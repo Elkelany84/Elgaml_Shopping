@@ -12,6 +12,7 @@ var uuid = const Uuid();
 class CartProvider with ChangeNotifier {
   final Map<String, CartModel> _cartItems = {};
   Map<String, CartModel> get cartItems => _cartItems;
+  var fees = 0.0;
 
   final usersDb = FirebaseFirestore.instance.collection("users");
   final auth = FirebaseAuth.instance;
@@ -149,7 +150,7 @@ class CartProvider with ChangeNotifier {
   //Get Total Price for payment screen
   double getTotalForPayment({required ProductsProvider productsProvider}) {
     var total = 0.0;
-    var fees = 10.0;
+
     _cartItems.forEach((key, value) {
       final getCurrentProduct = productsProvider.findByProdId(value.productId);
       if (getCurrentProduct == null) {

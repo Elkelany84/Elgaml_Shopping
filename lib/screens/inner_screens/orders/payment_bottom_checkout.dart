@@ -6,14 +6,18 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 class PaymentBottomSheetWidget extends StatelessWidget {
-  const PaymentBottomSheetWidget({super.key, required this.function});
+  const PaymentBottomSheetWidget(
+      {super.key, required this.function, required this.feesAmount});
 
   final Function function;
+  final int feesAmount;
 
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    cartProvider.fees = feesAmount.toDouble();
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -37,10 +41,13 @@ class PaymentBottomSheetWidget extends StatelessWidget {
                           "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)",
                       fontSize: 17,
                     ),
-                    SubtitleTextWidget(
-                      label:
-                          "\$ ${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)}",
-                      color: Colors.blue,
+                    GestureDetector(
+                      onTap: () {},
+                      child: SubtitleTextWidget(
+                        label:
+                            "\$ ${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)}",
+                        color: Colors.blue,
+                      ),
                     )
                   ],
                 ),

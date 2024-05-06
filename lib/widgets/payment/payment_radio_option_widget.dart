@@ -26,7 +26,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
     return Column(
       children: [
         buildRadioPayment(
-            name: "Cash On Delivery",
+            name: "Cash On Delivery-Alexandria Only",
             image: AssetsManager.paymentCash,
             scale: 0.5,
             value: 1,
@@ -40,7 +40,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
           height: 20,
         ),
         buildRadioPayment(
-            name: "CreditCard On Delivery",
+            name: "Etisallat Wallet-Outside Alexandria",
             image: AssetsManager.paymentPos,
             scale: 0.5,
             value: 2,
@@ -79,12 +79,13 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
                 scale: scale,
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               TitleTextWidget(
                 label: name,
-                fontSize: 18,
+                fontSize: 16,
                 color: Colors.black,
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),

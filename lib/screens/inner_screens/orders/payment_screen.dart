@@ -37,7 +37,7 @@ class _PaymentScreenState extends State<PaymentScreen>
   User? user = FirebaseAuth.instance.currentUser;
   OrderUserModel? orderUserModel;
   bool _isLoading = true;
-  String? _categoryValue = "60";
+  int _categoryValue = 60;
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<OrderProvider>(context, listen: false);
     final orderUserProvider =
@@ -101,13 +101,17 @@ class _PaymentScreenState extends State<PaymentScreen>
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     // DateTime? maximumDate = dateTime;.add(const Duration(days: 7))
     return Scaffold(
-      bottomSheet: PaymentBottomSheetWidget(function: () async {
-        await placeOrderAdvanced(
+      bottomSheet: PaymentBottomSheetWidget(
+        function: () async {
+          await placeOrderAdvanced(
             cartProvider: cartProvider,
             productProvider: productProvider,
             userProvider: userProvider,
-            hobby: hobby);
-      }),
+            hobby: hobby,
+          );
+        },
+        feesAmount: _categoryValue,
+      ),
       appBar: AppBar(
         centerTitle: true,
         // automaticallyImplyLeading: false,
@@ -303,7 +307,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                     //   ),
                     // ),
                     const SizedBox(
-                      height: 3,
+                      height: 2,
                     ),
                     const TitleTextWidget(
                       label: "Order Summary : ",
@@ -366,8 +370,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SubtitleTextWidget(
                         label:
                             "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram)."),
-                    SizedBox(
-                      height: 5,
+                    const SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),
@@ -382,6 +386,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     required ProductsProvider productProvider,
     required CartProvider cartProvider,
     required int hobby,
+    // required int categoryValue,
   }) async {
     final auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
