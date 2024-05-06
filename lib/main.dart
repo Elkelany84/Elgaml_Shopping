@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Shop Smart ADMIN EN',
+          title: 'Elgaml Dashboard',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
           home: const DashboardScreen(),
