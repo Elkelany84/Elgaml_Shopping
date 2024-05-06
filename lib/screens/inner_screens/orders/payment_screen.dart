@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
@@ -38,7 +37,7 @@ class _PaymentScreenState extends State<PaymentScreen>
   User? user = FirebaseAuth.instance.currentUser;
   OrderUserModel? orderUserModel;
   bool _isLoading = true;
-
+  String? _categoryValue = "60";
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<OrderProvider>(context, listen: false);
     final orderUserProvider =
@@ -152,7 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
                     Container(
                       width: double.infinity,
-                      height: 140,
+                      height: 130,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.grey.shade100),
@@ -247,64 +246,64 @@ class _PaymentScreenState extends State<PaymentScreen>
                     //     ),
                     //   ),
                     // ),
-                    const TitleTextWidget(
-                      label: "Delivery Date : ",
-                      fontSize: 24,
-                    ),
+                    // const TitleTextWidget(
+                    //   label: "Delivery Date : ",
+                    //   fontSize: 24,
+                    // ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+                    // SizedBox(
+                    //   height: kBottomNavigationBarHeight,
+                    //   width: double.infinity,
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //       padding: const EdgeInsets.all(12),
+                    //       backgroundColor: Colors.purpleAccent,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //     ),
+                    //     onPressed: () {
+                    //       showCupertinoModalPopup(
+                    //           context: context,
+                    //           builder: (context) {
+                    //             return SizedBox(
+                    //               height: 250, width: double.infinity,
+                    //               // width: double.infinity,
+                    //               child: DecoratedBox(
+                    //                 decoration: BoxDecoration(
+                    //                   color: Colors.white,
+                    //                   borderRadius: BorderRadius.circular(10),
+                    //                 ),
+                    //                 child: CupertinoDatePicker(
+                    //                   backgroundColor: Colors.white,
+                    //                   onDateTimeChanged: (DateTime newTime) {
+                    //                     setState(() {
+                    //                       dateTime = newTime;
+                    //                       // print(dateTime);
+                    //                       defaultTimeString =
+                    //                           "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
+                    //                     });
+                    //                   },
+                    //                   initialDateTime: dateTime,
+                    //                   maximumDate: dateTime.add(
+                    //                     const Duration(days: 20),
+                    //                   ),
+                    //                   use24hFormat: true,
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           });
+                    //     },
+                    //     child: Text(
+                    //       defaultTimeString,
+                    //       style: const TextStyle(fontSize: 20),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      height: kBottomNavigationBarHeight,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12),
-                          backgroundColor: Colors.purpleAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) {
-                                return SizedBox(
-                                  height: 250, width: double.infinity,
-                                  // width: double.infinity,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: CupertinoDatePicker(
-                                      backgroundColor: Colors.white,
-                                      onDateTimeChanged: (DateTime newTime) {
-                                        setState(() {
-                                          dateTime = newTime;
-                                          // print(dateTime);
-                                          defaultTimeString =
-                                              "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
-                                        });
-                                      },
-                                      initialDateTime: dateTime,
-                                      maximumDate: dateTime.add(
-                                        const Duration(days: 20),
-                                      ),
-                                      use24hFormat: true,
-                                    ),
-                                  ),
-                                );
-                              });
-                        },
-                        child: Text(
-                          defaultTimeString,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
+                      height: 3,
                     ),
                     const TitleTextWidget(
                       label: "Order Summary : ",
@@ -321,9 +320,54 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 10,
                     ),
-                    const TitleTextWidget(
-                      label: "Delivery Fees : \$ 10 ",
+                    TitleTextWidget(
+                      label: "Delivery Fees : \$ $_categoryValue ",
                       fontSize: 18,
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 8, right: 12, left: 12),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('orderFees')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            List<DropdownMenuItem> categoryItems = [];
+                            for (var doc in snapshot.data!.docs) {
+                              categoryItems.add(
+                                DropdownMenuItem(
+                                  child: Text(doc['placeName']),
+                                  value: doc['fees'],
+                                ),
+                              );
+                            }
+
+                            return DropdownButtonFormField(
+                              hint: const Text('Select Place'),
+                              value: _categoryValue,
+                              items: categoryItems,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _categoryValue = newValue;
+                                  print(_categoryValue);
+                                });
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    const SubtitleTextWidget(
+                        label:
+                            "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram)."),
+                    SizedBox(
+                      height: 5,
                     ),
                   ],
                 ),
