@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             //     AssetsManager.shoppingCart,
             //   ),
             // ),
-            title: const TitleTextWidget(label: "All Categories "),
+            title: const AppNameTextWidget(
+              label: "All Categories ",
+              fontSize: 22,
+            ),
             // label: "All Categories ( $quer )"),
           ),
           body: categoriesList.isEmpty

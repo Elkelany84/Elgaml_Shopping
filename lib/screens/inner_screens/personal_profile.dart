@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -128,7 +128,9 @@ class _PersonalProfileState extends State<PersonalProfile>
             textColor: Colors.white,
             fontSize: 16.0);
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, RootScreen.routeName);
+
+        Navigator.pushReplacementNamed(context, PaymentScreen.routeName);
+        // Navigator.pop(context);
       } on FirebaseException catch (error) {
         await MyAppFunctions.showErrorOrWarningDialog(
             context: context, fct: () {}, subTitle: error.message.toString());

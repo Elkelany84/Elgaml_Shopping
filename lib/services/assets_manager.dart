@@ -37,6 +37,7 @@ class AssetsManager {
 
   static String paymentPos = "$bagImagesPath/payment_pos.png";
   static String paymentCash = "$bagImagesPath/payment_cash.png";
+  static String paymentWallet = "$bagImagesPath/payment_ewallet.png";
 
   // Categories path
   static String mobiles = "$categoriesImagesPath/mobiles.png";

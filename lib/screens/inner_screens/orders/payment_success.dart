@@ -13,8 +13,8 @@ class PaymentSuccess extends StatelessWidget {
         body: EmptyBag(
       imagePath: AssetsManager.paymentSuccess,
       title: "Thanks For Shopping With Us",
-      subtitle: "Payment Success !",
-      details: "Your Order Place Successfully and Forward to Our Store!",
+      subtitle: "Your Order Place Successfully and Forward to Our Store!",
+      // details: "Your Order Place Successfully and Forward to Our Store!",
       buttonText: "Continue Shopping",
     ));
   }

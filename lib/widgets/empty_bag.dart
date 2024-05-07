@@ -21,7 +21,7 @@ class EmptyBag extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 70,
+            height: 90,
           ),
           Image.asset(
             imagePath,
@@ -29,24 +29,25 @@ class EmptyBag extends StatelessWidget {
             height: size.height * 0.35,
           ),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           TitleTextWidget(
             label: title,
-            fontSize: 25,
+            fontSize: 23,
             color: Colors.red,
           ),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           Center(
             child: SubtitleTextWidget(
               label: subtitle,
               fontWeight: FontWeight.w600,
+              fontSize: 15,
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -55,17 +56,24 @@ class EmptyBag extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          SizedBox(
+            height: 60,
+            width: 170,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RootScreen.routeName);
-              },
-              child: Text(buttonText))
+                onPressed: () {
+                  Navigator.of(context).pushNamed(RootScreen.routeName);
+                },
+                child: TitleTextWidget(
+                  label: buttonText,
+                  fontSize: 14,
+                )),
+          )
         ],
       ),
     );

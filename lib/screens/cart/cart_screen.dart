@@ -77,8 +77,8 @@ class _CartScreenState extends State<CartScreen> {
             body: EmptyBag(
               imagePath: AssetsManager.shoppingBasket,
               title: "Whoops",
-              subtitle: "Your Cart Is Empty!",
-              details: "Looks Like Your Cart is Empty,Start Shopping!",
+              subtitle: "Looks Like Your Cart Is Empty!",
+              // details: "Looks Like Your Cart is Empty,Start Shopping!",
               buttonText: "Shop now",
             ),
           )
@@ -113,7 +113,8 @@ class _CartScreenState extends State<CartScreen> {
                         },
                         subTitle: "Clear Cart?");
                   },
-                  icon: const Icon(Icons.delete_forever_rounded),
+                  icon: const Icon(Icons.delete_forever_rounded,
+                      color: Colors.red),
                 )
               ],
             ),

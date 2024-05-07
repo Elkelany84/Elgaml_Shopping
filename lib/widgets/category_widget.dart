@@ -47,7 +47,8 @@ class category_widget extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10)),
-                            height: size.height * 0.25,
+                            height: size.height * 0.90,
+                            width: size.width * 0.30,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: FancyShimmerImage(

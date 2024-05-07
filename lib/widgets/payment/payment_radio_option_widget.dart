@@ -28,7 +28,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
         buildRadioPayment(
             name: "Cash On Delivery-Alexandria Only",
             image: AssetsManager.paymentCash,
-            scale: 0.5,
+            // scale: 0.5,
             value: 1,
             onChange: (value) {
               setState(() {
@@ -37,12 +37,12 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               });
             }),
         const SizedBox(
-          height: 20,
+          height: 12,
         ),
         buildRadioPayment(
             name: "Etisallat Wallet-Outside Alexandria",
-            image: AssetsManager.paymentPos,
-            scale: 0.5,
+            image: AssetsManager.paymentWallet,
+            // scale: 0.5,
             value: 2,
             onChange: (value) {
               setState(() {
@@ -56,7 +56,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
 
   Widget buildRadioPayment(
       {required String image,
-      required double scale,
+      // required double scale,
       required String name,
       required int value,
       required Function onChange}) {
@@ -74,12 +74,15 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                image,
-                scale: scale,
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Image.asset(
+                  image, width: 40, height: 40,
+                  // scale: scale,
+                ),
               ),
               const SizedBox(
-                width: 5,
+                width: 6,
               ),
               TitleTextWidget(
                 label: name,

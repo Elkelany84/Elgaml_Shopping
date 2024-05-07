@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
@@ -103,12 +104,20 @@ class _PaymentScreenState extends State<PaymentScreen>
     return Scaffold(
       bottomSheet: PaymentBottomSheetWidget(
         function: () async {
-          await placeOrderAdvanced(
-            cartProvider: cartProvider,
-            productProvider: productProvider,
-            userProvider: userProvider,
-            hobby: hobby,
-          );
+          orderUserModel!.userAddress != ""
+              ? await placeOrderAdvanced(
+                  cartProvider: cartProvider,
+                  productProvider: productProvider,
+                  userProvider: userProvider,
+                  hobby: hobby,
+                )
+              : Fluttertoast.showToast(
+                      msg: "Pleas Enter Your Address First!",
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0)
+                  .then((value) =>
+                      Navigator.pushNamed(context, PersonalProfile.routeName));
         },
         feesAmount: _categoryValue,
       ),
@@ -143,14 +152,14 @@ class _PaymentScreenState extends State<PaymentScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     const TitleTextWidget(
                       label: "Shipping to : ",
-                      fontSize: 24,
+                      fontSize: 18,
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
 
                     Container(
@@ -171,7 +180,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                               // textDecoration: TextDecoration.underline,
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
@@ -204,7 +213,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
                     const TitleTextWidget(
                       label: "Payment Method : ",
-                      fontSize: 24,
+                      fontSize: 18,
                     ),
                     const SizedBox(
                       height: 10,
@@ -225,7 +234,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                     // ),
                     //Total Button
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     // Center(
                     //   child: SizedBox(
@@ -310,23 +319,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                       height: 2,
                     ),
                     const TitleTextWidget(
-                      label: "Order Summary : ",
-                      fontSize: 24,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TitleTextWidget(
-                      label:
-                          "Total Price: \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
-                      fontSize: 18,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TitleTextWidget(
-                      label: "Delivery Fees : \$ $_categoryValue ",
-                      fontSize: 18,
+                      label: "Choose Your Shipping City :",
+                      fontSize: 16,
                     ),
                     Padding(
                       padding:
@@ -343,8 +337,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                             for (var doc in snapshot.data!.docs) {
                               categoryItems.add(
                                 DropdownMenuItem(
-                                  child: Text(doc['placeName']),
                                   value: doc['fees'],
+                                  child: Text(doc['placeName']),
                                 ),
                               );
                             }
@@ -365,13 +359,39 @@ class _PaymentScreenState extends State<PaymentScreen>
                       ),
                     ),
                     const SizedBox(
+                      height: 5,
+                    ),
+                    const TitleTextWidget(
+                      label: "Order Summary : ",
+                      fontSize: 16,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TitleTextWidget(
+                      label:
+                          "Total Price: \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                      fontSize: 16,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TitleTextWidget(
+                      label: "Delivery Fees : \$ $_categoryValue ",
+                      fontSize: 16,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+
+                    const SizedBox(
                       height: 3,
                     ),
                     const SubtitleTextWidget(
                         label:
                             "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram)."),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                   ],
                 ),

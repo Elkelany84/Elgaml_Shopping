@@ -27,7 +27,7 @@ class WishListScreen extends StatelessWidget {
                 ),
                 EmptyBag(
                   imagePath: AssetsManager.bagWish,
-                  title: "Nothing In Your WishList Yet",
+                  title: "Nothing In Your WishList Yet!",
                   // subtitle: "Looks Like Your Wishlist is Empty,Start Shopping!",
                   // details: "Looks Like Your Cart is Empty,Start Shopping!",
                   buttonText: "Shop now",
