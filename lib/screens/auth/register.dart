@@ -142,12 +142,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         cameraFct: () async {
           pickedImage = await imagePicker.pickImage(
-              source: ImageSource.camera, imageQuality: 85);
+              source: ImageSource.camera,
+              maxHeight: 480,
+              maxWidth: 640,
+              imageQuality: 50);
           setState(() {});
         },
         galleryFct: () async {
           pickedImage = await imagePicker.pickImage(
-              source: ImageSource.gallery, imageQuality: 85);
+              source: ImageSource.gallery,
+              maxHeight: 480,
+              maxWidth: 640,
+              imageQuality: 85);
           setState(() {});
         },
         removeFct: () {

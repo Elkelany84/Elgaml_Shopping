@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
@@ -22,10 +24,11 @@ class ViewedRecentlyScreen extends StatelessWidget {
         ? Scaffold(
             body: EmptyBag(
               imagePath: AssetsManager.orderBag,
-              title: "Looks Like No Viewed Products Yet !",
+              title: LocaleData.viewedRecentlyMessage.getString(context),
+              titleFont: 20,
               // subtitle: "Looks Like Your Cart is Empty,Start Shopping!",
               // details: "Looks Like Your Cart is Empty,Start Shopping!",
-              buttonText: "Shop now",
+              buttonText: LocaleData.shopNow.getString(context), buttonFont: 18,
             ),
           )
         : Scaffold(
@@ -37,7 +40,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
               ),
               title: AppNameTextWidget(
                 label:
-                    "Viewed Recently (${viewedProdProvider.viewedProdsItems.length})",
+                    "${LocaleData.viewedRecently.getString(context)} (${viewedProdProvider.viewedProdsItems.length})",
                 fontSize: 22,
               ),
               actions: [
@@ -49,9 +52,10 @@ class ViewedRecentlyScreen extends StatelessWidget {
                           fct: () {
                             viewedProdProvider.clearViewedProds();
                           },
-                          subTitle: "Clear Viewed Products?");
+                          subTitle: LocaleData.clearViewedRecently
+                              .getString(context));
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete_forever_rounded,
                       color: Colors.red,
                     ))

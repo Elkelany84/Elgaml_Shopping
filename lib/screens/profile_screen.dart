@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
@@ -32,7 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   User? user = FirebaseAuth.instance.currentUser;
   UserModel? userModel;
   bool _isLoading = true;
-
+  late FlutterLocalization _flutterLocalization;
+  late String _currentLocale;
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -56,6 +59,9 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     fetchUserInfo();
+    _flutterLocalization = FlutterLocalization.instance;
+    _currentLocale = _flutterLocalization.currentLocale!.languageCode;
+    print(_currentLocale);
     super.initState();
   }
 
@@ -70,8 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen>
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(AssetsManager.shoppingCart),
         ),
-        title: const AppNameTextWidget(
-          label: "Profile Screen",
+        title: AppNameTextWidget(
+          label: LocaleData.profileScreen.getString(context),
           fontSize: 22,
         ),
       ),
@@ -136,18 +142,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                   thickness: 3,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
                 child: Column(
                   children: [
-                    TitleTextWidget(label: "General"),
+                    TitleTextWidget(
+                        label: LocaleData.general.getString(context)),
                   ],
                 ),
               ),
               Visibility(
                 visible: userModel == null ? false : true,
                 child: CustomListTile(
-                  label: "All Orders",
+                  label: LocaleData.allOrders.getString(context),
                   imagePath: AssetsManager.orderSvg,
                   onTab: () {
                     Navigator.of(context).pushNamed(OrdersScreenFree.routeName);
@@ -155,12 +162,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               Visibility(
                 visible: userModel == null ? false : true,
                 child: CustomListTile(
-                  label: "WishList",
+                  label: LocaleData.wishList.getString(context),
                   imagePath: AssetsManager.wishlistSvg,
                   onTab: () async {
                     await Navigator.pushNamed(
@@ -169,10 +176,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               CustomListTile(
-                label: "Viewed Recently",
+                label: LocaleData.viewedRecently.getString(context),
                 imagePath: AssetsManager.recent,
                 onTab: () async {
                   await Navigator.pushNamed(
@@ -180,12 +187,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                 },
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               Visibility(
                 visible: userModel == null ? false : true,
                 child: CustomListTile(
-                  label: "Personal Profile",
+                  label: LocaleData.personalProfile.getString(context),
                   imagePath: AssetsManager.profile,
                   onTab: () {
                     Navigator.pushNamed(context, PersonalProfile.routeName);
@@ -193,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               const Padding(
                 padding: EdgeInsets.all(10.0),
@@ -201,23 +208,55 @@ class _ProfileScreenState extends State<ProfileScreen>
                   thickness: 3,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: TitleTextWidget(label: "Settings"),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: TitleTextWidget(
+                    label: LocaleData.settings.getString(context)),
               ),
               SwitchListTile(
                   secondary: Image.asset(
                     AssetsManager.theme,
                     height: 34,
                   ),
-                  title: Text(
-                      themeProvider.getIsDarkTheme ? "DarkMode" : "LightMode"),
+                  title: Text(themeProvider.getIsDarkTheme
+                      ? LocaleData.darkMode.getString(context)
+                      : LocaleData.lightMode.getString(context)),
                   value: themeProvider.getIsDarkTheme,
                   onChanged: (value) {
                     themeProvider.setDarkTheme(value);
                   }),
               const SizedBox(
-                height: 30,
+                height: 8,
+              ),
+              ListTile(
+                leading: Image.asset(
+                  AssetsManager.language,
+                  height: 34,
+                ),
+                title: SubtitleTextWidget(
+                  label: LocaleData.language.getString(context),
+                ),
+                trailing: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: _currentLocale,
+                    items: const [
+                      DropdownMenuItem(
+                        value: "en",
+                        child: Text("English"),
+                      ),
+                      DropdownMenuItem(
+                        value: "ar",
+                        child: Text("العربية"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      _setLocale(value);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
               ),
               Center(
                   child: ElevatedButton.icon(
@@ -233,7 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   } else {
                     await MyAppFunctions.showErrorOrWarningDialog(
                       context: context,
-                      subTitle: "Are You Sure You Want To SignOut?",
+                      subTitle: LocaleData.logoutMessage.getString(context),
                       fct: () async {
                         await FirebaseAuth.instance.signOut();
                         if (!mounted) return;
@@ -248,7 +287,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                   }
                 },
                 label: Text(
-                  user == null ? "Login" : "Logout",
+                  user == null
+                      ? LocaleData.login.getString(context)
+                      : LocaleData.logout.getString(context),
                   style: const TextStyle(fontSize: 20),
                 ),
                 icon: Icon(user == null ? Icons.login : Icons.logout),
@@ -287,6 +328,18 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
       ),
     );
+  }
+
+  void _setLocale(String? value) {
+    if (value == null) return;
+    if (value == "en") {
+      _flutterLocalization.translate("en");
+    } else {
+      _flutterLocalization.translate("ar");
+    }
+    setState(() {
+      _currentLocale = value;
+    });
   }
 }
 

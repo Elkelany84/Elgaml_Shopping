@@ -7,11 +7,15 @@ class EmptyBag extends StatelessWidget {
   const EmptyBag(
       {super.key,
       required this.imagePath,
-      required this.title,
+      this.title = "",
       this.subtitle = "",
       this.details = "",
+      this.buttonFont = 14,
+      this.titleFont = 20,
+      this.buttonWidth = 150,
       required this.buttonText});
   final String title, subtitle, details, buttonText, imagePath;
+  final double buttonFont, titleFont, buttonWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -29,26 +33,26 @@ class EmptyBag extends StatelessWidget {
             height: size.height * 0.35,
           ),
           const SizedBox(
-            height: 30,
+            height: 40,
           ),
           TitleTextWidget(
             label: title,
-            fontSize: 23,
+            fontSize: titleFont,
             color: Colors.red,
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          // const SizedBox(
+          //   height: 5,
+          // ),
           Center(
             child: SubtitleTextWidget(
               label: subtitle,
               fontWeight: FontWeight.w600,
-              fontSize: 15,
+              fontSize: 18,
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          // const SizedBox(
+          //   height: 15,
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SubtitleTextWidget(
@@ -58,7 +62,7 @@ class EmptyBag extends StatelessWidget {
           ),
           SizedBox(
             height: 60,
-            width: 170,
+            width: buttonWidth,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
@@ -71,7 +75,7 @@ class EmptyBag extends StatelessWidget {
                 },
                 child: TitleTextWidget(
                   label: buttonText,
-                  fontSize: 14,
+                  fontSize: buttonFont,
                 )),
           )
         ],

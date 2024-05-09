@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
@@ -52,7 +54,8 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Image.asset(AssetsManager.shoppingCart),
           ),
           title: AppNameTextWidget(
-            label: passedCategory ?? "Search Products",
+            label:
+                passedCategory ?? LocaleData.searchProducts.getString(context),
             fontSize: 22,
           ),
         ),
@@ -83,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         TextField(
                           controller: controller,
                           decoration: InputDecoration(
-                            hintText: "Search",
+                            hintText: LocaleData.search.getString(context),
                             prefixIcon: const Icon(
                               Icons.search,
                             ),

@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
@@ -45,12 +47,25 @@ void main() async {
       : await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-    runApp(const MyApp());
+    runApp(MyApp());
   });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final FlutterLocalization localization = FlutterLocalization.instance;
+
+  @override
+  void initState() {
+    configureLocalization();
+    super.initState();
+  }
 
   // This widget is the root of your application.
   @override
@@ -91,6 +106,13 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'ShopSmart',
+            supportedLocales: localization.supportedLocales,
+            localizationsDelegates: localization.localizationsDelegates,
+            // localizationsDelegates: [
+            //   GlobalCupertinoLocalizations.delegate,
+            //   GlobalMaterialLocalizations.delegate,
+            //   GlobalWidgetsLocalizations.delegate,
+            // ],
             theme: Styles.themeData(
                 isDarkTheme: themeProvider.getIsDarkTheme, context: context),
             home: const RootScreen(),
@@ -118,5 +140,14 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void configureLocalization() {
+    localization.init(mapLocales: LOCALES, initLanguageCode: "en");
+    localization.onTranslatedLanguage = onTranslatedLanguage;
+  }
+
+  void onTranslatedLanguage(Locale? local) {
+    setState(() {});
   }
 }

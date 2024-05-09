@@ -1,6 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/categories_screen.dart';
@@ -30,7 +32,7 @@ class HomeScreen extends StatelessWidget {
           child: Image.asset(AssetsManager.shoppingCart),
         ),
         title: const AppNameTextWidget(
-          label: "Shop Smart",
+          label: "Elgaml Stores",
           fontSize: 40,
         ),
       ),
@@ -74,8 +76,11 @@ class HomeScreen extends StatelessWidget {
                 height: 10,
               ),
               Visibility(
-                  visible: productsProvider.getProducts.isNotEmpty,
-                  child: const TitleTextWidget(label: "Latest Arrivals")),
+                visible: productsProvider.getProducts.isNotEmpty,
+                child: TitleTextWidget(
+                  label: LocaleData.latestArrivals.getString(context),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -99,17 +104,21 @@ class HomeScreen extends StatelessWidget {
                 height: 8,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TitleTextWidget(label: "Categories:"),
+                  TitleTextWidget(
+                      label: LocaleData.categories.getString(context)),
                   const SizedBox(
                     width: 2,
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, CategoriesScreen.routeName);
-                      },
-                      child: const SubtitleTextWidget(label: "Show All"))
+                    onPressed: () {
+                      Navigator.pushNamed(context, CategoriesScreen.routeName);
+                    },
+                    child: SubtitleTextWidget(
+                      label: LocaleData.showAll.getString(context),
+                    ),
+                  )
                 ],
               ),
               const SizedBox(

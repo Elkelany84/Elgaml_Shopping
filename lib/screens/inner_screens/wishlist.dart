@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/wishlist_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
@@ -27,10 +29,11 @@ class WishListScreen extends StatelessWidget {
                 ),
                 EmptyBag(
                   imagePath: AssetsManager.bagWish,
-                  title: "Nothing In Your WishList Yet!",
+                  title: LocaleData.wishListMessage.getString(context),
                   // subtitle: "Looks Like Your Wishlist is Empty,Start Shopping!",
                   // details: "Looks Like Your Cart is Empty,Start Shopping!",
-                  buttonText: "Shop now",
+                  buttonText: LocaleData.shopNow.getString(context),
+                  buttonFont: 18,
                 ),
               ],
             ),
@@ -43,7 +46,8 @@ class WishListScreen extends StatelessWidget {
                 child: Image.asset(AssetsManager.bagWish),
               ),
               title: AppNameTextWidget(
-                label: "WishList (${wishlistProvider.wishlistItems.length})",
+                label:
+                    "${LocaleData.wishList.getString(context)} (${wishlistProvider.wishlistItems.length})",
                 fontSize: 22,
               ),
               actions: [
@@ -56,7 +60,8 @@ class WishListScreen extends StatelessWidget {
                             wishlistProvider.wishlistItems.clear();
                             await wishlistProvider.clearCartFirebase();
                           },
-                          subTitle: "Clear Wishlist");
+                          subTitle:
+                              LocaleData.clearWishList.getString(context));
                     },
                     icon: const Icon(
                       Icons.delete_forever_rounded,

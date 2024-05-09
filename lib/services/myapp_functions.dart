@@ -29,7 +29,7 @@ class MyAppFunctions {
                 ),
                 SubtitleTextWidget(
                   label: subTitle,
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
                 const SizedBox(

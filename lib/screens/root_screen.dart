@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
@@ -114,15 +116,15 @@ class _RootScreenState extends State<RootScreen> {
           controller.jumpToPage(currentScreen);
         },
         destinations: [
-          const NavigationDestination(
-            selectedIcon: Icon(IconlyBold.home),
-            icon: Icon(IconlyLight.home),
-            label: "Home",
+          NavigationDestination(
+            selectedIcon: const Icon(IconlyBold.home),
+            icon: const Icon(IconlyLight.home),
+            label: LocaleData.home.getString(context),
           ),
-          const NavigationDestination(
-            selectedIcon: Icon(IconlyBold.search),
-            icon: Icon(IconlyLight.search),
-            label: "Search",
+          NavigationDestination(
+            selectedIcon: const Icon(IconlyBold.search),
+            icon: const Icon(IconlyLight.search),
+            label: LocaleData.search.getString(context),
           ),
           NavigationDestination(
             selectedIcon: const Icon(IconlyBold.bag2),
@@ -131,12 +133,12 @@ class _RootScreenState extends State<RootScreen> {
                 textColor: Colors.white,
                 label: Text("${cartProvider.cartItems.length}"),
                 child: const Icon(IconlyLight.bag2)),
-            label: "Cart",
+            label: LocaleData.cart.getString(context),
           ),
-          const NavigationDestination(
-            selectedIcon: Icon(IconlyBold.profile),
-            icon: Icon(IconlyLight.profile),
-            label: "Profile",
+          NavigationDestination(
+            selectedIcon: const Icon(IconlyBold.profile),
+            icon: const Icon(IconlyLight.profile),
+            label: LocaleData.profile.getString(context),
           ),
         ],
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
@@ -76,10 +78,10 @@ class _CartScreenState extends State<CartScreen> {
         ? Scaffold(
             body: EmptyBag(
               imagePath: AssetsManager.shoppingBasket,
-              title: "Whoops",
-              subtitle: "Looks Like Your Cart Is Empty!",
+              // title: "Whoops",
+              subtitle: LocaleData.emptyCartMessage.getString(context),
               // details: "Looks Like Your Cart is Empty,Start Shopping!",
-              buttonText: "Shop now",
+              buttonText: LocaleData.shopNow.getString(context), buttonFont: 18,
             ),
           )
         : Scaffold(
@@ -97,7 +99,8 @@ class _CartScreenState extends State<CartScreen> {
                 child: Image.asset(AssetsManager.shoppingCart),
               ),
               title: AppNameTextWidget(
-                label: "Cart (${cartProvider.cartItems.length})",
+                label:
+                    "${LocaleData.cart.getString(context)} (${cartProvider.cartItems.length})",
                 fontSize: 22,
               ),
               actions: [
@@ -111,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
                           await cartProvider.getCartItemsFromFirebase();
                           // cartProvider.clearCart();
                         },
-                        subTitle: "Clear Cart?");
+                        subTitle: LocaleData.clearCart.getString(context));
                   },
                   icon: const Icon(Icons.delete_forever_rounded,
                       color: Colors.red),
