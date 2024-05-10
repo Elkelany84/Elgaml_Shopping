@@ -5,13 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/auth/google_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/image_picker_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
@@ -181,10 +184,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 60,
                   ),
-                  const AppNameTextWidget(label: "Shop Smart", fontSize: 30),
-                  const Align(
+                  const AppNameTextWidget(label: "Elgaml Stores", fontSize: 30),
+                  Align(
                     alignment: Alignment.centerLeft,
-                    child: TitleTextWidget(label: "Welcome !"),
+                    child: TitleTextWidget(
+                        label: LocaleData.welcome.getString(context)),
                   ),
                   const SizedBox(
                     height: 20,
@@ -215,9 +219,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           focusNode: _nameFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.name,
-                          decoration: const InputDecoration(
-                            hintText: "Enter Your Name",
-                            prefixIcon: Icon(Icons.person),
+                          decoration: InputDecoration(
+                            hintText:
+                                LocaleData.signUpToName.getString(context),
+                            prefixIcon: const Icon(Icons.person),
                           ),
                           onFieldSubmitted: (value) {
                             FocusScope.of(context)
@@ -235,9 +240,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           focusNode: _emailFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            hintText: "Email Address",
-                            prefixIcon: Icon(IconlyLight.message),
+                          decoration: InputDecoration(
+                            hintText:
+                                LocaleData.signUpToEmail.getString(context),
+                            prefixIcon: const Icon(IconlyLight.message),
                           ),
                           onFieldSubmitted: (value) {
                             FocusScope.of(context)
@@ -257,7 +263,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                              hintText: "Password",
+                              hintText: LocaleData.signUpToPassword
+                                  .getString(context),
                               prefixIcon: const Icon(IconlyLight.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
@@ -287,7 +294,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            hintText: "Repeat Password",
+                            hintText: LocaleData.signUpToConfirmPassword
+                                .getString(context),
                             prefixIcon: const Icon(IconlyLight.lock),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -325,9 +333,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () async {
                               await registerFct();
                             },
-                            label: const Text(
-                              "SignUp",
-                              style: TextStyle(fontSize: 20),
+                            label: Text(
+                              LocaleData.signUp.getString(context),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             icon: const Icon(IconlyLight.addUser),
                           ),
@@ -335,21 +343,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(
                           height: 16,
                         ),
-                        const SubtitleTextWidget(label: "Or Connect Using"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SubtitleTextWidget(
+                                label: LocaleData.signUpConnectUsing
+                                    .getString(context)),
+                            const GoogleButton(),
+                          ],
+                        ),
                         const SizedBox(
                           height: 16,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SubtitleTextWidget(label: "Already User?"),
+                            SubtitleTextWidget(
+                                label: LocaleData.signUpToAlreadyHaveAccount
+                                    .getString(context)),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(LoginScreen.routeName);
                               },
-                              child: const SubtitleTextWidget(
-                                label: "SignIn?",
+                              child: SubtitleTextWidget(
+                                label: LocaleData.signIn.getString(context),
                                 fontStyle: FontStyle.italic,
                                 textDecoration: TextDecoration.underline,
                               ),

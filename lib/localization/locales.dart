@@ -6,6 +6,35 @@ const List<MapLocale> LOCALES = [
 ];
 
 mixin LocaleData {
+  //Signup Screen
+  static const String welcome = "Welcome !";
+  static const String signUpToName = "Enter Your Name";
+  static const String signUpToEmail = "Enter Your Email";
+  static const String signUpToPassword = "Enter Your Password";
+  static const String signUpToConfirmPassword = "Repeat Password";
+  static const String signUpToSignUp = "Sign Up";
+  static const String signUpConnectUsing = "Or Sign Up using ";
+  static const String signUpToAlreadyHaveAccount = "Already have an account?";
+
+  //Login Screen
+  static const String welcomeBack = "Welcome Back!";
+  static const String loginEmail = "Email Address";
+  static const String password = "Password";
+  static const String forgotPassword = "Forgot Password?";
+  static const String newHere = "New Here?";
+  static const String loginConnectUsing = "Or Connect Using";
+  static const String signIn = "Sign In";
+  static const String signUp = "Sign Up";
+  static const String guest = "Guest";
+  static const String googleSignin = "SignIn With Google";
+
+  //Forgot Password Screen
+  static const String forgotPasswordScreen = "Forgot Password ?";
+  static const String forgotPasswordScreenMessage =
+      "Enter your email address to reset your password.";
+  static const String forgotPasswordScreenToEmail = "Enter Your Email Address";
+  static const String forgotPasswordRequestLink = "Request Link";
+
   //Root Screen
   static const String home = "Home";
   static const String search = "Search";
@@ -44,6 +73,18 @@ mixin LocaleData {
   static const String logout = "Logout";
   static const String logoutMessage = "Are You Sure You Want To SignOut?";
 
+  //Personal Profile
+  static const String yourDetails = "Your Details: ";
+  static const String subDetails =
+      "You Can Change your Details From Here , Then Press Save. ";
+  static const String firstName = "First Name: ";
+  static const String email = "E-mail: You Can\'t Change Your E-mail ";
+  static const String phone = "Phone: ";
+  static const String address = "Address: ";
+  static const String creationDate = "Creation Date: ";
+  static const String save = "Save";
+  static const String updateAccountMessage = "An Account Has been Updated!";
+
   //WishList Screen
   static const String wishListScreen = "WishList";
   static const String clearWishList = "Clear Wishlist";
@@ -69,6 +110,34 @@ mixin LocaleData {
     search: "Search",
     cart: "Cart",
     profile: "Profile",
+
+    //Signup Screen
+    welcome: "Welcome !",
+    signUpToName: "Enter Your Name",
+    signUpToEmail: "Enter Your Email",
+    signUpToPassword: "Enter Your Password",
+    signUpToConfirmPassword: "Repeat Password",
+    signUpToAlreadyHaveAccount: "Already Have An Account?",
+    signUpConnectUsing: "Or Sign Up using ",
+
+    //Login Screen
+    signIn: "Sign In",
+    signUp: "Sign Up",
+    loginEmail: "Email Address",
+    password: "Password",
+    welcomeBack: "Welcome Back!",
+    forgotPassword: "Forgot Password?",
+    newHere: "New Here?",
+    loginConnectUsing: "Or Connect Using",
+    guest: "Guest",
+    googleSignin: "SignIn With Google",
+
+    //Forgot Password
+    forgotPasswordScreen: "Forgot Password",
+    forgotPasswordScreenMessage: "Enter Your Email To Reset Your Password",
+    forgotPasswordScreenToEmail: "Enter Your Email Address",
+    forgotPasswordRequestLink: "Request Link",
+
     //Home Screen
     latestArrivals: "Latest Arrivals",
     categories: "Categories",
@@ -106,6 +175,17 @@ mixin LocaleData {
     logout: "Logout",
     logoutMessage: "Are You Sure You Want To SignOut?",
 
+    //Personal Profile
+    yourDetails: "Your Details: ",
+    subDetails: "You Can Change your Details From Here , Then Press Save. ",
+    firstName: "First Name: ",
+    email: "E-mail: You Can\'t Change Your E-mail ",
+    phone: "Phone: ",
+    address: "Address: ",
+    creationDate: "Creation Date: ",
+    save: "Save",
+    updateAccountMessage: "An Account Has been Updated!",
+
     //WishList Screen
 
     clearWishList: "Clear Wishlist",
@@ -120,6 +200,32 @@ mixin LocaleData {
   };
 
   static const Map<String, dynamic> AR = {
+    //Signup Screen
+    welcome: "مرحبا بك",
+    signUpToName: "ادخل إسمك",
+    signUpToEmail: "ادخل بريدك الإليكترونى",
+    signUpToPassword: "ادخل كلمة السر",
+    signUpToConfirmPassword: "أعد كلمة السر",
+    signUpToAlreadyHaveAccount: "هل لديك حساب بالفعل ؟",
+    //Login Screen
+    signIn: "دخول",
+    signUp: "تسجيل جديد",
+    loginEmail: "ادخل بريدك الإليكترونى",
+    password: "ادخل كلمة السر",
+    welcomeBack: "مرحبا بك",
+    forgotPassword: "هل نسيت كلمة السر ؟",
+    newHere: "مستخدم جديد",
+    loginConnectUsing: "الدخول بواسطة",
+    guest: "التصفح كضيف",
+    googleSignin: "الدخول بحساب جوجل",
+
+    //Forgot Password
+    forgotPasswordScreen: "هل نسيت كلمة السر ؟",
+    forgotPasswordScreenMessage:
+        "ادخل بريدك الإليكترونى لتحصل على رابط كلمة السر",
+    forgotPasswordScreenToEmail: "ادخل بريدك الإليكترونى",
+    forgotPasswordRequestLink: "ارسل الرابط",
+
     //Root Screen
     home: "الرئيسية",
     search: "بحث",
@@ -159,6 +265,17 @@ mixin LocaleData {
     login: "دخول",
     logout: "خروج",
     logoutMessage: "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+
+    //Personal Profile
+    yourDetails: "تفاصيلك: ",
+    subDetails: "يمكنك تغيير تفاصيلك من هنا ثم انقر على حفظ. ",
+    firstName: "الاسم: ",
+    email: "البريد الالكتروني: لا يمكنك تغيير بريدك الالكتروني ",
+    phone: "رقم الهاتف: ",
+    address: "العنوان: ",
+    creationDate: "تاريخ الإنشاء: ",
+    save: "حفظ",
+    updateAccountMessage: "تم تحديث ملفك الشخصى!",
 
     //WishList Screen
 

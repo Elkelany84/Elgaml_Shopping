@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         ),
         title: const AppNameTextWidget(
           label: "Elgaml Stores",
-          fontSize: 40,
+          fontSize: 30,
         ),
       ),
       body: Padding(

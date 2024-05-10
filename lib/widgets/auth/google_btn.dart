@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:ionicons/ionicons.dart';
@@ -144,9 +146,9 @@ class GoogleButton extends StatelessWidget {
         //     .googleSignSignIn(context: context);
         // await _googleSignSignIn(context: context);
       },
-      label: const Text(
-        "SignIn With Google",
-        style: TextStyle(fontSize: 20, color: Colors.black),
+      label: Text(
+        LocaleData.googleSignin.getString(context),
+        style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
       icon: const Icon(
         Ionicons.logo_google,

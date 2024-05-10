@@ -1,6 +1,10 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -45,8 +49,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const AppNameTextWidget(
-          label: "Shop Smart",
-          fontSize: 22,
+          label: "Elgaml Stores",
+          fontSize: 30,
         ),
       ),
       body: GestureDetector(
@@ -68,12 +72,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const SizedBox(
               height: 10,
             ),
-            const TitleTextWidget(
-              label: "Forget Password",
+            TitleTextWidget(
+              label: LocaleData.forgotPassword.getString(context),
               fontSize: 22,
             ),
-            const SubtitleTextWidget(
-              label: "Enter your email to get reset link",
+            const SizedBox(
+              height: 5,
+            ),
+            SubtitleTextWidget(
+              label: LocaleData.forgotPasswordScreenMessage.getString(context),
               fontSize: 14,
             ),
             const SizedBox(
@@ -88,7 +95,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                          hintText: "Enter Your Email Address",
+                          hintText: LocaleData.forgotPasswordScreenToEmail
+                              .getString(context),
                           prefixIcon: Container(
                             padding: const EdgeInsets.all(8),
                             child: const Icon(IconlyLight.message),
@@ -114,8 +122,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           forgetPassFct();
                         },
                         icon: const Icon(IconlyLight.send),
-                        label: const Text(
-                          "Request Link",
+                        label: Text(
+                          LocaleData.forgotPasswordRequestLink
+                              .getString(context),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),

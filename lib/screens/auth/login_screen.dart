@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/forgot_password.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
@@ -61,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _emailController.text.trim(),
             password: _passwordController.text.trim());
         Fluttertoast.showToast(
-            msg: "Welcome Back!",
+            msg: LocaleData.welcomeBack.getString(context),
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
@@ -100,13 +102,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 60,
                   ),
-                  const AppNameTextWidget(label: "Shop Smart", fontSize: 30),
+                  const AppNameTextWidget(label: "Elgaml Stores", fontSize: 30),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Align(
+                  Align(
                       alignment: Alignment.centerLeft,
-                      child: TitleTextWidget(label: "Welcome Back!")),
+                      child: TitleTextWidget(
+                          label: LocaleData.welcomeBack.getString(context))),
                   const SizedBox(
                     height: 20,
                   ),
@@ -120,9 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusNode: _emailFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            hintText: "Email Address",
-                            prefixIcon: Icon(IconlyLight.message),
+                          decoration: InputDecoration(
+                            hintText: LocaleData.loginEmail.getString(context),
+                            prefixIcon: const Icon(IconlyLight.message),
                           ),
                           onFieldSubmitted: (value) {
                             FocusScope.of(context)
@@ -142,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                              hintText: "Password",
+                              hintText: LocaleData.password.getString(context),
                               prefixIcon: const Icon(IconlyLight.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
@@ -171,8 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.of(context)
                                   .pushNamed(ForgotPasswordScreen.routeName);
                             },
-                            child: const SubtitleTextWidget(
-                              label: "Forgot Password?",
+                            child: SubtitleTextWidget(
+                              label:
+                                  LocaleData.forgotPassword.getString(context),
                               fontStyle: FontStyle.italic,
                               textDecoration: TextDecoration.underline,
                             ),
@@ -194,17 +198,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () async {
                               await loginFct();
                             },
-                            label: const Text(
-                              "LogIn",
-                              style: TextStyle(fontSize: 20),
+                            label: Text(
+                              LocaleData.login.getString(context),
+                              style: const TextStyle(fontSize: 20),
                             ),
-                            icon: const Icon(Icons.logout),
+                            icon: const Icon(Icons.login),
                           ),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const SubtitleTextWidget(label: "Or Connect Using"),
+                        SubtitleTextWidget(
+                            label: LocaleData.loginConnectUsing
+                                .getString(context)),
                         const SizedBox(
                           height: 30,
                         ),
@@ -236,9 +242,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.of(context)
                                           .pushNamed(RootScreen.routeName);
                                     },
-                                    child: const Text(
-                                      "Guest",
-                                      style: TextStyle(fontSize: 20),
+                                    child: Text(
+                                      LocaleData.guest.getString(context),
+                                      style: const TextStyle(fontSize: 20),
                                     ),
                                   ),
                                 ),
@@ -252,14 +258,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SubtitleTextWidget(label: "New Here?"),
+                            SubtitleTextWidget(
+                                label: LocaleData.newHere.getString(context)),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(RegisterScreen.routeName);
                               },
-                              child: const SubtitleTextWidget(
-                                label: "SignUp",
+                              child: SubtitleTextWidget(
+                                label: LocaleData.signUp.getString(context),
                                 fontStyle: FontStyle.italic,
                                 textDecoration: TextDecoration.underline,
                               ),

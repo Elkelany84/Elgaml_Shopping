@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_screen.dart';
@@ -123,7 +125,7 @@ class _PersonalProfileState extends State<PersonalProfile>
 
         //SToast Message
         Fluttertoast.showToast(
-            msg: "An Account Has been Updated!",
+            msg: LocaleData.updateAccountMessage.getString(context),
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
@@ -164,8 +166,8 @@ class _PersonalProfileState extends State<PersonalProfile>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: const AppNameTextWidget(
-          label: "Personal Profile",
+        title: AppNameTextWidget(
+          label: LocaleData.personalProfile.getString(context),
           fontSize: 30,
         ),
       ),
@@ -178,8 +180,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SubtitleTextWidget(
-                      label: "Your Details: ",
+                    SubtitleTextWidget(
+                      label: LocaleData.yourDetails.getString(context),
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       textDecoration: TextDecoration.underline,
@@ -187,9 +189,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                     const SizedBox(
                       height: 10,
                     ),
-                    const SubtitleTextWidget(
-                      label:
-                          "You Can Change your Details From Here , Then Press Save. ",
+                    SubtitleTextWidget(
+                      label: LocaleData.subDetails.getString(context),
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
                     ),
@@ -202,8 +203,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SubtitleTextWidget(
-                            label: "First Name: ",
+                          SubtitleTextWidget(
+                            label: LocaleData.firstName.getString(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -230,8 +231,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                           const SizedBox(
                             height: 20,
                           ),
-                          const SubtitleTextWidget(
-                            label: "E-mail: You Can\'t Change Your E-mail ",
+                          SubtitleTextWidget(
+                            label: LocaleData.email.getString(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -252,8 +253,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                           const SizedBox(
                             height: 20,
                           ),
-                          const SubtitleTextWidget(
-                            label: "Address: ",
+                          SubtitleTextWidget(
+                            label: LocaleData.address.getString(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -280,8 +281,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                           const SizedBox(
                             height: 20,
                           ),
-                          const SubtitleTextWidget(
-                            label: "Phone: ",
+                          SubtitleTextWidget(
+                            label: LocaleData.phone.getString(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -307,8 +308,8 @@ class _PersonalProfileState extends State<PersonalProfile>
                           const SizedBox(
                             height: 20,
                           ),
-                          const SubtitleTextWidget(
-                            label: "Creation Date: ",
+                          SubtitleTextWidget(
+                            label: LocaleData.creationDate.getString(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -344,9 +345,9 @@ class _PersonalProfileState extends State<PersonalProfile>
                               onPressed: () async {
                                 await updateUserDetailsFct();
                               },
-                              label: const Text(
-                                "Save",
-                                style: TextStyle(fontSize: 20),
+                              label: Text(
+                                LocaleData.save.getString(context),
+                                style: const TextStyle(fontSize: 20),
                               ),
                               icon: const Icon(IconlyLight.addUser),
                             ),
