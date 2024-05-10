@@ -15,6 +15,7 @@ mixin LocaleData {
   static const String signUpToSignUp = "Sign Up";
   static const String signUpConnectUsing = "Or Sign Up using ";
   static const String signUpToAlreadyHaveAccount = "Already have an account?";
+  // static const String googleSignUp = "Sign Up";
 
   //Login Screen
   static const String welcomeBack = "Welcome Back!";
@@ -26,7 +27,7 @@ mixin LocaleData {
   static const String signIn = "Sign In";
   static const String signUp = "Sign Up";
   static const String guest = "Guest";
-  static const String googleSignin = "SignIn With Google";
+  static const String googleSignin = "With Google";
 
   //Forgot Password Screen
   static const String forgotPasswordScreen = "Forgot Password ?";
@@ -58,8 +59,33 @@ mixin LocaleData {
   static const String emptyCartMessage = "Looks Like Your Cart Is Empty!";
   static const String shopNow = "Shop now";
 
+  //CheckOut Screen
+  static const String checkOut = "CheckOut";
+  static const String deliveryAddressMessage =
+      "Pleas Enter Your Address First!";
+  static const String deliveryAddress = "Delivery Address :";
+  static const String editAddress = "Edit Address";
+  static const String paymentMethod = "Payment Method : ";
+  static const String cityDelivery = "Choose Your Delivery City :";
+  static const String cashOnDelivery = "Cash On Delivery-Alexandria Only";
+  static const String etissalatWallet = "Etisallat Wallet-Outside Alexandria";
+  static const String orderSummary = "Order Summary : ";
+  static const String totalPrice = "Total Price: ";
+  static const String deliveryFee = "Delivery Fee: ";
+  static const String deliveryMessage =
+      "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram).";
+
+  //PLaced Orders
+  static const String placedOrders = "Placed Orders";
+  static const String orderNumber = "Order Number: ";
+  static const String orderDate = "Order Date: ";
+  static const String orderStatus = "Order Status: ";
+  static const String orderTotalProducts = "TotalProducts: ";
+
   //Profile Screen
   static const String profileScreen = "Profile Screen";
+  static const String profileScreenMessage =
+      "Please Login To Have Unlimited Access!";
   static const String general = "General";
   static const String allOrders = "All Orders";
   static const String wishList = "WishList";
@@ -130,7 +156,7 @@ mixin LocaleData {
     newHere: "New Here?",
     loginConnectUsing: "Or Connect Using",
     guest: "Guest",
-    googleSignin: "SignIn With Google",
+    googleSignin: "With Google",
 
     //Forgot Password
     forgotPasswordScreen: "Forgot Password",
@@ -155,6 +181,28 @@ mixin LocaleData {
     emptyCartMessage: "Looks Like Your Cart Is Empty!",
     shopNow: "Shop now",
 
+    //PLaced Orders
+    placedOrders: "Placed Orders",
+    orderNumber: "Order Number: ",
+    orderStatus: "Order Status: ",
+    orderDate: "Order Date: ",
+    orderTotalProducts: "TotalProducts: ",
+
+    //CheckOut Screen
+    checkOut: "CheckOut",
+    deliveryAddressMessage: "Pleas Enter Your Address First!",
+    deliveryAddress: "Delivery Address",
+    editAddress: "Edit Address",
+    paymentMethod: "Payment Method:",
+    cityDelivery: "Choose Your Shipping City :",
+    cashOnDelivery: "Cash On Delivery-Alexandria Only",
+    etissalatWallet: "Etisallat Wallet-Outside Alexandria",
+    orderSummary: "Order Summary : ",
+    totalPrice: "Total Price : ",
+    deliveryFee: "Delivery Fee : ",
+    deliveryMessage:
+        "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram).",
+
     //PaymentSuccess
     continueShopping: "Continue Shopping",
     paymentSuccessMessage:
@@ -162,6 +210,7 @@ mixin LocaleData {
 
     //Profile Screen
     profileScreen: "Profile Screen",
+    profileScreenMessage: "Please Login To Have Unlimited Access!",
     general: "General",
     allOrders: "All Orders",
     wishList: "WishList",
@@ -207,6 +256,8 @@ mixin LocaleData {
     signUpToPassword: "ادخل كلمة السر",
     signUpToConfirmPassword: "أعد كلمة السر",
     signUpToAlreadyHaveAccount: "هل لديك حساب بالفعل ؟",
+    signUpConnectUsing: "التسجيل بواسطة",
+
     //Login Screen
     signIn: "دخول",
     signUp: "تسجيل جديد",
@@ -223,7 +274,7 @@ mixin LocaleData {
     forgotPasswordScreen: "هل نسيت كلمة السر ؟",
     forgotPasswordScreenMessage:
         "ادخل بريدك الإليكترونى لتحصل على رابط كلمة السر",
-    forgotPasswordScreenToEmail: "ادخل بريدك الإليكترونى",
+    forgotPasswordScreenToEmail: "بريدك الإليكترونى",
     forgotPasswordRequestLink: "ارسل الرابط",
 
     //Root Screen
@@ -240,12 +291,27 @@ mixin LocaleData {
 
     //Cart Screen
     total: "المجموع",
-    products: "المنتجات",
-    items: "العناصر",
-    clearCart: "مسح سلة التسوق ؟",
-    checkout: "الدفع",
+    products: "منتجات",
+    items: "عناصر",
+    clearCart: "? مسح سلة التسوق",
+    checkout: "الذهاب للدفع",
     emptyCartMessage: "يبدو أن سلة التسوق فارغة!",
     shopNow: "تسوق الآن",
+
+    //CheckOut Screen
+    checkOut: "تأكيد الطلب",
+    deliveryAddressMessage: "يرجى إدخال عنوانك أولا",
+    deliveryAddress: "تعديل العنوان",
+    editAddress: "تعديل العنوان",
+    paymentMethod: "طريقة الدفع",
+    cityDelivery: "يرجى إدخال مدينتك",
+    cashOnDelivery: "الدفع عند الإستلام-داخل الإسكندرية فقط",
+    etissalatWallet: "التحويل لمحفظة إتصالات",
+    orderSummary: "ملخص الطلب",
+    totalPrice: "المجموع",
+    deliveryFee: "رسوم التوصيل",
+    deliveryMessage:
+        "رسوم التوصيل قد تختلف وفقا لمكان الشحن وحجم الشحنة ، زيادة 4 جنيهات عن كل كيلو جرام",
 
     //PaymentSuccess
     continueShopping: "استمر في التسوق",
@@ -253,6 +319,7 @@ mixin LocaleData {
 
     //Profile Screen
     profileScreen: "الملف الشخصى",
+    profileScreenMessage: "يرجى تسجيل الدخول للحصول على الميزات كاملة",
     general: "عـــام",
     allOrders: "طلبياتى",
     wishList: "المفضلة",
@@ -265,6 +332,13 @@ mixin LocaleData {
     login: "دخول",
     logout: "خروج",
     logoutMessage: "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+
+    //PLaced Orders
+    placedOrders: "طلباتى",
+    orderNumber: " -رقم الطلب",
+    orderStatus: " -حالة الطلب",
+    orderDate: " -تاريخ الطلب",
+    orderTotalProducts: " -عدد المنتجات",
 
     //Personal Profile
     yourDetails: "تفاصيلك: ",
@@ -280,12 +354,12 @@ mixin LocaleData {
     //WishList Screen
 
     clearWishList: "مسح المفضلة",
-    wishListMessage: "يبدو أن سلة المفضلة فارغة!",
+    wishListMessage: "!يبدو أن سلة المفضلة فارغة",
 
     //Viewed Recently
 
     clearViewedRecently: "مسح المشاهدة المؤخرة",
-    viewedRecentlyMessage: "يبدو أنك لم ترى أي منتج مؤخرا!",
+    viewedRecentlyMessage: "!يبدو أنك لم تشاهد أي منتج مؤخرا",
     //Categories Screen
     allCategories: "جميع التصنيفات",
   };

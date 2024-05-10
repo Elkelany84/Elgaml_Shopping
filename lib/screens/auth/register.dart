@@ -349,11 +349,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SubtitleTextWidget(
                                 label: LocaleData.signUpConnectUsing
                                     .getString(context)),
-                            const GoogleButton(),
+                            const GoogleButton(
+                              sign: "Up",
+                            ),
                           ],
                         ),
                         const SizedBox(
-                          height: 16,
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

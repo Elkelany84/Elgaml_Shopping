@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -26,7 +28,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
     return Column(
       children: [
         buildRadioPayment(
-            name: "Cash On Delivery-Alexandria Only",
+            name: LocaleData.cashOnDelivery.getString(context),
             image: AssetsManager.paymentCash,
             // scale: 0.5,
             value: 1,
@@ -40,7 +42,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
           height: 12,
         ),
         buildRadioPayment(
-            name: "Etisallat Wallet-Outside Alexandria",
+            name: LocaleData.etissalatWallet.getString(context),
             image: AssetsManager.paymentWallet,
             // scale: 0.5,
             value: 2,
@@ -77,7 +79,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 3.0),
                 child: Image.asset(
-                  image, width: 40, height: 40,
+                  image, width: 40, height: 30,
                   // scale: scale,
                 ),
               ),
@@ -86,7 +88,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               ),
               TitleTextWidget(
                 label: name,
-                fontSize: 16,
+                fontSize: 14,
                 color: Colors.black,
                 overflow: TextOverflow.ellipsis,
               )

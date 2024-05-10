@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
@@ -91,7 +93,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
   int hobby = 1;
   DateTime dateTime = DateTime.now(); // 获取当前时间
-  String defaultTimeString = "Choose Delivery Time";
+  // String defaultTimeString = "Choose Delivery Time";
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +114,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                   hobby: hobby,
                 )
               : Fluttertoast.showToast(
-                      msg: "Pleas Enter Your Address First!",
+                      msg: LocaleData.deliveryAddressMessage.getString(context),
                       backgroundColor: Colors.red,
                       textColor: Colors.white,
                       fontSize: 16.0)
@@ -137,8 +139,8 @@ class _PaymentScreenState extends State<PaymentScreen>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: const AppNameTextWidget(
-          label: "CheckOut ",
+        title: AppNameTextWidget(
+          label: LocaleData.checkout.getString(context),
           fontSize: 30,
         ),
       ),
@@ -154,8 +156,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 5,
                     ),
-                    const TitleTextWidget(
-                      label: "Shipping to : ",
+                    TitleTextWidget(
+                      label: LocaleData.deliveryAddress.getString(context),
                       fontSize: 18,
                     ),
                     const SizedBox(
@@ -189,11 +191,12 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   Navigator.of(context)
                                       .pushNamed(PersonalProfile.routeName);
                                 },
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     SubtitleTextWidget(
-                                      label: "Edit Address",
+                                      label: LocaleData.editAddress
+                                          .getString(context),
                                       fontStyle: FontStyle.italic,
                                       textDecoration: TextDecoration.underline,
                                     ),
@@ -211,8 +214,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                       height: 10,
                     ),
 
-                    const TitleTextWidget(
-                      label: "Payment Method : ",
+                    TitleTextWidget(
+                      label: LocaleData.paymentMethod.getString(context),
                       fontSize: 18,
                     ),
                     const SizedBox(
@@ -318,8 +321,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 2,
                     ),
-                    const TitleTextWidget(
-                      label: "Choose Your Shipping City :",
+                    TitleTextWidget(
+                      label: LocaleData.cityDelivery.getString(context),
                       fontSize: 16,
                     ),
                     Padding(
@@ -361,8 +364,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 5,
                     ),
-                    const TitleTextWidget(
-                      label: "Order Summary : ",
+                    TitleTextWidget(
+                      label: LocaleData.orderSummary.getString(context),
                       fontSize: 16,
                     ),
                     const SizedBox(
@@ -370,14 +373,15 @@ class _PaymentScreenState extends State<PaymentScreen>
                     ),
                     TitleTextWidget(
                       label:
-                          "Total Price: \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                          "${LocaleData.total.getString(context)} \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
                       fontSize: 16,
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TitleTextWidget(
-                      label: "Delivery Fees : \$ $_categoryValue ",
+                      label:
+                          "${LocaleData.deliveryFee.getString(context)} \$ $_categoryValue ",
                       fontSize: 16,
                     ),
                     const SizedBox(
@@ -387,9 +391,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 3,
                     ),
-                    const SubtitleTextWidget(
-                        label:
-                            "- Fees may be vary Depends on Weight & Quantity (about 4 Pounds for Every KiloGram)."),
+                    SubtitleTextWidget(
+                        label: LocaleData.deliveryMessage.getString(context)),
                     const SizedBox(
                       height: 15,
                     ),

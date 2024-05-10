@@ -222,7 +222,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 flex: 2,
                                 child: SizedBox(
                                     height: kBottomNavigationBarHeight,
-                                    child: FittedBox(child: GoogleButton())),
+                                    child: FittedBox(
+                                        child: GoogleButton(
+                                      sign: "In",
+                                    ))),
                               ),
                               const SizedBox(
                                 width: 8,
@@ -249,11 +252,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
                             ],
                           ),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

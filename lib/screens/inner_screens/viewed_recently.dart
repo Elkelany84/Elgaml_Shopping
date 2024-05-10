@@ -25,7 +25,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
             body: EmptyBag(
               imagePath: AssetsManager.orderBag,
               title: LocaleData.viewedRecentlyMessage.getString(context),
-              titleFont: 20,
+              titleFont: 18,
               // subtitle: "Looks Like Your Cart is Empty,Start Shopping!",
               // details: "Looks Like Your Cart is Empty,Start Shopping!",
               buttonText: LocaleData.shopNow.getString(context), buttonFont: 18,

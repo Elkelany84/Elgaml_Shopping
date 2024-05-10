@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -38,7 +40,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
                   children: [
                     TitleTextWidget(
                       label:
-                          "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)",
+                          "${LocaleData.total.getString(context)} (${cartProvider.cartItems.length} ${LocaleData.products.getString(context)} / ${cartProvider.getQty()} ${LocaleData.items.getString(context)})",
                       fontSize: 17,
                     ),
                     GestureDetector(
@@ -61,9 +63,9 @@ class PaymentBottomSheetWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  "Checkout",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                child: Text(
+                  LocaleData.checkOut.getString(context),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               )
             ],

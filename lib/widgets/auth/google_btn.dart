@@ -9,7 +9,8 @@ import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:ionicons/ionicons.dart';
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({super.key});
+  const GoogleButton({super.key, required this.sign});
+  final String sign;
 
   Future<UserCredential?> signInWithGoogle(
       {required BuildContext context}) async {
@@ -147,7 +148,7 @@ class GoogleButton extends StatelessWidget {
         // await _googleSignSignIn(context: context);
       },
       label: Text(
-        LocaleData.googleSignin.getString(context),
+        "Sign $sign ${LocaleData.googleSignin.getString(context)}",
         style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
       icon: const Icon(

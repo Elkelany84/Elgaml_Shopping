@@ -5,6 +5,9 @@ class ThemeProvider extends ChangeNotifier {
   static const String isDarkMode = "isDarkMode";
   bool _darkTheme = false;
   bool get getIsDarkTheme => _darkTheme;
+
+  var currentLocaleProvider = "";
+
   ThemeProvider() {
     getTheme();
   }

@@ -106,8 +106,9 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Elgaml Stores',
-            supportedLocales: localization.supportedLocales,
             localizationsDelegates: localization.localizationsDelegates,
+            supportedLocales: localization.supportedLocales,
+
             // localizationsDelegates: [
             //   GlobalCupertinoLocalizations.delegate,
             //   GlobalMaterialLocalizations.delegate,
