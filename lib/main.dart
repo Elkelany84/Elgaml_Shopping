@@ -37,11 +37,11 @@ void main() async {
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-            apiKey: "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0",
-            appId: "1:493433453225:android:3c381866aa7848ca6207b8",
-            messagingSenderId: "493433453225",
-            projectId: "hadishopsmarprovideradminpanel",
-            storageBucket: "hadishopsmarprovideradminpanel.appspot.com",
+            apiKey: "AIzaSyDAVrD1t3YlQhh3xG333nfjInaM5HGeBkQ",
+            appId: "1:1035545623294:android:474c46ad7f73ce4a4943af",
+            messagingSenderId: "1035545623294",
+            projectId: "elgamlstores",
+            storageBucket: "elgamlstores.appspot.com",
           ),
         )
       : await Firebase.initializeApp();

@@ -1,4 +1,4 @@
-package com.example.hadi_ecommerce_firebase_admin
+package com.elgamlstores
 
 import io.flutter.embedding.android.FlutterActivity
 

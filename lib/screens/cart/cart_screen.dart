@@ -3,7 +3,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_screen.dart';
@@ -72,8 +72,8 @@ class _CartScreenState extends State<CartScreen> {
     final productProvider =
         Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context);
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    // final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return cartProvider.cartItems.isEmpty
         ? Scaffold(
             body: EmptyBag(
@@ -84,61 +84,66 @@ class _CartScreenState extends State<CartScreen> {
               buttonText: LocaleData.shopNow.getString(context), buttonFont: 18,
             ),
           )
-        : Scaffold(
-            bottomSheet: CartBottomSheetWidget(function: () {
-              Navigator.pushNamed(context, PaymentScreen.routeName);
-              // await placeOrderAdvanced(
-              //   cartProvider: cartProvider,
-              //   productProvider: productProvider,
-              //   userProvider: userProvider,
-              // );
-            }),
-            appBar: AppBar(
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AssetsManager.shoppingCart),
-              ),
-              title: AppNameTextWidget(
-                label:
-                    "${LocaleData.cart.getString(context)} (${cartProvider.cartItems.length})",
-                fontSize: 22,
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    MyAppFunctions.showErrorOrWarningDialog(
-                        isError: false,
-                        context: context,
-                        fct: () async {
-                          await cartProvider.clearCartFirebase();
-                          await cartProvider.getCartItemsFromFirebase();
-                          // cartProvider.clearCart();
-                        },
-                        subTitle: LocaleData.clearCart.getString(context));
-                  },
-                  icon: const Icon(Icons.delete_forever_rounded,
-                      color: Colors.red),
-                )
-              ],
-            ),
-            body: LoadingManager(
-              isLoading: isLoading,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: cartProvider.cartItems.length,
-                        itemBuilder: (context, index) {
-                          return ChangeNotifierProvider.value(
-                              value:
-                                  cartProvider.cartItems.values.toList()[index],
-                              child: const CartWidget());
-                        }),
-                  ),
-                  const SizedBox(
-                    height: kBottomNavigationBarHeight + 10,
+        : Directionality(
+            textDirection: themeProvider.currentLocaleProvider == "ar"
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+            child: Scaffold(
+              bottomSheet: CartBottomSheetWidget(function: () {
+                Navigator.pushNamed(context, PaymentScreen.routeName);
+                // await placeOrderAdvanced(
+                //   cartProvider: cartProvider,
+                //   productProvider: productProvider,
+                //   userProvider: userProvider,
+                // );
+              }),
+              appBar: AppBar(
+                leading: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(AssetsManager.shoppingCart),
+                ),
+                title: AppNameTextWidget(
+                  label:
+                      "${LocaleData.cart.getString(context)} (${cartProvider.cartItems.length})",
+                  fontSize: 22,
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      MyAppFunctions.showErrorOrWarningDialog(
+                          isError: false,
+                          context: context,
+                          fct: () async {
+                            await cartProvider.clearCartFirebase();
+                            await cartProvider.getCartItemsFromFirebase();
+                            // cartProvider.clearCart();
+                          },
+                          subTitle: LocaleData.clearCart.getString(context));
+                    },
+                    icon: const Icon(Icons.delete_forever_rounded,
+                        color: Colors.red),
                   )
                 ],
+              ),
+              body: LoadingManager(
+                isLoading: isLoading,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: cartProvider.cartItems.length,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider.value(
+                                value: cartProvider.cartItems.values
+                                    .toList()[index],
+                                child: const CartWidget());
+                          }),
+                    ),
+                    const SizedBox(
+                      height: kBottomNavigationBarHeight + 10,
+                    )
+                  ],
+                ),
               ),
             ),
           );

@@ -9,6 +9,7 @@ import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_success.dart';
@@ -101,305 +102,313 @@ class _PaymentScreenState extends State<PaymentScreen>
         Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+    // final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     // DateTime? maximumDate = dateTime;.add(const Duration(days: 7))
-    return Scaffold(
-      bottomSheet: PaymentBottomSheetWidget(
-        function: () async {
-          orderUserModel!.userAddress != ""
-              ? await placeOrderAdvanced(
-                  cartProvider: cartProvider,
-                  productProvider: productProvider,
-                  userProvider: userProvider,
-                  hobby: hobby,
-                )
-              : Fluttertoast.showToast(
-                      msg: LocaleData.deliveryAddressMessage.getString(context),
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0)
-                  .then((value) =>
-                      Navigator.pushNamed(context, PersonalProfile.routeName));
-        },
-        feesAmount: _categoryValue,
-      ),
-      appBar: AppBar(
-        centerTitle: true,
-        // automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
+    return Directionality(
+      textDirection: themeProvider.currentLocaleProvider == "ar"
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+      child: Scaffold(
+        bottomSheet: PaymentBottomSheetWidget(
+          function: () async {
+            orderUserModel!.userAddress != ""
+                ? await placeOrderAdvanced(
+                    cartProvider: cartProvider,
+                    productProvider: productProvider,
+                    userProvider: userProvider,
+                    hobby: hobby,
+                  )
+                : Fluttertoast.showToast(
+                        msg: LocaleData.deliveryAddressMessage
+                            .getString(context),
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0)
+                    .then((value) => Navigator.pushNamed(
+                        context, PersonalProfile.routeName));
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
+          feesAmount: _categoryValue,
+        ),
+        appBar: AppBar(
+          centerTitle: true,
+          // automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+          ),
+          // leading: Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: Image.asset(AssetsManager.shoppingCart),
+          // ),
+          title: AppNameTextWidget(
+            label: LocaleData.checkout.getString(context),
+            fontSize: 30,
           ),
         ),
-        // leading: Padding(
-        //   padding: EdgeInsets.all(8.0),
-        //   child: Image.asset(AssetsManager.shoppingCart),
-        // ),
-        title: AppNameTextWidget(
-          label: LocaleData.checkout.getString(context),
-          fontSize: 30,
-        ),
-      ),
-      body: orderUserModel == null
-          ? const SizedBox.shrink()
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    TitleTextWidget(
-                      label: LocaleData.deliveryAddress.getString(context),
-                      fontSize: 18,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+        body: orderUserModel == null
+            ? const SizedBox.shrink()
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TitleTextWidget(
+                        label: LocaleData.deliveryAddress.getString(context),
+                        fontSize: 18,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
 
-                    Container(
-                      width: double.infinity,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.grey.shade100),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8, right: 8, left: 8, bottom: 6),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SubtitleTextWidget(
-                              label: orderUserModel!.userAddress,
-                              fontSize: 20, color: Colors.black,
-                              // textDecoration: TextDecoration.underline,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed(PersonalProfile.routeName);
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    SubtitleTextWidget(
-                                      label: LocaleData.editAddress
-                                          .getString(context),
-                                      fontStyle: FontStyle.italic,
-                                      textDecoration: TextDecoration.underline,
-                                    ),
-                                    Icon(IconlyLight.location)
-                                  ],
+                      Container(
+                        width: double.infinity,
+                        height: 130,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.grey.shade100),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, right: 8, left: 8, bottom: 6),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SubtitleTextWidget(
+                                label: orderUserModel!.userAddress,
+                                fontSize: 20, color: Colors.black,
+                                // textDecoration: TextDecoration.underline,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed(PersonalProfile.routeName);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SubtitleTextWidget(
+                                        label: LocaleData.editAddress
+                                            .getString(context),
+                                        fontStyle: FontStyle.italic,
+                                        textDecoration:
+                                            TextDecoration.underline,
+                                      ),
+                                      Icon(IconlyLight.location)
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    // DeliveryContainerWidget(),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                      // DeliveryContainerWidget(),
+                      const SizedBox(
+                        height: 10,
+                      ),
 
-                    TitleTextWidget(
-                      label: LocaleData.paymentMethod.getString(context),
-                      fontSize: 18,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    PaymentMethodWidget(
-                      hobby,
-                      (value) {
-                        hobby = value;
-                        setState(() {
+                      TitleTextWidget(
+                        label: LocaleData.paymentMethod.getString(context),
+                        fontSize: 18,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      PaymentMethodWidget(
+                        hobby,
+                        (value) {
                           hobby = value;
-                        });
-                        // print(hobby);
-                      },
-                    ),
-                    // TitleTextWidget(
-                    //   label: "Payment On Delivery",
-                    //   fontSize: 24,
-                    // ),
-                    //Total Button
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Center(
-                    //   child: SizedBox(
-                    //     height: 50,
-                    //     width: 150,
-                    //     child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //         elevation: 0,
-                    //         backgroundColor: Colors.blue,
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(10),
-                    //         ),
-                    //       ),
-                    //       onPressed: () {},
-                    //       child: Text(
-                    //         "Buy Now",
-                    //         style: TextStyle(
-                    //             fontSize: 22,
-                    //             // fontWeight: FontWeight.bold,
-                    //             color: Colors.white),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // const TitleTextWidget(
-                    //   label: "Delivery Date : ",
-                    //   fontSize: 24,
-                    // ),
-                    // const SizedBox(
-                    //   height: 5,
-                    // ),
-                    // SizedBox(
-                    //   height: kBottomNavigationBarHeight,
-                    //   width: double.infinity,
-                    //   child: ElevatedButton(
-                    //     style: ElevatedButton.styleFrom(
-                    //       padding: const EdgeInsets.all(12),
-                    //       backgroundColor: Colors.purpleAccent,
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(12),
-                    //       ),
-                    //     ),
-                    //     onPressed: () {
-                    //       showCupertinoModalPopup(
-                    //           context: context,
-                    //           builder: (context) {
-                    //             return SizedBox(
-                    //               height: 250, width: double.infinity,
-                    //               // width: double.infinity,
-                    //               child: DecoratedBox(
-                    //                 decoration: BoxDecoration(
-                    //                   color: Colors.white,
-                    //                   borderRadius: BorderRadius.circular(10),
-                    //                 ),
-                    //                 child: CupertinoDatePicker(
-                    //                   backgroundColor: Colors.white,
-                    //                   onDateTimeChanged: (DateTime newTime) {
-                    //                     setState(() {
-                    //                       dateTime = newTime;
-                    //                       // print(dateTime);
-                    //                       defaultTimeString =
-                    //                           "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
-                    //                     });
-                    //                   },
-                    //                   initialDateTime: dateTime,
-                    //                   maximumDate: dateTime.add(
-                    //                     const Duration(days: 20),
-                    //                   ),
-                    //                   use24hFormat: true,
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           });
-                    //     },
-                    //     child: Text(
-                    //       defaultTimeString,
-                    //       style: const TextStyle(fontSize: 20),
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    TitleTextWidget(
-                      label: LocaleData.cityDelivery.getString(context),
-                      fontSize: 16,
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8, right: 12, left: 12),
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('orderFees')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const CircularProgressIndicator();
-                          } else {
-                            List<DropdownMenuItem> categoryItems = [];
-                            for (var doc in snapshot.data!.docs) {
-                              categoryItems.add(
-                                DropdownMenuItem(
-                                  value: doc['fees'],
-                                  child: Text(doc['placeName']),
-                                ),
-                              );
-                            }
-
-                            return DropdownButtonFormField(
-                              hint: const Text('Select Place'),
-                              value: _categoryValue,
-                              items: categoryItems,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _categoryValue = newValue;
-                                  print(_categoryValue);
-                                });
-                              },
-                            );
-                          }
+                          setState(() {
+                            hobby = value;
+                          });
+                          // print(hobby);
                         },
                       ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    TitleTextWidget(
-                      label: LocaleData.orderSummary.getString(context),
-                      fontSize: 16,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TitleTextWidget(
-                      label:
-                          "${LocaleData.total.getString(context)} \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
-                      fontSize: 16,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TitleTextWidget(
-                      label:
-                          "${LocaleData.deliveryFee.getString(context)} \$ $_categoryValue ",
-                      fontSize: 16,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                      // TitleTextWidget(
+                      //   label: "Payment On Delivery",
+                      //   fontSize: 24,
+                      // ),
+                      //Total Button
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // Center(
+                      //   child: SizedBox(
+                      //     height: 50,
+                      //     width: 150,
+                      //     child: ElevatedButton(
+                      //       style: ElevatedButton.styleFrom(
+                      //         elevation: 0,
+                      //         backgroundColor: Colors.blue,
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         ),
+                      //       ),
+                      //       onPressed: () {},
+                      //       child: Text(
+                      //         "Buy Now",
+                      //         style: TextStyle(
+                      //             fontSize: 22,
+                      //             // fontWeight: FontWeight.bold,
+                      //             color: Colors.white),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // const TitleTextWidget(
+                      //   label: "Delivery Date : ",
+                      //   fontSize: 24,
+                      // ),
+                      // const SizedBox(
+                      //   height: 5,
+                      // ),
+                      // SizedBox(
+                      //   height: kBottomNavigationBarHeight,
+                      //   width: double.infinity,
+                      //   child: ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //       padding: const EdgeInsets.all(12),
+                      //       backgroundColor: Colors.purpleAccent,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(12),
+                      //       ),
+                      //     ),
+                      //     onPressed: () {
+                      //       showCupertinoModalPopup(
+                      //           context: context,
+                      //           builder: (context) {
+                      //             return SizedBox(
+                      //               height: 250, width: double.infinity,
+                      //               // width: double.infinity,
+                      //               child: DecoratedBox(
+                      //                 decoration: BoxDecoration(
+                      //                   color: Colors.white,
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                 ),
+                      //                 child: CupertinoDatePicker(
+                      //                   backgroundColor: Colors.white,
+                      //                   onDateTimeChanged: (DateTime newTime) {
+                      //                     setState(() {
+                      //                       dateTime = newTime;
+                      //                       // print(dateTime);
+                      //                       defaultTimeString =
+                      //                           "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
+                      //                     });
+                      //                   },
+                      //                   initialDateTime: dateTime,
+                      //                   maximumDate: dateTime.add(
+                      //                     const Duration(days: 20),
+                      //                   ),
+                      //                   use24hFormat: true,
+                      //                 ),
+                      //               ),
+                      //             );
+                      //           });
+                      //     },
+                      //     child: Text(
+                      //       defaultTimeString,
+                      //       style: const TextStyle(fontSize: 20),
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      TitleTextWidget(
+                        label: LocaleData.cityDelivery.getString(context),
+                        fontSize: 16,
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 8, right: 12, left: 12),
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('orderFees')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const CircularProgressIndicator();
+                            } else {
+                              List<DropdownMenuItem> categoryItems = [];
+                              for (var doc in snapshot.data!.docs) {
+                                categoryItems.add(
+                                  DropdownMenuItem(
+                                    value: doc['fees'],
+                                    child: Text(doc['placeName']),
+                                  ),
+                                );
+                              }
 
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    SubtitleTextWidget(
-                        label: LocaleData.deliveryMessage.getString(context)),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                  ],
+                              return DropdownButtonFormField(
+                                hint: const Text('Select Place'),
+                                value: _categoryValue,
+                                items: categoryItems,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _categoryValue = newValue;
+                                    print(_categoryValue);
+                                  });
+                                },
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TitleTextWidget(
+                        label: LocaleData.orderSummary.getString(context),
+                        fontSize: 16,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      TitleTextWidget(
+                        label:
+                            "${LocaleData.total.getString(context)} \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                        fontSize: 16,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      TitleTextWidget(
+                        label:
+                            "${LocaleData.deliveryFee.getString(context)} \$ $_categoryValue ",
+                        fontSize: 16,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      SubtitleTextWidget(
+                          label: LocaleData.deliveryMessage.getString(context)),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+      ),
     );
   }
 

@@ -12,9 +12,11 @@ mixin LocaleData {
   static const String signUpToEmail = "Enter Your Email";
   static const String signUpToPassword = "Enter Your Password";
   static const String signUpToConfirmPassword = "Repeat Password";
+  static const String signUpPhone = "Enter Phone Number";
   static const String signUpToSignUp = "Sign Up";
   static const String signUpConnectUsing = "Or Sign Up using ";
   static const String signUpToAlreadyHaveAccount = "Already have an account?";
+  static const String signUpMessage = "An Account Has been Created!";
   // static const String googleSignUp = "Sign Up";
 
   //Login Screen
@@ -50,6 +52,11 @@ mixin LocaleData {
   static const String categories = "Categories";
   static const String showAll = "Show All";
 
+  //Product Details
+  static const String productDetailsAddedAlready = "Added Already";
+  static const String productDetailsAddedToCart = "Added To Cart";
+  static const String productDetailsAboutItem = "About This Item :";
+  static const String productDetailsIn = "In";
   //Cart Screen
   static const String total = "Total";
   static const String products = "Products";
@@ -143,8 +150,10 @@ mixin LocaleData {
     signUpToEmail: "Enter Your Email",
     signUpToPassword: "Enter Your Password",
     signUpToConfirmPassword: "Repeat Password",
+    signUpPhone: "Enter Phone Number",
     signUpToAlreadyHaveAccount: "Already Have An Account?",
     signUpConnectUsing: "Or Sign Up using ",
+    signUpMessage: "An Account Has been Created!",
 
     //Login Screen
     signIn: "Sign In",
@@ -171,6 +180,12 @@ mixin LocaleData {
 
     //Search Screen
     searchProducts: "Search Products",
+
+    //Product Details
+    productDetailsAddedAlready: "Added Already",
+    productDetailsAddedToCart: "Added To Cart",
+    productDetailsAboutItem: "About This Item :",
+    productDetailsIn: "In",
 
     //Cart Screen
     total: "Total",
@@ -255,8 +270,10 @@ mixin LocaleData {
     signUpToEmail: "ادخل بريدك الإليكترونى",
     signUpToPassword: "ادخل كلمة السر",
     signUpToConfirmPassword: "أعد كلمة السر",
+    signUpPhone: "ادخل رقم الهاتف",
     signUpToAlreadyHaveAccount: "هل لديك حساب بالفعل ؟",
     signUpConnectUsing: "التسجيل بواسطة",
+    signUpMessage: "تم إنشاء الحساب بنجاح",
 
     //Login Screen
     signIn: "دخول",
@@ -268,7 +285,7 @@ mixin LocaleData {
     newHere: "مستخدم جديد",
     loginConnectUsing: "الدخول بواسطة",
     guest: "التصفح كضيف",
-    googleSignin: "الدخول بحساب جوجل",
+    googleSignin: "بحساب جوجل",
 
     //Forgot Password
     forgotPasswordScreen: "هل نسيت كلمة السر ؟",
@@ -286,8 +303,15 @@ mixin LocaleData {
     latestArrivals: "أحدث المنتجات",
     categories: "التصنيفات",
     showAll: "عرض الكل",
+
     //Search Screen
     searchProducts: "المنتجات",
+
+    //Product Details
+    productDetailsAddedAlready: "أضيف بالفعل لسلة التسوق",
+    productDetailsAddedToCart: "أضف لسلة التسوق",
+    productDetailsAboutItem: "عن المنتج: ",
+    productDetailsIn: "فى ",
 
     //Cart Screen
     total: "المجموع",
@@ -303,12 +327,12 @@ mixin LocaleData {
     deliveryAddressMessage: "يرجى إدخال عنوانك أولا",
     deliveryAddress: "تعديل العنوان",
     editAddress: "تعديل العنوان",
-    paymentMethod: "طريقة الدفع",
+    paymentMethod: "طريقة الدفع: ",
     cityDelivery: "يرجى إدخال مدينتك",
     cashOnDelivery: "الدفع عند الإستلام-داخل الإسكندرية فقط",
     etissalatWallet: "التحويل لمحفظة إتصالات",
     orderSummary: "ملخص الطلب",
-    totalPrice: "المجموع",
+    totalPrice: "المجموع: ",
     deliveryFee: "رسوم التوصيل",
     deliveryMessage:
         "رسوم التوصيل قد تختلف وفقا لمكان الشحن وحجم الشحنة ، زيادة 4 جنيهات عن كل كيلو جرام",
@@ -335,10 +359,10 @@ mixin LocaleData {
 
     //PLaced Orders
     placedOrders: "طلباتى",
-    orderNumber: " -رقم الطلب",
-    orderStatus: " -حالة الطلب",
-    orderDate: " -تاريخ الطلب",
-    orderTotalProducts: " -عدد المنتجات",
+    orderNumber: "رقم الطلب: ",
+    orderStatus: "حالة الطلب: ",
+    orderDate: "تاريخ الطلب: ",
+    orderTotalProducts: "عدد المنتجات: ",
 
     //Personal Profile
     yourDetails: "تفاصيلك: ",

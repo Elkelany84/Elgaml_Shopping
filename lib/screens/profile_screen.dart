@@ -121,9 +121,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background),
-                                image: DecorationImage(
-                                    image: NetworkImage(userModel!.userImage),
-                                    fit: BoxFit.fill),
+                                // image: DecorationImage(
+                                //     image: NetworkImage(userModel!.userImage),
+                                //     fit: BoxFit.fill),
                               ),
                             ),
                             const SizedBox(
@@ -376,7 +376,7 @@ class CustomListTile extends StatelessWidget {
         imagePath,
         height: 34,
       ),
-      trailing: const Icon(IconlyLight.arrowRight2),
+      trailing: Icon(IconlyLight.arrowRight2),
     );
   }
 }

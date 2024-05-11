@@ -4,6 +4,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/product_widget.dart';
@@ -43,113 +44,120 @@ class _SearchScreenState extends State<SearchScreen> {
     List<ProductModel> productList = passedCategory == null
         ? productsProvider.products
         : productsProvider.findByCategory(categoryName: passedCategory);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(AssetsManager.shoppingCart),
+      child: Directionality(
+        textDirection: themeProvider.currentLocaleProvider == "ar"
+            ? TextDirection.rtl
+            : TextDirection.ltr,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(AssetsManager.shoppingCart),
+            ),
+            title: AppNameTextWidget(
+              label: passedCategory ??
+                  LocaleData.searchProducts.getString(context),
+              fontSize: 22,
+            ),
           ),
-          title: AppNameTextWidget(
-            label:
-                passedCategory ?? LocaleData.searchProducts.getString(context),
-            fontSize: 22,
-          ),
-        ),
-        body: productList.isEmpty
-            ? const Center(
-                child: TitleTextWidget(label: "No Products Found!"),
-              )
-            : StreamBuilder<List<ProductModel>>(
-                stream: productsProvider.fetchProductStream(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: SelectableText(snapshot.error.toString()),
-                    );
-                  } else if (snapshot.data == null) {
-                    return const Center(
-                      child: SelectableText("No Products Found!"),
-                    );
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                            hintText: LocaleData.search.getString(context),
-                            prefixIcon: const Icon(
-                              Icons.search,
-                            ),
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                // setState(() {
-                                FocusScope.of(context).unfocus();
-                                controller.clear();
-                                // });
-                              },
-                              child: const Icon(
-                                Icons.clear,
-                                color: Colors.red,
+          body: productList.isEmpty
+              ? const Center(
+                  child: TitleTextWidget(label: "No Products Found!"),
+                )
+              : StreamBuilder<List<ProductModel>>(
+                  stream: productsProvider.fetchProductStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: SelectableText(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.data == null) {
+                      return const Center(
+                        child: SelectableText("No Products Found!"),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: controller,
+                            decoration: InputDecoration(
+                              hintText: LocaleData.search.getString(context),
+                              prefixIcon: const Icon(
+                                Icons.search,
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  // setState(() {
+                                  FocusScope.of(context).unfocus();
+                                  controller.clear();
+                                  // });
+                                },
+                                child: const Icon(
+                                  Icons.clear,
+                                  color: Colors.red,
+                                ),
                               ),
                             ),
-                          ),
-                          //Decrease The Performance a little bit
-                          onChanged: (value) {
-                            // setState(() {
-                            productListSearch = productsProvider.searchQuery(
-                                // searchText: controller.text,
-                                searchText: value,
-                                passedList: productList);
-                            // });
-                          },
-                          onSubmitted: (value) {
-                            setState(() {
+                            //Decrease The Performance a little bit
+                            onChanged: (value) {
+                              // setState(() {
                               productListSearch = productsProvider.searchQuery(
-                                  searchText: controller.text,
+                                  // searchText: controller.text,
+                                  searchText: value,
                                   passedList: productList);
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        if (controller.text.isNotEmpty &&
-                            productListSearch.isEmpty) ...[
-                          const Center(
-                              child:
-                                  TitleTextWidget(label: "No Products Found"))
-                        ],
-                        Expanded(
-                          child: DynamicHeightGridView(
-                            // mainAxisSpacing: 12,
-                            // crossAxisSpacing: 12,
-                            builder: (context, index) {
-                              return ProductWidget(
-                                productId: controller.text.isNotEmpty
-                                    ? productListSearch[index].productId
-                                    : productList[index].productId,
-                              );
+                              // });
                             },
-                            itemCount: controller.text.isNotEmpty
-                                ? productListSearch.length
-                                : productList.length,
-                            crossAxisCount: 2,
+                            onSubmitted: (value) {
+                              setState(() {
+                                productListSearch =
+                                    productsProvider.searchQuery(
+                                        searchText: controller.text,
+                                        passedList: productList);
+                              });
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          if (controller.text.isNotEmpty &&
+                              productListSearch.isEmpty) ...[
+                            const Center(
+                                child:
+                                    TitleTextWidget(label: "No Products Found"))
+                          ],
+                          Expanded(
+                            child: DynamicHeightGridView(
+                              // mainAxisSpacing: 12,
+                              // crossAxisSpacing: 12,
+                              builder: (context, index) {
+                                return ProductWidget(
+                                  productId: controller.text.isNotEmpty
+                                      ? productListSearch[index].productId
+                                      : productList[index].productId,
+                                );
+                              },
+                              itemCount: controller.text.isNotEmpty
+                                  ? productListSearch.length
+                                  : productList.length,
+                              crossAxisCount: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+        ),
       ),
     );
   }
