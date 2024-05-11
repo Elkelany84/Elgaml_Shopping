@@ -51,10 +51,18 @@ dependencies:
   timeago: ^3.6.1
   flutter_iconly: ^1.0.2
   url_launcher: ^6.0.10
+  flutter_localization: ^0.2.0
+  change_app_package_name: ^1.1.0
+  flutter_app_name: ^0.1.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+flutter_app_name:
+  name: "Elgaml Stores Dashboard"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -92,11 +100,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: ElMessiri
+      fonts:
+         - asset: assets/fonts/ElMessiri-Bold.ttf
+         - asset: assets/fonts/ElMessiri-Medium.ttf
+         - asset: assets/fonts/ElMessiri-Regular.ttf
+         - asset: assets/fonts/ElMessiri-SemiBold.ttf
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

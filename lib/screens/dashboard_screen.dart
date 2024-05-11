@@ -7,12 +7,12 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/dashboard_btn.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
 import '../services/assets_manager.dart';
-import '../widgets/title_text.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const routeName = '/DashboardScreen';
@@ -73,7 +73,10 @@ class DashboardScreenState extends State<DashboardScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const TitlesTextWidget(label: "Dashboard Screen"),
+        title: const AppNameTextWidget(
+          label: "DashBoard",
+          fontFamily: "ElMessiri",
+        ),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(AssetsManager.shoppingCart),

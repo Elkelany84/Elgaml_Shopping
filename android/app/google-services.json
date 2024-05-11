@@ -1,26 +1,81 @@
 {
   "project_info": {
-    "project_number": "493433453225",
-    "project_id": "hadishopsmarprovideradminpanel",
-    "storage_bucket": "hadishopsmarprovideradminpanel.appspot.com"
+    "project_number": "1035545623294",
+    "project_id": "elgamlstores",
+    "storage_bucket": "elgamlstores.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:493433453225:android:3b221b58cbaa93116207b8",
+        "mobilesdk_app_id": "1:1035545623294:android:474c46ad7f73ce4a4943af",
         "android_client_info": {
-          "package_name": "com.example.hadi_ecommerce_firebase_adminpanel"
+          "package_name": "com.elgamlstores"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1035545623294-12ogpbndmucepmildsho42226llhpfhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0"
+          "current_key": "AIzaSyDAVrD1t3YlQhh3xG333nfjInaM5HGeBkQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035545623294:android:74841b51e955a20d4943af",
+        "android_client_info": {
+          "package_name": "com.elgamlstores_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035545623294-731peph4mnohecm9g1jpr4ave46f5524.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores_admin",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAVrD1t3YlQhh3xG333nfjInaM5HGeBkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

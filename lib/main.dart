@@ -68,6 +68,15 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Elgaml Admin Dashboard',
+          // localizationsDelegates: [
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          // ],
+          supportedLocales: [
+            const Locale('ar', 'AE'),
+            const Locale('en'),
+          ],
+          locale: Locale("ar", "AE"),
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
           home: const DashboardScreen(),

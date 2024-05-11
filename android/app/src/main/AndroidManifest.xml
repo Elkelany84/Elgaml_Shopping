@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="hadi_ecommerce_firebase_adminpanel"
+        android:label="Elgaml Stores Dashboard"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
