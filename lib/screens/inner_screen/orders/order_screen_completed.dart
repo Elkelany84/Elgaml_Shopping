@@ -35,7 +35,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const AppNameTextWidget(label: "Placed Orders"),
+        title: const AppNameTextWidget(label: "طلبيات منتهية"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

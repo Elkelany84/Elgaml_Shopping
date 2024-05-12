@@ -35,7 +35,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const AppNameTextWidget(label: "Placed Orders"),
+        title: const AppNameTextWidget(label: "طلبيات واردة"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

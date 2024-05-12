@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_modelsheet.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +73,29 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             child: const Icon(Icons.add, color: Colors.white, size: 28),
           ),
           appBar: AppBar(
+            // actions: [
+            //   Padding(
+            //     padding: const EdgeInsets.only(right: 12.0),
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         Navigator.pushNamed(
+            //             context, AddCategoryBottomSheet.routeName);
+            //       },
+            //       child: Container(
+            //           decoration: BoxDecoration(
+            //             color: Colors.purpleAccent,
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(10.0),
+            //             child: Icon(
+            //               Icons.add,
+            //               color: Colors.white,
+            //             ),
+            //           )),
+            //     ),
+            //   )
+            // ],
             // leading: Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Image.asset(
@@ -79,8 +103,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             //   ),
             // ),
             title: Consumer<CategoriesProvider>(
-              builder: (context, categoriesProvider, child) => TitlesTextWidget(
-                  label: "All Categories ( ${categoriesProvider.quer} )"),
+              builder: (context, categoriesProvider, child) =>
+                  AppNameTextWidget(
+                      label: "All Categories ( ${categoriesProvider.quer} )"),
             ),
             // label: "All Categories ( $quer )"),
           ),

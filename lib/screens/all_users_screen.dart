@@ -6,6 +6,7 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
@@ -75,7 +76,7 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
             //   ),
             // ),
             title:
-                TitlesTextWidget(label: "All Users ( ${userProvider.quer} )"),
+                AppNameTextWidget(label: "All Users ( ${userProvider.quer} )"),
           ),
           body: categoriesList.isEmpty
               ? Center(

@@ -24,28 +24,28 @@ class DashboardButtonsModel {
   final CollectionReference<Map<String, dynamic>> productList =
       FirebaseFirestore.instance.collection('products');
   int? quer;
-  Future<int?> countProducts() async {
-    AggregateQuerySnapshot query = await productList.count().get();
-    debugPrint('The number of products: ${query.count}');
-    quer = query.count;
-    return query.count;
-  }
+  // Future<int?> countProducts() async {
+  //   AggregateQuerySnapshot query = await productList.count().get();
+  //   debugPrint('The number of products: ${query.count}');
+  //   quer = query.count;
+  //   return query.count;
+  // }
 
   static List<DashboardButtonsModel> dashboardBtnsList(context) => [
         DashboardButtonsModel(
-            text: "Add a New Product",
+            text: "أضف منتج جديد",
             imagePath: AssetsManager.cloud,
             onPressed: () {
               Navigator.pushNamed(context, EditOrUploadProductForm.routeName);
             }),
         DashboardButtonsModel(
-            text: "Inspect All Products",
+            text: "عرض جميع المنتجات",
             imagePath: AssetsManager.shoppingCart,
             onPressed: () {
               Navigator.pushNamed(context, SearchScreen.routeName);
             }),
         DashboardButtonsModel(
-            text: "All Users",
+            text: "جميع العملاء",
             imagePath: AssetsManager.allUsers,
             onPressed: () {
               Navigator.pushNamed(context, AllUsersScreen.routeName);
@@ -57,19 +57,19 @@ class DashboardButtonsModel {
         //       Navigator.pushNamed(context, AddCategoryDashboard.routeName);
         //     }),
         DashboardButtonsModel(
-            text: "View Categories",
+            text: "عرض جميع التصنيفات",
             imagePath: AssetsManager.categories,
             onPressed: () {
               Navigator.pushNamed(context, CategoriesScreen.routeName);
             }),
         DashboardButtonsModel(
-            text: "Processing Orders",
+            text: "طلبيات واردة",
             imagePath: AssetsManager.order,
             onPressed: () {
               Navigator.pushNamed(context, OrdersScreenFree.routeName);
             }),
         DashboardButtonsModel(
-            text: "Completed Orders",
+            text: "طلبيات منهية",
             imagePath: AssetsManager.orderCompleted,
             onPressed: () {
               Navigator.pushNamed(context, OrdersScreenCompleted.routeName);

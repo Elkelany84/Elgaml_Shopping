@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
@@ -59,9 +60,9 @@ class _SearchScreenState extends State<SearchScreen> {
           //     AssetsManager.shoppingCart,
           //   ),
           // ),
-          title: TitlesTextWidget(
+          title: AppNameTextWidget(
               label: passedCategory ??
-                  "Search products ( ${productsProvider.quer} )"),
+                  "جميع المنتجات ( ${productsProvider.quer} )"),
         ),
         body: productList.isEmpty
             ? Center(

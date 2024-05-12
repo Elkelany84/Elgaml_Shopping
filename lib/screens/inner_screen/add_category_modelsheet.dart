@@ -53,7 +53,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
 //check if he choose image or not
     if (_pickedImage == null) {
       MyAppFunctions.showErrorOrWarningDialog(
-          context: context, fct: () {}, subtitle: "Please Choose an Image");
+          context: context, fct: () {}, subtitle: "اختر صورة للتصنيف");
       return;
     }
     if (isValid) {
@@ -88,7 +88,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
         // await categoriesProvider.countCategories();
         //SToast Message
         Fluttertoast.showToast(
-            msg: "A Category has been added!",
+            msg: "تم إضافة التصنيف بنجاح !",
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
@@ -121,14 +121,20 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
         context: context,
         cameraFCT: () async {
           _pickedImage = await picker.pickImage(
-              source: ImageSource.camera, imageQuality: 85);
+              source: ImageSource.camera,
+              maxHeight: 480,
+              maxWidth: 640,
+              imageQuality: 50);
           setState(() {
             // productNetworkImage = null;
           });
         },
         galleryFCT: () async {
           _pickedImage = await picker.pickImage(
-              source: ImageSource.gallery, imageQuality: 85);
+              source: ImageSource.gallery,
+              maxHeight: 480,
+              maxWidth: 640,
+              imageQuality: 50);
           setState(() {
             // productNetworkImage = null;
           });
@@ -148,156 +154,160 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
     Size size = MediaQuery.of(context).size;
     return LoadingManager(
       isLoading: isLoading,
-      child: Container(
-        height: 400.0,
-        color: Colors.transparent, //could change this to Color(0xFF737373),
-        //so you don't have to change MaterialApp canvasColor
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(12.0),
-                topRight: const Radius.circular(12.0),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          height: 400.0,
+          color: Colors.transparent, //could change this to Color(0xFF737373),
+          //so you don't have to change MaterialApp canvasColor
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(12.0),
+                  topRight: const Radius.circular(12.0),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 8,
-                    ), //Image Picker
-                    if (_pickedImage == null) ...[
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            localImagePicker();
-                          },
-                          child: SizedBox(
-                            width: size.width * 0.4 + 10,
-                            height: size.width * 0.4,
-                            child: DottedBorder(
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.image_outlined,
-                                      size: 80,
-                                      color: Colors.blue,
-                                    ),
-                                    Text(
-                                      "Pick Category Image",
-                                      style: TextStyle(fontSize: 12),
-                                    )
-                                  ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 8,
+                      ), //Image Picker
+                      if (_pickedImage == null) ...[
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              localImagePicker();
+                            },
+                            child: SizedBox(
+                              width: size.width * 0.4 + 10,
+                              height: size.width * 0.4,
+                              child: DottedBorder(
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image_outlined,
+                                        size: 80,
+                                        color: Colors.blue,
+                                      ),
+                                      Text(
+                                        "اختر صورة للتصنيف",
+                                        style: TextStyle(fontSize: 12),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    ] else ...[
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            File(
-                              _pickedImage!.path,
+                        )
+                      ] else ...[
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(
+                                _pickedImage!.path,
+                              ),
+                              height: size.width * 0.3,
+                              alignment: Alignment.center,
                             ),
-                            height: size.width * 0.3,
-                            alignment: Alignment.center,
                           ),
+                        ),
+                      ],
+                      _pickedImage != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    localImagePicker();
+                                  },
+                                  child: Text("اختر صورة آخرى"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    removePickedImage();
+                                  },
+                                  child: Text(
+                                    "امسح الصورة",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "اسم التصنيف : ",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: _titleController,
+                          key: ValueKey("Title"),
+                          maxLength: 80,
+                          maxLines: 1,
+                          minLines: 1,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.newline,
+                          decoration:
+                              InputDecoration(hintText: "Category Name"),
+                          validator: (value) {
+                            return MyValidators.uploadProdTexts(
+                                value: value,
+                                toBeReturnedString: "اختر اسم صحيح للتصنيف");
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Material(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  // textStyle: TextStyle(color: Colors.white),
+                                  padding: const EdgeInsets.all(10),
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onPressed: () {
+                                _uploadCategory();
+                                // await categoriesProvider.countCategories();
+                              },
+                              child: const Text(
+                                "اضف التصنيف",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              )),
                         ),
                       ),
                     ],
-                    _pickedImage != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  localImagePicker();
-                                },
-                                child: Text("Pick another Image"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  removePickedImage();
-                                },
-                                child: Text(
-                                  "Remove Image",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Category Name: ",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: _titleController,
-                        key: ValueKey("Title"),
-                        maxLength: 80,
-                        maxLines: 1,
-                        minLines: 1,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.newline,
-                        decoration: InputDecoration(hintText: "Category Name"),
-                        validator: (value) {
-                          return MyValidators.uploadProdTexts(
-                              value: value,
-                              toBeReturnedString:
-                                  "Please Enter Valid Category Name");
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Material(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                // textStyle: TextStyle(color: Colors.white),
-                                padding: const EdgeInsets.all(10),
-                                backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                            onPressed: () {
-                              _uploadCategory();
-                              // await categoriesProvider.countCategories();
-                            },
-                            child: const Text(
-                              "Add Category",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
-                            )),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
