@@ -84,6 +84,7 @@ mixin LocaleData {
 
   //PLaced Orders
   static const String placedOrders = "Placed Orders";
+  static const String orderDetails = "Order Details";
   static const String orderNumber = "Order Number: ";
   static const String orderDate = "Order Date: ";
   static const String orderStatus = "Order Status: ";
@@ -198,6 +199,7 @@ mixin LocaleData {
 
     //PLaced Orders
     placedOrders: "Placed Orders",
+    orderDetails: "Order Details",
     orderNumber: "Order Number: ",
     orderStatus: "Order Status: ",
     orderDate: "Order Date: ",
@@ -319,19 +321,19 @@ mixin LocaleData {
     items: "عناصر",
     clearCart: "? مسح سلة التسوق",
     checkout: "الذهاب للدفع",
-    emptyCartMessage: "يبدو أن سلة التسوق فارغة!",
+    emptyCartMessage: "!يبدو أن سلة التسوق فارغة",
     shopNow: "تسوق الآن",
 
     //CheckOut Screen
-    checkOut: "تأكيد الطلب",
+    checkOut: "تسجيل الطلب",
     deliveryAddressMessage: "يرجى إدخال عنوانك أولا",
-    deliveryAddress: "تعديل العنوان",
+    deliveryAddress: "تعديل العنوان:",
     editAddress: "تعديل العنوان",
     paymentMethod: "طريقة الدفع: ",
-    cityDelivery: "يرجى إدخال مدينتك",
+    cityDelivery: "يرجى إدخال مدينتك:",
     cashOnDelivery: "الدفع عند الإستلام-داخل الإسكندرية فقط",
-    etissalatWallet: "التحويل لمحفظة إتصالات",
-    orderSummary: "ملخص الطلب",
+    etissalatWallet: "التحويل لمحفظة إتصالات-سيتم التواصل معك",
+    orderSummary: "ملخص الطلب:",
     totalPrice: "المجموع: ",
     deliveryFee: "رسوم التوصيل",
     deliveryMessage:
@@ -345,7 +347,7 @@ mixin LocaleData {
     profileScreen: "الملف الشخصى",
     profileScreenMessage: "يرجى تسجيل الدخول للحصول على الميزات كاملة",
     general: "عـــام",
-    allOrders: "طلبياتى",
+    allOrders: "طلبيــاتــى",
     wishList: "المفضلة",
     viewedRecently: "شوهد مؤخرا",
     personalProfile: "ملفى الشخصى",
@@ -358,7 +360,8 @@ mixin LocaleData {
     logoutMessage: "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
 
     //PLaced Orders
-    placedOrders: "طلباتى",
+    placedOrders: "طلبياتى",
+    orderDetails: "تفاصيل الطلبية",
     orderNumber: "رقم الطلب: ",
     orderStatus: "حالة الطلب: ",
     orderDate: "تاريخ الطلب: ",
@@ -373,7 +376,7 @@ mixin LocaleData {
     address: "العنوان: ",
     creationDate: "تاريخ الإنشاء: ",
     save: "حفظ",
-    updateAccountMessage: "تم تحديث ملفك الشخصى!",
+    updateAccountMessage: "!تم تحديث ملفك الشخصى",
 
     //WishList Screen
 
@@ -382,7 +385,7 @@ mixin LocaleData {
 
     //Viewed Recently
 
-    clearViewedRecently: "مسح المشاهدة المؤخرة",
+    clearViewedRecently: "مسح أخر مشاهدات",
     viewedRecentlyMessage: "!يبدو أنك لم تشاهد أي منتج مؤخرا",
     //Categories Screen
     allCategories: "جميع التصنيفات",

@@ -16,6 +16,9 @@ class CategoryRoundedWidget extends StatelessWidget {
       child: Column(
         children: [
           FancyShimmerImage(
+            boxDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
             imageUrl: image,
             height: 50,
             width: 50,

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SubtitleTextWidget extends StatelessWidget {
-  const SubtitleTextWidget(
-      {super.key,
-      required this.label,
-      this.fontSize = 18,
-      this.fontWeight = FontWeight.normal,
-      this.textDecoration = TextDecoration.none,
-      this.color,
-      this.fontStyle = FontStyle.normal,
-      this.textOverflow});
+  const SubtitleTextWidget({
+    super.key,
+    required this.label,
+    this.fontSize = 18,
+    this.fontWeight = FontWeight.normal,
+    this.textDecoration = TextDecoration.none,
+    this.color,
+    this.maxLines = 2,
+    this.fontStyle = FontStyle.normal,
+    this.textOverflow,
+    this.textDirection,
+  });
   final String label;
   final double fontSize;
   final FontWeight fontWeight;
@@ -17,11 +20,15 @@ class SubtitleTextWidget extends StatelessWidget {
   final TextDecoration textDecoration;
   final Color? color;
   final TextOverflow? textOverflow;
+  final textDirection;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       label,
+      textDirection: textDirection,
+      maxLines: maxLines,
       style: TextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,

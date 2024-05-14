@@ -100,8 +100,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: TitleTextWidget(
-                        label:
-                            LocaleData.profileScreenMessage.getString(context)),
+                      label: LocaleData.profileScreenMessage.getString(context),
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 userModel == null
@@ -126,9 +127,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 //     fit: BoxFit.fill),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            // const SizedBox(
+                            //   width: 10,
+                            // ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -202,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 Visibility(
                   visible: userModel == null ? false : true,
                   child: CustomListTile(
-                    label: LocaleData.personalProfile.getString(context),
+                    label: LocaleData.profileScreen.getString(context),
                     imagePath: AssetsManager.profile,
                     onTab: () {
                       Navigator.pushNamed(context, PersonalProfile.routeName);
@@ -376,7 +377,7 @@ class CustomListTile extends StatelessWidget {
         imagePath,
         height: 34,
       ),
-      trailing: Icon(IconlyLight.arrowRight2),
+      trailing: Icon(IconlyLight.arrowLeft2),
     );
   }
 }

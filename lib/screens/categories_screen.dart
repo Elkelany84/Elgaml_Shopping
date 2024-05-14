@@ -64,7 +64,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             // ),
             title: AppNameTextWidget(
               label: LocaleData.allCategories.getString(context),
-              fontSize: 22,
+              fontSize: 24,
             ),
             // label: "All Categories ( $quer )"),
           ),

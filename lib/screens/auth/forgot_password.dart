@@ -48,7 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       appBar: AppBar(
         title: const AppNameTextWidget(
           label: "Elgaml Stores",
-          fontSize: 30,
+          fontSize: 24,
         ),
       ),
       body: GestureDetector(

@@ -30,7 +30,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          height: kBottomNavigationBarHeight + 10,
+          height: kBottomNavigationBarHeight + 5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -47,7 +47,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
                       onTap: () {},
                       child: SubtitleTextWidget(
                         label:
-                            "\$ ${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)}",
+                            "${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)} جنيه ",
                         color: Colors.blue,
                       ),
                     )

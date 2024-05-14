@@ -38,7 +38,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
         appBar: AppBar(
           title: AppNameTextWidget(
             label: LocaleData.placedOrders.getString(context),
-            fontSize: 30,
+            fontSize: 24,
           ),
         ),
         body: StreamBuilder(
@@ -164,7 +164,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                                   Expanded(
                                     child: SubtitleTextWidget(
                                         label:
-                                            "\$ ${snapshot.data!.docs[index]["totalPrice"].toString()}",
+                                            "${snapshot.data!.docs[index]["totalPrice"].toString()} جنيه ",
                                         color: Colors.blue),
                                   ),
                                 ],

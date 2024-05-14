@@ -112,7 +112,7 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                     ),
                     FittedBox(
                       child: SubtitleTextWidget(
-                        label: "\$ ${productModel.productPrice}",
+                        label: "${productModel.productPrice} جنيه ",
                         color: Colors.blue,
                         fontWeight: FontWeight.w600,
                         // maxLines: 2,

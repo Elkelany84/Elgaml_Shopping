@@ -41,7 +41,7 @@ class _PaymentScreenState extends State<PaymentScreen>
   User? user = FirebaseAuth.instance.currentUser;
   OrderUserModel? orderUserModel;
   bool _isLoading = true;
-  int _categoryValue = 60;
+  int _categoryValue = 70;
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<OrderProvider>(context, listen: false);
     final orderUserProvider =
@@ -147,22 +147,19 @@ class _PaymentScreenState extends State<PaymentScreen>
           //   child: Image.asset(AssetsManager.shoppingCart),
           // ),
           title: AppNameTextWidget(
-            label: LocaleData.checkout.getString(context),
-            fontSize: 30,
+            label: LocaleData.checkOut.getString(context),
+            fontSize: 24,
           ),
         ),
         body: orderUserModel == null
             ? const SizedBox.shrink()
             : SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.only(right: 10, left: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
                       TitleTextWidget(
                         label: LocaleData.deliveryAddress.getString(context),
                         fontSize: 18,
@@ -173,7 +170,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
                       Container(
                         width: double.infinity,
-                        height: 130,
+                        height: 120,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Colors.grey.shade100),
@@ -183,10 +180,13 @@ class _PaymentScreenState extends State<PaymentScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SubtitleTextWidget(
-                                label: orderUserModel!.userAddress,
-                                fontSize: 20, color: Colors.black,
-                                // textDecoration: TextDecoration.underline,
+                              Expanded(
+                                child: SubtitleTextWidget(
+                                  textOverflow: TextOverflow.ellipsis,
+                                  label: orderUserModel!.userAddress * 2,
+                                  fontSize: 17, color: Colors.black,
+                                  // textDecoration: TextDecoration.underline,
+                                ),
                               ),
                               const SizedBox(
                                 height: 5,
@@ -381,7 +381,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       ),
                       TitleTextWidget(
                         label:
-                            "${LocaleData.total.getString(context)} \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                            "${LocaleData.total.getString(context)} ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)} جنيه ",
                         fontSize: 16,
                       ),
                       const SizedBox(
@@ -389,7 +389,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       ),
                       TitleTextWidget(
                         label:
-                            "${LocaleData.deliveryFee.getString(context)} \$ $_categoryValue ",
+                            "${LocaleData.deliveryFee.getString(context)} $_categoryValue جنيه ",
                         fontSize: 16,
                       ),
                       const SizedBox(
@@ -447,8 +447,8 @@ class _PaymentScreenState extends State<PaymentScreen>
           "sessionId": _sessionId, //done
           "totalPrice": cartProvider.getTotalForPayment(
               productsProvider: productProvider), //done
-          "paymentMethod": hobby.toString() == "1" ? "Cash" : "Visa",
-          "orderStatus": "Processing",
+          "paymentMethod": hobby.toString() == "1" ? "Cash" : "Etissalat",
+          "orderStatus": "جارى تجهيز الطلب",
           "shippingDate": dateTime,
         });
 

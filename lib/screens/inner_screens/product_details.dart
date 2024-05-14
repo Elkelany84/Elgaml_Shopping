@@ -7,7 +7,6 @@ import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
-import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
@@ -56,10 +55,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           //   padding: EdgeInsets.all(8.0),
           //   child: Image.asset(AssetsManager.shoppingCart),
           // ),
-          title: const AppNameTextWidget(
-            label: "Elgaml Stores",
-            fontSize: 30,
-          ),
+          // title: const AppNameTextWidget(
+          //   label: "Elgaml Stores",
+          //   fontSize: 26,
+          // ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -68,10 +67,10 @@ class _ProductDetailsState extends State<ProductDetails> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      Hero(
-                        tag: getCurrentProduct.productImage,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Hero(
+                          tag: getCurrentProduct.productImage,
                           child: FancyShimmerImage(
                             imageUrl: getCurrentProduct.productImage,
                             height: size.height * 0.38,
@@ -84,6 +83,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
                             child: Text(
@@ -97,7 +97,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                             width: 10,
                           ),
                           SubtitleTextWidget(
-                            label: "\$ ${getCurrentProduct.productPrice}",
+                            textDirection: TextDirection.rtl,
+                            label: "${getCurrentProduct.productPrice} جنيه",
                             color: Colors.blue, fontSize: 20,
                             fontWeight: FontWeight.w700,
                             // maxLines: 2,

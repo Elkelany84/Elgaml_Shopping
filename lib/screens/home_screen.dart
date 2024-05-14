@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
         ),
         title: const AppNameTextWidget(
           label: "Elgaml Stores",
-          fontSize: 30,
+          fontSize: 24,
         ),
       ),
       body: Directionality(

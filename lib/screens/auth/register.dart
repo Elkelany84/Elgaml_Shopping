@@ -195,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 60,
                     ),
                     const AppNameTextWidget(
-                        label: "Elgaml Stores", fontSize: 30),
+                        label: "Elgaml Stores", fontSize: 24),
                     const SizedBox(
                       height: 20,
                     ),

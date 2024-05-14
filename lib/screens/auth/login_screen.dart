@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 60,
                     ),
                     const AppNameTextWidget(
-                        label: "Elgaml Stores", fontSize: 30),
+                        label: "Elgaml Stores", fontSize: 24),
                     const SizedBox(
                       height: 20,
                     ),

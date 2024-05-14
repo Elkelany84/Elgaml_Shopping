@@ -18,7 +18,7 @@ class PaymentSuccess extends StatelessWidget {
       subtitle: LocaleData.paymentSuccessMessage.getString(context),
       // details: "Your Order Place Successfully and Forward to Our Store!",
       buttonText: LocaleData.continueShopping.getString(context),
-      buttonFont: 12, buttonWidth: 170,
+      buttonFont: 14, buttonWidth: 170,
     ));
   }
 }

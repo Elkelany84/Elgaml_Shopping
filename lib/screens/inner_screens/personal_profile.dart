@@ -173,8 +173,8 @@ class _PersonalProfileState extends State<PersonalProfile>
           //   child: Image.asset(AssetsManager.shoppingCart),
           // ),
           title: AppNameTextWidget(
-            label: LocaleData.personalProfile.getString(context),
-            fontSize: 30,
+            label: LocaleData.profileScreen.getString(context),
+            fontSize: 24,
           ),
         ),
         body: SingleChildScrollView(
