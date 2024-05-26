@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 import '../models/product_model.dart';
 import '../widgets/title_text.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  static const routeName = '/CategoriesScreen';
+class FeesScreen extends StatefulWidget {
+  static const routeName = '/FeesScreen';
 
-  const CategoriesScreen({
+  const FeesScreen({
     super.key,
     // required this.categoryId,
   });
@@ -20,10 +20,10 @@ class CategoriesScreen extends StatefulWidget {
   // final String categoryId;
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<FeesScreen> createState() => _FeesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _FeesScreenState extends State<FeesScreen> {
   @override
   void initState() {
     super.initState();

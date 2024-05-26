@@ -75,8 +75,8 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
             //     AssetsManager.shoppingCart,
             //   ),
             // ),
-            title:
-                AppNameTextWidget(label: "All Users ( ${userProvider.quer} )"),
+            title: AppNameTextWidget(
+                label: "جميع العملاء ( ${userProvider.quer} )"),
           ),
           body: categoriesList.isEmpty
               ? Center(

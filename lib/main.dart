@@ -7,8 +7,10 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/fees_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_dashboard.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_details.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_cancelled.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -17,8 +19,8 @@ import 'providers/theme_provider.dart';
 import 'screens/categories_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/edit_upload_product_form.dart';
-import 'screens/inner_screen/orders/order_screen_completed.dart';
-import 'screens/inner_screen/orders/orders_screen_processing.dart';
+import 'screens/inner_screen/orders/orders_completed.dart';
+import 'screens/inner_screen/orders/orders_processing.dart';
 import 'screens/search_screen.dart';
 
 void main() async {
@@ -81,7 +83,8 @@ class MyApp extends StatelessWidget {
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
           home: const DashboardScreen(),
           routes: {
-            OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
+            OrdersScreenProcessing.routeName: (context) =>
+                const OrdersScreenProcessing(),
             SearchScreen.routeName: (context) => const SearchScreen(),
             EditOrUploadProductForm.routeName: (context) =>
                 const EditOrUploadProductForm(),
@@ -90,6 +93,9 @@ class MyApp extends StatelessWidget {
             OrderStreamScreen.routeName: (context) => OrderStreamScreen(),
             OrdersScreenCompleted.routeName: (context) =>
                 OrdersScreenCompleted(),
+            OrdersScreenCancelled.routeName: (context) =>
+                OrdersScreenCancelled(),
+            FeesScreen.routeName: (context) => const FeesScreen(),
             AddCategoryDashboard.routeName: (context) => AddCategoryDashboard(),
             // PersonalProfile.routeName: (context) => const PersonalProfile(),
           },

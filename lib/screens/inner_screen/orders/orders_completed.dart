@@ -8,15 +8,15 @@ import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class OrdersScreenFree extends StatefulWidget {
-  const OrdersScreenFree({super.key});
-  static String routeName = "OrdersScreenFree";
+class OrdersScreenCompleted extends StatefulWidget {
+  const OrdersScreenCompleted({super.key});
+  static String routeName = "OrdersScreenCompleted";
 
   @override
-  State<OrdersScreenFree> createState() => _OrdersScreenFreeState();
+  State<OrdersScreenCompleted> createState() => _OrdersScreenCompletedState();
 }
 
-class _OrdersScreenFreeState extends State<OrdersScreenFree> {
+class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
   // bool isEmptyOrders = false;
 
   @override
@@ -35,13 +35,13 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const AppNameTextWidget(label: "طلبيات واردة"),
+        title: const AppNameTextWidget(label: "طلبيات منتهية"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
-            .where("orderStatus", isEqualTo: "Processing")
-            .orderBy("orderDate", descending: false)
+            .where("orderStatus", isEqualTo: "تم استلام الطلب")
+            .orderBy("orderDate", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -65,7 +65,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      height: 195,
+                      height: 240,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey)),
@@ -157,6 +157,33 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: kBottomNavigationBarHeight - 10,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.all(12),
+                                  backgroundColor: Colors.purpleAccent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  FirebaseFirestore.instance
+                                      .collection('ordersAdvanced')
+                                      .doc(snapshot.data!.docs[index]
+                                          ["sessionId"])
+                                      .update({
+                                    'orderStatus': 'Processing',
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "Mark as Processing",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            )
 
                             // Row(
                             //   children: [

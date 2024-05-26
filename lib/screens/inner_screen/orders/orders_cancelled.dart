@@ -8,15 +8,15 @@ import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class OrdersScreenCompleted extends StatefulWidget {
-  const OrdersScreenCompleted({super.key});
-  static String routeName = "OrdersScreenCompleted";
+class OrdersScreenCancelled extends StatefulWidget {
+  const OrdersScreenCancelled({super.key});
+  static String routeName = "OrdersScreenCancelled";
 
   @override
-  State<OrdersScreenCompleted> createState() => _OrdersScreenCompletedState();
+  State<OrdersScreenCancelled> createState() => _OrdersScreenCancelledState();
 }
 
-class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
+class _OrdersScreenCancelledState extends State<OrdersScreenCancelled> {
   // bool isEmptyOrders = false;
 
   @override
@@ -40,7 +40,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
-            .where("orderStatus", isEqualTo: "Completed")
+            .where("orderStatus", isEqualTo: "تم إلغاء الطلب")
             .orderBy("orderDate", descending: false)
             .snapshots(),
         builder: (context, snapshot) {

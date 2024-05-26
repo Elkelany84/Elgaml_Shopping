@@ -73,8 +73,9 @@ class DashboardScreenState extends State<DashboardScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const AppNameTextWidget(
-          label: "DashBoard",
+          label: "لوحة التحكم",
           fontFamily: "ElMessiri",
         ),
         leading: Padding(
