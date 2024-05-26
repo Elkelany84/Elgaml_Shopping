@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/edit_category_modelsheet.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/edit_category_modelsheet.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 
@@ -104,7 +104,7 @@ class category_widget extends StatelessWidget {
                                   MyAppFunctions.showErrorOrWarningDialog(
                                       isError: false,
                                       context: context,
-                                      subtitle: "Delete Category",
+                                      subtitle: "مسح التصنيف",
                                       fct: () async {
                                         await categoriesProvider
                                             .deleteCategory(document.id);

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_modelsheet.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/add_category_modelsheet.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../models/product_model.dart';
-import '../widgets/title_text.dart';
+import '../../../models/product_model.dart';
+import '../../../widgets/title_text.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const routeName = '/CategoriesScreen';
@@ -103,9 +103,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             //   ),
             // ),
             title: Consumer<CategoriesProvider>(
-              builder: (context, categoriesProvider, child) =>
-                  AppNameTextWidget(
-                      label: "جميع التصنيفات ( ${categoriesProvider.quer} )"),
+              builder: (context, categoriesProvider, child) => AppNameTextWidget(
+                  label:
+                      "جميع التصنيفات ( ${categoriesProvider.categoriesCount} )"),
             ),
             // label: "All Categories ( $quer )"),
           ),

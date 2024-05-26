@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/fees_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/categories_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_cancelled.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_completed.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_processing.dart';
@@ -78,13 +78,13 @@ class DashboardButtonsModel {
             }),
         DashboardButtonsModel(
             text: "طلبيات مُلغاة",
-            imagePath: AssetsManager.orderCompleted,
+            imagePath: AssetsManager.orderCanceled,
             onPressed: () {
               Navigator.pushNamed(context, OrdersScreenCancelled.routeName);
             }),
         DashboardButtonsModel(
             text: "مصاريف الشحن",
-            imagePath: AssetsManager.orderCompleted,
+            imagePath: AssetsManager.deliveryFees,
             onPressed: () {
               Navigator.pushNamed(context, FeesScreen.routeName);
             }),

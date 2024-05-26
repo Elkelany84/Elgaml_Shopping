@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/categories_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:image_picker/image_picker.dart';

@@ -18,19 +18,24 @@ class DashboardButtonsWidget extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                imagePath,
-                height: 50,
-                width: 50,
-              ),
-              const SizedBox(height: 10),
-              SubtitleTextWidget(label: text),
-              // const SizedBox(height: 10),
-            ],
+        child: Container(
+          margin: EdgeInsets.only(top: 10, bottom: 10),
+          height: 150,
+          child: Card(
+            semanticContainer: true,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  imagePath,
+                  height: 50,
+                  width: 50,
+                ),
+                const SizedBox(height: 10),
+                SubtitleTextWidget(label: text),
+                // const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
       ),

@@ -24,6 +24,8 @@ class AssetsManager {
 
   static String order = "$dashboardImagesPath/order.png";
   static String orderCompleted = "$dashboardImagesPath/orderCompleted.png";
+  static String orderCanceled = "$dashboardImagesPath/cancelOrders.png";
+  static String deliveryFees = "$dashboardImagesPath/deliveryFees.png";
 
   static String cloud = "$dashboardImagesPath/cloud.png";
 }

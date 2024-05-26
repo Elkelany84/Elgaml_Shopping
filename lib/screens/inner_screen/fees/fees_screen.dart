@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_modelsheet.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/add_category_modelsheet.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/widgets/category_widget.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/fees_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../models/product_model.dart';
-import '../widgets/title_text.dart';
+import '../../../models/product_model.dart';
+import '../../../widgets/title_text.dart';
 
 class FeesScreen extends StatefulWidget {
   static const routeName = '/FeesScreen';
@@ -102,19 +102,15 @@ class _FeesScreenState extends State<FeesScreen> {
             //     AssetsManager.shoppingCart,
             //   ),
             // ),
-            title: Consumer<CategoriesProvider>(
-              builder: (context, categoriesProvider, child) =>
-                  AppNameTextWidget(
-                      label: "جميع التصنيفات ( ${categoriesProvider.quer} )"),
-            ),
+            title: AppNameTextWidget(label: "جميع المحافظات"),
             // label: "All Categories ( $quer )"),
           ),
           body: categoriesList.isEmpty
               ? Center(
-                  child: TitlesTextWidget(label: "No Categories Found!"),
+                  child: TitlesTextWidget(label: "لا توجد محافظات"),
                 )
               : //create streambuilder to fetch categories from firebase
-              category_widget(
+              Fees_widget(
                   categoriesProvider: categoriesProvider,
                 ),
           // : StreamBuilder<List<ProductModel>>(

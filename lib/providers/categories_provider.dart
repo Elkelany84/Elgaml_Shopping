@@ -72,11 +72,15 @@ class CategoriesProvider extends ChangeNotifier {
   //count categories in firebase
   final CollectionReference<Map<String, dynamic>> categoryList =
       FirebaseFirestore.instance.collection('categories');
-  int? quer;
+
+  //Fees Collection
+  final CollectionReference<Map<String, dynamic>> feesList =
+      FirebaseFirestore.instance.collection('orderFees');
+  int? categoriesCount;
   Future<int?> countCategories() async {
     AggregateQuerySnapshot query = await categoryList.count().get();
     debugPrint('The number of categories: ${query.count}');
-    quer = query.count;
+    categoriesCount = query.count;
     notifyListeners();
     return query.count;
   }
@@ -84,6 +88,11 @@ class CategoriesProvider extends ChangeNotifier {
 //create function to delete category from firebase
   Future<void> deleteCategory(String categoryId) {
     return categoryList.doc(categoryId).delete();
+  }
+
+//create function to delete Place from firebase
+  Future<void> deletePlace(String categoryId) {
+    return feesList.doc(categoryId).delete();
   }
 
 //create function to add category to firebase

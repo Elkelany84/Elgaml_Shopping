@@ -469,37 +469,37 @@ class _PersonalProfileState extends State<PersonalProfile>
                               SizedBox(
                                 height: 20,
                               ),
-                              SubtitleTextWidget(
-                                label: "TotalPurchases: ",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              TextFormField(
-                                readOnly: true,
-                                controller: _totalPurchasesController,
-                                focusNode: _totalPurchasesFocusNode,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  // hintText: userModel!.userAddress,
-                                  hintText: "\$ ${tPurchases.toString()}",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  prefixIcon: Icon(Icons.money),
-                                ),
-                                // onFieldSubmitted: (value) {
-                                //   FocusScope.of(context)
-                                //       .requestFocus(_phoneFocusNode);
-                                // },
-                                validator: (value) {
-                                  return MyValidators.addressvalidator(value);
-                                },
-                              ),
+                              // SubtitleTextWidget(
+                              //   label: "TotalPurchases: ",
+                              //   fontWeight: FontWeight.bold,
+                              //   fontSize: 14,
+                              // ),
+                              // SizedBox(
+                              //   height: 5,
+                              // ),
+                              // TextFormField(
+                              //   readOnly: true,
+                              //   controller: _totalPurchasesController,
+                              //   focusNode: _totalPurchasesFocusNode,
+                              //   textInputAction: TextInputAction.next,
+                              //   keyboardType: TextInputType.emailAddress,
+                              //   decoration: InputDecoration(
+                              //     // hintText: userModel!.userAddress,
+                              //     hintText: "\$ ${tPurchases.toString()}",
+                              //     hintStyle: TextStyle(
+                              //         fontSize: 20,
+                              //         color: Colors.black,
+                              //         fontWeight: FontWeight.bold),
+                              //     prefixIcon: Icon(Icons.money),
+                              //   ),
+                              //   // onFieldSubmitted: (value) {
+                              //   //   FocusScope.of(context)
+                              //   //       .requestFocus(_phoneFocusNode);
+                              //   // },
+                              //   validator: (value) {
+                              //     return MyValidators.addressvalidator(value);
+                              //   },
+                              // ),
                               // SizedBox(
                               //   width: double.infinity,
                               //   child: ElevatedButton.icon(
