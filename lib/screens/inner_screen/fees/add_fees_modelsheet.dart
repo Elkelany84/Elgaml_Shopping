@@ -2,61 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
-class EditFeesBottomSheet extends StatefulWidget {
-  EditFeesBottomSheet({
-    super.key,
-    this.categoryModel,
-    required this.placeName,
-    required this.placeId,
-    required this.fees,
-  });
-  static const routeName = '/edit_fees_bottomSheet';
-  final CategoryModel? categoryModel;
-  final String? placeId;
-  final String fees;
-  final String? placeName;
+class AddFeesBottomSheet extends StatefulWidget {
+  const AddFeesBottomSheet({super.key});
+  static const routeName = '/add_category_bottomSheet';
 
   @override
-  State<EditFeesBottomSheet> createState() => _EditCategoryBottomSheetState();
+  State<AddFeesBottomSheet> createState() => _AddFeesBottomSheetState();
 }
 
-class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
+class _AddFeesBottomSheetState extends State<AddFeesBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  XFile? _pickedImage;
+
   bool isLoading = false;
-  bool isEditing = true;
-  late TextEditingController _titleController;
-  late TextEditingController _feesController;
-
-  // String? productNetworkImage;
-  // late String productImageUrl;
-
-  @override
-  void initState() {
-    if (widget.categoryModel != null) {
-      // isEditing = true;
-      // widget.productNetworkImage = widget.categoryModel!.categoryImage;
-    }
-    isEditing = true;
-
-    // _titleController = TextEditingController(
-    //     text: widget.categoryModel == null
-    //         ? ""
-    //         : widget.categoryModel!.categoryName);
-    _titleController = TextEditingController(text: widget.placeName);
-    _feesController = TextEditingController(text: widget.fees);
-
-    super.initState();
-  }
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _feesController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _feesController.dispose();
     super.dispose();
   }
 
@@ -64,7 +35,7 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
     _titleController.clear();
   }
 
-  Future<void> _editFees() async {
+  Future<void> _uploadCategory() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
@@ -74,24 +45,29 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
           isLoading = true;
         });
 
-        // final productId = Uuid().v4();
+        //store picked image to firebase storage
+        final categoryId = Uuid().v4();
+
         await FirebaseFirestore.instance
             .collection("orderFees")
-            .doc(widget.placeId)
-            .update({
-          "placeId": widget.placeId,
+            .doc(categoryId)
+            .set({
+          "placeId": categoryId,
           "placeName": _titleController.text.trim(),
           "fees": _feesController.text.trim(),
         });
-
+        Navigator.pushNamed(
+            context,
+            FeesScreen
+                .routeName); // await categoriesProvider.countCategories();
         //SToast Message
         Fluttertoast.showToast(
-            msg: "تم التعديل بنجاح",
+            msg: "تم إضافة المحافظة بنجاح !",
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
         if (!mounted) return;
-        Navigator.pop(context);
+
         // MyAppFunctions.showErrorOrWarningDialog(
         //     isError: false,
         //     context: context,
@@ -115,12 +91,16 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+    );
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: LoadingManager(
-        isLoading: isLoading,
+    return LoadingManager(
+      isLoading: isLoading,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
         child: Container(
-          // height: 435.0,
+          height: 300.0,
           color: Colors.transparent, //could change this to Color(0xFF737373),
           //so you don't have to change MaterialApp canvasColor
           child: Padding(
@@ -138,46 +118,17 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: 8,
                       ), //Image Picker
-                      //Image Picker
 
-                      // else if (_pickedImage == null) ...[
-                      //   Center(
-                      //     child: SizedBox(
-                      //       width: size.width * 0.4 + 10,
-                      //       height: size.width * 0.4,
-                      //       child: DottedBorder(
-                      //         child: Center(
-                      //           child: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             children: [
-                      //               Icon(
-                      //                 Icons.image_outlined,
-                      //                 size: 80,
-                      //                 color: Colors.blue,
-                      //               ),
-                      //               TextButton(
-                      //                 onPressed: () {
-                      //                   localImagePicker();
-                      //                 },
-                      //                 child: Text("Pick Category Image"),
-                      //               )
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   )
-                      // ]
-
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Text(
-                        "إسم المحافظة : ",
+                        "اسم المحافظة : ",
                         style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -199,12 +150,12 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
                               keyboardType: TextInputType.text,
                               textInputAction: TextInputAction.newline,
                               decoration:
-                                  InputDecoration(hintText: "إسم المحافظة"),
+                                  InputDecoration(hintText: "اسم المحافظة"),
                               validator: (value) {
                                 return MyValidators.uploadProdTexts(
                                     value: value,
                                     toBeReturnedString:
-                                        "ادخل اسم محافظة صحيحة");
+                                        "اختر اسم صحيح للتصنيف");
                               },
                             ),
                             TextFormField(
@@ -216,11 +167,12 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.newline,
                               decoration:
-                                  InputDecoration(hintText: "سعر المحافظة"),
+                                  InputDecoration(hintText: "سعر الشحن"),
                               validator: (value) {
                                 return MyValidators.uploadProdTexts(
                                     value: value,
-                                    toBeReturnedString: "ادخل سعر صحيح");
+                                    toBeReturnedString:
+                                        "اختر اسم صحيح للتصنيف");
                               },
                             ),
                           ],
@@ -229,30 +181,27 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
                       SizedBox(
                         height: 10,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Material(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    // textStyle: TextStyle(color: Colors.white),
-                                    padding: const EdgeInsets.all(10),
-                                    backgroundColor: Colors.blue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                                onPressed: () {
-                                  _editFees();
-                                },
-                                child: const Text(
-                                  "تعديل المحافظة",
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                )),
-                          ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Material(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  // textStyle: TextStyle(color: Colors.white),
+                                  padding: const EdgeInsets.all(10),
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onPressed: () {
+                                _uploadCategory();
+                                // await categoriesProvider.countCategories();
+                              },
+                              child: const Text(
+                                "اضف المحافظة",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              )),
                         ),
                       ),
                     ],
