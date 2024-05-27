@@ -56,7 +56,7 @@ class _AddFeesBottomSheetState extends State<AddFeesBottomSheet> {
           "placeName": _titleController.text.trim(),
           "fees": _feesController.text.trim(),
         });
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
             context,
             FeesScreen
                 .routeName); // await categoriesProvider.countCategories();

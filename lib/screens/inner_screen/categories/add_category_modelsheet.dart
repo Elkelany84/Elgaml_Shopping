@@ -79,12 +79,8 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
           "categoryName": _titleController.text.trim(),
           "categoryImage": imageUrl,
           "createdAt": Timestamp.now(),
-        }).then((value) => Navigator.pushReplacement<void, void>(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const CategoriesScreen(),
-                  ),
-                ));
+        });
+        Navigator.pushReplacementNamed(context, CategoriesScreen.routeName);
         // await categoriesProvider.countCategories();
         //SToast Message
         Fluttertoast.showToast(

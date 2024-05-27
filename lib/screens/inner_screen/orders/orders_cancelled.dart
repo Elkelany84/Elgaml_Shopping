@@ -35,7 +35,7 @@ class _OrdersScreenCancelledState extends State<OrdersScreenCancelled> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const AppNameTextWidget(label: "طلبيات منتهية"),
+        title: const AppNameTextWidget(label: "طلبيات مُـلغاة"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

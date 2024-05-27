@@ -40,7 +40,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
-            .where("orderStatus", isEqualTo: "تم استلام الطلب")
+            .where("orderStatus", isEqualTo: "تم توصيل الطلب")
             .orderBy("orderDate", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
