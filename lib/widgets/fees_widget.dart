@@ -78,7 +78,7 @@ class Fees_widget extends StatelessWidget {
                                         child: EditFeesBottomSheet(
                                           placeId: document['placeId'],
                                           placeName: document['placeName'],
-                                          fees: document["fees"].toString(),
+                                          fees: document["fees"],
 
                                           // categoryModel: getCurrCategory,
                                         ),

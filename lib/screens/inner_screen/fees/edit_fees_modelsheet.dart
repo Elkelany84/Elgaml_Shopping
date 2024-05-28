@@ -5,7 +5,6 @@ import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
-import 'package:image_picker/image_picker.dart';
 
 class EditFeesBottomSheet extends StatefulWidget {
   EditFeesBottomSheet({
@@ -18,7 +17,7 @@ class EditFeesBottomSheet extends StatefulWidget {
   static const routeName = '/edit_fees_bottomSheet';
   final CategoryModel? categoryModel;
   final String? placeId;
-  final String fees;
+  final int? fees;
   final String? placeName;
 
   @override
@@ -27,7 +26,7 @@ class EditFeesBottomSheet extends StatefulWidget {
 
 class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  XFile? _pickedImage;
+
   bool isLoading = false;
   bool isEditing = true;
   late TextEditingController _titleController;
@@ -49,7 +48,7 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
     //         ? ""
     //         : widget.categoryModel!.categoryName);
     _titleController = TextEditingController(text: widget.placeName);
-    _feesController = TextEditingController(text: widget.fees);
+    _feesController = TextEditingController(text: widget.fees.toString());
 
     super.initState();
   }
@@ -81,7 +80,7 @@ class _EditCategoryBottomSheetState extends State<EditFeesBottomSheet> {
             .update({
           "placeId": widget.placeId,
           "placeName": _titleController.text.trim(),
-          "fees": _feesController.text.trim(),
+          "fees": int.parse(_feesController.text.trim()),
         });
 
         //SToast Message
