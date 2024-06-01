@@ -65,7 +65,7 @@ class _OrdersScreenProcessingState extends State<OrdersScreenProcessing> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      height: 195,
+                      height: 250,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey)),
@@ -170,6 +170,61 @@ class _OrdersScreenProcessingState extends State<OrdersScreenProcessing> {
                             //     ),
                             //   ],
                             // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: kBottomNavigationBarHeight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(12),
+                                      backgroundColor: Colors.purpleAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("ordersAdvanced")
+                                          .doc(snapshot.data!.docs[index]
+                                              ["sessionId"])
+                                          .update({
+                                        "orderStatus": "تم إلغاء الطلب",
+                                      });
+                                    },
+                                    child: Text(
+                                      "إلغاء الطلب",
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: kBottomNavigationBarHeight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(12),
+                                      backgroundColor: Colors.purpleAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("ordersAdvanced")
+                                          .doc(snapshot.data!.docs[index]
+                                              ["sessionId"])
+                                          .update({
+                                        "orderStatus": "تم توصيل الطلب",
+                                      });
+                                    },
+                                    child: Text(
+                                      "تم توصيل الطلب",
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),

@@ -10,7 +10,8 @@ class SubtitleTextWidget extends StatelessWidget {
       this.color,
       this.textDecoration = TextDecoration.none,
       this.textOverflow,
-      this.maxLines});
+      this.maxLines,
+      this.textDirection});
 
   final String label;
   final double fontSize;
@@ -20,10 +21,12 @@ class SubtitleTextWidget extends StatelessWidget {
   final TextDecoration textDecoration;
   final String? textOverflow;
   final int? maxLines;
+  final textDirection;
   @override
   Widget build(BuildContext context) {
     return Text(
       label,
+      textDirection: textDirection,
       maxLines: maxLines,
       style: TextStyle(
         fontSize: fontSize,

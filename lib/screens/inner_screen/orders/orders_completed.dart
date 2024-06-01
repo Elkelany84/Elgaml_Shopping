@@ -65,7 +65,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      height: 240,
+                      height: 250,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey)),
@@ -157,33 +157,61 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: kBottomNavigationBarHeight - 10,
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.all(12),
-                                  backgroundColor: Colors.purpleAccent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: kBottomNavigationBarHeight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(12),
+                                      backgroundColor: Colors.purpleAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("ordersAdvanced")
+                                          .doc(snapshot.data!.docs[index]
+                                              ["sessionId"])
+                                          .update({
+                                        "orderStatus": "تم إلغاء الطلب",
+                                      });
+                                    },
+                                    child: Text(
+                                      "إلغاء الطلب",
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ),
-                                onPressed: () {
-                                  FirebaseFirestore.instance
-                                      .collection('ordersAdvanced')
-                                      .doc(snapshot.data!.docs[index]
-                                          ["sessionId"])
-                                      .update({
-                                    'orderStatus': 'Processing',
-                                  });
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  "Mark as Processing",
-                                  style: TextStyle(fontSize: 18),
+                                SizedBox(
+                                  height: kBottomNavigationBarHeight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(12),
+                                      backgroundColor: Colors.purpleAccent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("ordersAdvanced")
+                                          .doc(snapshot.data!.docs[index]
+                                              ["sessionId"])
+                                          .update({
+                                        "orderStatus": "جارى مراجعة الطلب",
+                                      });
+                                    },
+                                    child: Text(
+                                      "جارى مراجعة الطلب",
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            )
+                              ],
+                            ),
 
                             // Row(
                             //   children: [

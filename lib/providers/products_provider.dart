@@ -101,6 +101,23 @@ class ProductsProvider with ChangeNotifier {
     return query.count;
   }
 
+  //create function to delete product
+  Future<void> deleteProduct(String productId) {
+    return productDb.doc(productId).delete();
+  }
+
+  //create function to update product
+  Future<void> updateProduct(String productId, ProductModel product) {
+    return productDb.doc(productId).update({
+      'productTitle': product.productTitle,
+      'productPrice': product.productPrice,
+      'productCategory': product.productCategory,
+      'productDescription': product.productDescription,
+      'productImage': product.productImage,
+      'productQuantity': product.productQuantity,
+    });
+  }
+
 // List<ProductModel> products = [
 //   // Phones
 //   ProductModel(

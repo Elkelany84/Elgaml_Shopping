@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/subtitle_text.dart';
 import '../widgets/title_text.dart';
@@ -69,6 +70,76 @@ class MyAppFunctions {
         });
   }
 
+  //Function to Confirm Deleteing Product
+  static Future<void> confirmDeleteProduct({
+    required BuildContext context,
+    required String subtitle,
+    bool isError = true,
+    required Function fct,
+  }) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0)),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  isError ? AssetsManager.error : AssetsManager.warning,
+                  height: 60,
+                  width: 60,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                SubtitleTextWidget(
+                  label: subtitle,
+                  fontWeight: FontWeight.w600,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: !isError,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const SubtitleTextWidget(
+                          label: "Cancel",
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        fct();
+                        await Fluttertoast.showToast(
+                            msg: "تمت مسح المنتج بنجاح!",
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        Navigator.pop(context);
+                      },
+                      child: const SubtitleTextWidget(
+                        label: "OK",
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   static Future<void> imagePickerDialog({
     required BuildContext context,
     required Function cameraFCT,
@@ -95,7 +166,7 @@ class MyAppFunctions {
                       }
                     },
                     icon: const Icon(Icons.camera),
-                    label: const Text("Camera"),
+                    label: const Text("الكاميرا"),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -107,7 +178,7 @@ class MyAppFunctions {
                     icon: const Icon(
                       Icons.browse_gallery,
                     ),
-                    label: const Text("Gallery"),
+                    label: const Text("معرض الصور"),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -119,7 +190,7 @@ class MyAppFunctions {
                     icon: const Icon(
                       Icons.remove_circle_outline,
                     ),
-                    label: const Text("Remove"),
+                    label: const Text("مسح"),
                   ),
                 ],
               ),

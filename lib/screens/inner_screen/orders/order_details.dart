@@ -28,7 +28,7 @@ class OrderStreamScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
@@ -72,7 +72,7 @@ class OrderStreamScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 1,
+                                height: 3,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +85,7 @@ class OrderStreamScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 1,
+                                height: 3,
                               ),
                               Row(
                                 children: [
@@ -170,33 +170,33 @@ class OrderStreamScreen extends StatelessWidget {
                                   SubtitleTextWidget(
                                       label: "${document['orderStatus']}"),
                                   Spacer(),
-                                  SizedBox(
-                                    height: kBottomNavigationBarHeight - 10,
-                                    width: kBottomNavigationBarHeight + 60,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.all(12),
-                                        backgroundColor: Colors.purpleAccent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        FirebaseFirestore.instance
-                                            .collection('ordersAdvanced')
-                                            .doc(docName)
-                                            .update({
-                                          'orderStatus': 'Completed',
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        "Completed",
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                  ),
+                                  // SizedBox(
+                                  //   height: kBottomNavigationBarHeight - 10,
+                                  //   width: kBottomNavigationBarHeight + 60,
+                                  //   child: ElevatedButton(
+                                  //     style: ElevatedButton.styleFrom(
+                                  //       padding: const EdgeInsets.all(12),
+                                  //       backgroundColor: Colors.purpleAccent,
+                                  //       shape: RoundedRectangleBorder(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(10),
+                                  //       ),
+                                  //     ),
+                                  //     onPressed: () {
+                                  //       FirebaseFirestore.instance
+                                  //           .collection('ordersAdvanced')
+                                  //           .doc(docName)
+                                  //           .update({
+                                  //         'orderStatus': 'Completed',
+                                  //       });
+                                  //       Navigator.pop(context);
+                                  //     },
+                                  //     child: const Text(
+                                  //       "Completed",
+                                  //       style: TextStyle(fontSize: 18),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               SizedBox(

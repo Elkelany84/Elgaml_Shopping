@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products_provider.dart';
@@ -30,6 +31,15 @@ class _ProductWidgetState extends State<ProductWidget> {
         : Padding(
             padding: const EdgeInsets.all(0.0),
             child: GestureDetector(
+              onLongPress: () async {
+                await MyAppFunctions.confirmDeleteProduct(
+                    isError: false,
+                    context: context,
+                    subtitle: "مسح المنتج ؟",
+                    fct: () {
+                      productsProvider.deleteProduct(getCurrProduct.productId);
+                    });
+              },
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return EditOrUploadProductForm(
@@ -52,10 +62,13 @@ class _ProductWidgetState extends State<ProductWidget> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: TitlesTextWidget(
-                      label: getCurrProduct.productTitle,
-                      fontSize: 18,
-                      maxLines: 2,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: TitlesTextWidget(
+                        label: getCurrProduct.productTitle,
+                        fontSize: 18,
+                        maxLines: 2,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -64,7 +77,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: SubtitleTextWidget(
-                      label: "${getCurrProduct.productPrice}\$",
+                      textDirection: TextDirection.rtl,
+                      label: "${getCurrProduct.productPrice} جنيه ",
                       fontWeight: FontWeight.w600,
                       color: Colors.blue,
                     ),
