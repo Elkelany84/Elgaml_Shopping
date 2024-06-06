@@ -111,6 +111,7 @@ class _CartScreenState extends State<CartScreen> {
                   IconButton(
                     onPressed: () {
                       MyAppFunctions.showErrorOrWarningDialog(
+                          fontSize: 14,
                           isError: false,
                           context: context,
                           fct: () async {

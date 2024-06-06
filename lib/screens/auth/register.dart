@@ -105,7 +105,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "userId": uid,
           "userName": _nameController.text.trim(),
           "userEmail": _emailController.text.trim().toLowerCase(),
-          "userImage": "",
+          "userImage":
+              'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
           "createdAt": Timestamp.now(),
           "userAddress": "",
           "userPhone": _phoneController.text,

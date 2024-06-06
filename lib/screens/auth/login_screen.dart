@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.centerRight,
                         child: TitleTextWidget(
                             label: LocaleData.welcomeBack.getString(context))),
                     const SizedBox(
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       },
                                       child: Text(
                                         LocaleData.guest.getString(context),
-                                        style: const TextStyle(fontSize: 18),
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ),
                                   ),

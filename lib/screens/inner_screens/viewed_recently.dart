@@ -47,6 +47,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       MyAppFunctions.showErrorOrWarningDialog(
+                          fontSize: 16,
                           isError: false,
                           context: context,
                           fct: () {

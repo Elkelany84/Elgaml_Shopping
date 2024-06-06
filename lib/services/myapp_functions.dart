@@ -8,7 +8,8 @@ class MyAppFunctions {
       {required BuildContext context,
       required Function fct,
       required String subTitle,
-      bool isError = true}) async {
+      bool isError = true,
+      double fontSize = 12}) async {
     await showDialog(
         context: context,
         builder: (context) {
@@ -29,7 +30,7 @@ class MyAppFunctions {
                 ),
                 SubtitleTextWidget(
                   label: subTitle,
-                  fontSize: 12,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w600,
                 ),
                 const SizedBox(

@@ -81,7 +81,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       Flexible(
                         flex: 4,
                         child: SubtitleTextWidget(
-                          label: getCurrentProduct.productPrice,
+                          label: "${getCurrentProduct.productPrice} جنيه",
                           color: Colors.blue,
                           fontWeight: FontWeight.w600,
                           // maxLines: 2,

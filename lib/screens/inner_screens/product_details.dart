@@ -172,6 +172,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TitleTextWidget(
+                              textDirection: TextDirection.rtl,
                               label: LocaleData.productDetailsAboutItem
                                   .getString(context)),
                           GestureDetector(
@@ -181,6 +182,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   arguments: getCurrentProduct.productCategory);
                             },
                             child: SubtitleTextWidget(
+                              textDirection: TextDirection.rtl,
                               label:
                                   "${LocaleData.productDetailsIn.getString(context)} ${getCurrentProduct.productCategory}",
                               color: Colors.blue,
@@ -194,6 +196,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: SubtitleTextWidget(
+                          textDirection: TextDirection.rtl,
                           label: getCurrentProduct.productDescription,
                           textOverflow: TextOverflow.visible,
                         ),

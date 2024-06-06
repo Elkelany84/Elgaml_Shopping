@@ -54,6 +54,7 @@ class WishListScreen extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       MyAppFunctions.showErrorOrWarningDialog(
+                          fontSize: 18,
                           isError: false,
                           context: context,
                           fct: () async {

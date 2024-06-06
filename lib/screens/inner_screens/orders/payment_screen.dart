@@ -42,6 +42,7 @@ class _PaymentScreenState extends State<PaymentScreen>
   OrderUserModel? orderUserModel;
   bool _isLoading = true;
   int _categoryValue = 70;
+  String placeId = "DDZP7lxdW2vDMlUgx3GX";
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<OrderProvider>(context, listen: false);
     final orderUserProvider =
@@ -165,7 +166,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                         fontSize: 18,
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 3,
                       ),
 
                       Container(
@@ -183,7 +184,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                               Expanded(
                                 child: SubtitleTextWidget(
                                   textOverflow: TextOverflow.ellipsis,
-                                  label: orderUserModel!.userAddress * 2,
+                                  label: orderUserModel!.userAddress,
                                   fontSize: 17, color: Colors.black,
                                   // textDecoration: TextDecoration.underline,
                                 ),
@@ -245,7 +246,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       // ),
                       //Total Button
                       const SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       // Center(
                       //   child: SizedBox(
@@ -326,9 +327,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       //     ),
                       //   ),
                       // ),
-                      const SizedBox(
-                        height: 2,
-                      ),
+
                       TitleTextWidget(
                         label: LocaleData.cityDelivery.getString(context),
                         fontSize: 16,
@@ -346,22 +345,27 @@ class _PaymentScreenState extends State<PaymentScreen>
                             } else {
                               List<DropdownMenuItem> categoryItems = [];
                               for (var doc in snapshot.data!.docs) {
+                                final fees = doc["fees"];
+                                // print(placeId);
                                 categoryItems.add(
                                   DropdownMenuItem(
-                                    value: doc['fees'],
+                                    value: doc['placeId'],
                                     child: Text(doc['placeName']),
                                   ),
                                 );
+                                if (placeId == doc['placeId']) {
+                                  _categoryValue = fees;
+                                }
                               }
 
                               return DropdownButtonFormField(
                                 hint: const Text('Select Place'),
-                                value: _categoryValue,
+                                value: placeId,
                                 items: categoryItems,
                                 onChanged: (newValue) {
                                   setState(() {
-                                    _categoryValue = newValue;
-                                    print(_categoryValue);
+                                    placeId = newValue;
+                                    print(placeId);
                                   });
                                 },
                               );
@@ -385,7 +389,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                         fontSize: 16,
                       ),
                       const SizedBox(
-                        height: 8,
+                        height: 6,
                       ),
                       TitleTextWidget(
                         label:
@@ -637,3 +641,41 @@ class _PaymentScreenState extends State<PaymentScreen>
 //     }
 //   }
 }
+
+//Original dropdownbutton
+// Padding(
+// padding:
+// const EdgeInsets.only(top: 8, right: 12, left: 12),
+// child: StreamBuilder<QuerySnapshot>(
+// stream: FirebaseFirestore.instance
+//     .collection('orderFees')
+//     .snapshots(),
+// builder: (context, snapshot) {
+// if (!snapshot.hasData) {
+// return const CircularProgressIndicator();
+// } else {
+// List<DropdownMenuItem> categoryItems = [];
+// for (var doc in snapshot.data!.docs) {
+// categoryItems.add(
+// DropdownMenuItem(
+// value: doc['fees'],
+// child: Text(doc['placeName']),
+// ),
+// );
+// }
+//
+// return DropdownButtonFormField(
+// hint: const Text('Select Place'),
+// value: _categoryValue,
+// items: categoryItems,
+// onChanged: (newValue) {
+// setState(() {
+// _categoryValue = newValue;
+// print(_categoryValue);
+// });
+// },
+// );
+// }
+// },
+// ),
+// ),

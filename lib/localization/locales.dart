@@ -46,6 +46,7 @@ mixin LocaleData {
 
   //Search Screen
   static const String searchProducts = "Search Products";
+  static const String searchNoProductsFound = "No Products Found!";
 
   //Home Screen
   static const String latestArrivals = "Latest Arrivals";
@@ -181,6 +182,7 @@ mixin LocaleData {
 
     //Search Screen
     searchProducts: "Search Products",
+    searchNoProductsFound: "No Products Found!",
 
     //Product Details
     productDetailsAddedAlready: "Added Already",
@@ -308,6 +310,7 @@ mixin LocaleData {
 
     //Search Screen
     searchProducts: "المنتجات",
+    searchNoProductsFound: "!لا يوجد منتجات مطابقة للبحث",
 
     //Product Details
     productDetailsAddedAlready: "أضيف بالفعل لسلة التسوق",
@@ -319,7 +322,7 @@ mixin LocaleData {
     total: "المجموع",
     products: "منتجات",
     items: "عناصر",
-    clearCart: "? مسح سلة التسوق",
+    clearCart: "مسح سلة التسوق ؟",
     checkout: "الذهاب للدفع",
     emptyCartMessage: "!يبدو أن سلة التسوق فارغة",
     shopNow: "تسوق الآن",
@@ -331,7 +334,7 @@ mixin LocaleData {
     editAddress: "تعديل العنوان",
     paymentMethod: "طريقة الدفع: ",
     cityDelivery: "يرجى إدخال مدينتك:",
-    cashOnDelivery: "الدفع عند الإستلام-داخل الإسكندرية فقط",
+    cashOnDelivery: "الدفع عند الإستلام-داخـل الإسكنـدريـة فقـط",
     etissalatWallet: "التحويل لمحفظة إتصالات-سيتم التواصل معك",
     orderSummary: "ملخص الطلب:",
     totalPrice: "المجموع: ",
@@ -368,7 +371,7 @@ mixin LocaleData {
     orderTotalProducts: "عدد المنتجات: ",
 
     //Personal Profile
-    yourDetails: "تفاصيلك: ",
+    yourDetails: "التفاصيل: ",
     subDetails: "يمكنك تغيير تفاصيلك من هنا ثم انقر على حفظ. ",
     firstName: "الاسم: ",
     email: "البريد الالكتروني: لا يمكنك تغيير بريدك الالكتروني ",

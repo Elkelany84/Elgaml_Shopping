@@ -66,8 +66,10 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           body: productList.isEmpty
-              ? const Center(
-                  child: TitleTextWidget(label: "No Products Found!"),
+              ? Center(
+                  child: TitleTextWidget(
+                      label:
+                          LocaleData.searchNoProductsFound.getString(context)),
                 )
               : StreamBuilder<List<ProductModel>>(
                   stream: productsProvider.fetchProductStream(),
@@ -81,8 +83,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: SelectableText(snapshot.error.toString()),
                       );
                     } else if (snapshot.data == null) {
-                      return const Center(
-                        child: SelectableText("No Products Found!"),
+                      return Center(
+                        child: SelectableText(LocaleData.searchNoProductsFound
+                            .getString(context)),
                       );
                     }
                     return Padding(
@@ -132,9 +135,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           if (controller.text.isNotEmpty &&
                               productListSearch.isEmpty) ...[
-                            const Center(
-                                child:
-                                    TitleTextWidget(label: "No Products Found"))
+                            Center(
+                                child: TitleTextWidget(
+                                    label: LocaleData.searchNoProductsFound
+                                        .getString(context)))
                           ],
                           Expanded(
                             child: DynamicHeightGridView(

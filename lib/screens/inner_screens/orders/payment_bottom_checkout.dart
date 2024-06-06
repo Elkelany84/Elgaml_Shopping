@@ -30,7 +30,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          height: kBottomNavigationBarHeight + 5,
+          height: kBottomNavigationBarHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -39,7 +39,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               });
             }),
         const SizedBox(
-          height: 12,
+          height: 10,
         ),
         buildRadioPayment(
             name: LocaleData.etissalatWallet.getString(context),
