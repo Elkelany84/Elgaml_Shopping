@@ -56,7 +56,7 @@ class UserProvider with ChangeNotifier {
   int? quer;
   Future<int?> countUsers() async {
     AggregateQuerySnapshot query = await categoryList.count().get();
-    debugPrint('The number of users: ${query.count}');
+    // debugPrint('The number of users: ${query.count}');
     quer = query.count;
     notifyListeners();
     return query.count;

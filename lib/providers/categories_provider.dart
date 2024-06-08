@@ -79,7 +79,7 @@ class CategoriesProvider extends ChangeNotifier {
   int? categoriesCount;
   Future<int?> countCategories() async {
     AggregateQuerySnapshot query = await categoryList.count().get();
-    debugPrint('The number of categories: ${query.count}');
+    // debugPrint('The number of categories: ${query.count}');
     categoriesCount = query.count;
     notifyListeners();
     return query.count;

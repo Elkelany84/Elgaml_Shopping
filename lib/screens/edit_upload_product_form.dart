@@ -40,12 +40,38 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
   bool isLoading = false;
   String? productImageUrl;
 
+  //get product images from firebase
+  List<String> productImages = [];
+  Future<List<String>> getProductImages(String productId) async {
+    final productDb =
+        FirebaseFirestore.instance.collection("products").doc(productId);
+    await productDb.get().then((productSnapshot) {
+      for (var element in productSnapshot.get("imageFileList")) {
+        productImages.add(element);
+      }
+    });
+    print("productImages: ${productImages.length}");
+    setState(() {});
+    return productImages;
+  }
+
+  //create function to delete images list from firebase
+  Future<void> deleteProductImages(String productId) async {
+    final productDb =
+        FirebaseFirestore.instance.collection("products").doc(productId);
+    await productDb.update({
+      "imageFileList": [],
+    });
+  }
+
   @override
   void initState() {
     if (widget.productModel != null) {
       _categoryValue = widget.productModel!.productCategory;
       isEditing = true;
       productNetworkImage = widget.productModel!.productImage;
+      getProductImages(widget.productModel!.productId);
+      // imageFileListString = widget.productModel!.imageFileListString;
     }
     _titleController = TextEditingController(
         text: widget.productModel == null
@@ -61,7 +87,6 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         text: widget.productModel == null
             ? ""
             : widget.productModel!.productQuantity);
-
     super.initState();
   }
 
@@ -79,13 +104,28 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     _priceController.clear();
     _descriptionController.clear();
     _quantityController.clear();
-    removePickedImage();
+    // removePickedImage();
+    _clearPickedImage();
   }
 
+
+  void _clearPickedImage(){
+    _pickedImage = null;
+    productNetworkImage = null;
+    imageFileList.clear();
+    setState(() {
+
+    });
+  }
   void removePickedImage() {
     setState(() {
       _pickedImage = null;
       productNetworkImage = null;
+      imageFileList.clear();
+      imageFileListString!.clear();
+      try {
+        deleteProductImages(widget.productModel!.productId);
+      } catch (e) {}
     });
   }
 
@@ -107,11 +147,25 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         //store picked image to firebase storage
         final productId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref.child("productsImages").child('$productId.jpg');
+        final imageRef = ref.child("productsImages").child('$productId.png');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
-        //Register user in FirebaseFirestore
+        //store every image in imageFileList in firestore storage
+        // String imageUrlFinal = "";
+        // final productId = Uuid().v4();   //remove comments if you comment the same variables above138
+        for (var image in imageFileList) {
+          final ref = FirebaseStorage.instance.ref();
+          final imageRef =
+              ref.child("productsImages").child('${Uuid().v4()}.png');
+          await imageRef.putFile(File(image.path));
+          final imageUrl = await imageRef.getDownloadURL();
+          // imageFileList.add(imageUrl);
+          imageFileListString!.add(imageUrl);
+          // imageUrlFinal = imageUrl;
+        }
+
+        //store product in firestore
 
         await FirebaseFirestore.instance
             .collection("products")
@@ -122,7 +176,9 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productCategory": _categoryValue,
           "productPrice": _priceController.text,
           "productDescription": _descriptionController.text,
-          "productImage": imageUrl,
+          // "productImage": imageUrl,
+          "productImage": imageUrl ?? imageFileListString![0],
+          "imageFileList": imageFileListString,
           "createdAt": Timestamp.now(),
           "productQuantity": _quantityController.text,
         });
@@ -171,16 +227,37 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         });
 
         //store picked image to firebase storage
+        // if (_pickedImage != null) {
+        //   final ref = FirebaseStorage.instance.ref();
+        //   final imageRef = ref
+        //       .child("productsImages")
+        //       .child('${widget.productModel!.productId}.png');
+        //   await imageRef.putFile(File(_pickedImage!.path));
+        //   productImageUrl = await imageRef.getDownloadURL();
+        // }
+//the camera one image
+        //store picked image to firebase storage
         if (_pickedImage != null) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef = ref
               .child("productsImages")
-              .child('${widget.productModel!.productId}.jpg');
+              .child('${widget.productModel!.productId}.png');
           await imageRef.putFile(File(_pickedImage!.path));
           productImageUrl = await imageRef.getDownloadURL();
         }
 
-        //Register user in FirebaseFirestore
+//add picked images to firestorage
+        for (var image in imageFileList) {
+          final ref = FirebaseStorage.instance.ref();
+          final imageRef =
+              ref.child("productsImages").child('${Uuid().v4()}.png');
+          await imageRef.putFile(File(image.path));
+          final imageUrl = await imageRef.getDownloadURL();
+          // imageFileList.add(imageUrl);
+          imageFileListString!.add(imageUrl);
+          // imageUrlFinal = imageUrl;
+        }
+
         // final productId = Uuid().v4();
         await FirebaseFirestore.instance
             .collection("products")
@@ -192,7 +269,10 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productBeforeDiscount": "",
           "productPrice": _priceController.text,
           "productDescription": _descriptionController.text,
-          "productImage": productImageUrl ?? productNetworkImage,
+          // "productImage": productImageUrl ?? productNetworkImage,
+          "productImage":
+              productImageUrl ?? productNetworkImage ?? imageFileListString![0],
+          "imageFileList": imageFileListString,
           "createdAt": widget.productModel!.createdAt,
           "productQuantity": _quantityController.text,
         });
@@ -256,10 +336,60 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         });
   }
 
+  //create function to select multiple images
+  final ImagePicker _picker = ImagePicker();
+  List<XFile> imageFileList = [];
+  List<dynamic>? imageFileListString = [];
+  Future<void> localMultipleImagePicker() async {
+    final List<XFile>? selectedImages = await _picker.pickMultiImage(
+        maxHeight: 480, maxWidth: 640, imageQuality: 50);
+    if (selectedImages!.isNotEmpty) {
+      imageFileList.addAll(selectedImages);
+      _pickedImage = imageFileList[0];
+      print("imageFileList: ${imageFileList.length}");
+      print("imageFileListString: ${imageFileListString!.length}");
+    }
+    setState(() {});
+  }
+
+  Future<void> localMultipleImagePickerCameraGallery() async {
+    MyAppFunctions.multiImagePickerDialog(
+        context: context,
+        cameraFCT: () async {
+          _pickedImage = await _picker.pickImage(
+              source: ImageSource.camera,
+              maxHeight: 480,
+              maxWidth: 640,
+              imageQuality: 50);
+          setState(() {
+            productNetworkImage = null;
+          });
+        },
+        galleryFCT: () async {
+          final List<XFile>? selectedImages = await _picker.pickMultiImage(
+              maxHeight: 480, maxWidth: 640, imageQuality: 50);
+          if (selectedImages!.isNotEmpty) {
+            imageFileList.addAll(selectedImages);
+            _pickedImage = imageFileList[0];
+            print("imageFileList: ${imageFileList.length}");
+            print("imageFileListString: ${imageFileListString!.length}");
+          }
+          setState(() {});
+        },
+        removeFCT: () async {
+          setState(() {
+            _pickedImage = null;
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final categoryProvider = Provider.of<CategoriesProvider>(context);
+    // final productsProvider = Provider.of<ProductsProvider>(
+    //   context,
+    // );
     return LoadingManager(
       isLoading: isLoading,
       child: GestureDetector(
@@ -339,14 +469,84 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   ),
 
                   //Image Picker
-                  if (isEditing && productNetworkImage != null) ...[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        productNetworkImage!,
-                        height: size.width * 0.5,
-                        alignment: Alignment.center,
-                      ),
+                  if (isEditing &&
+                      productNetworkImage != null &&
+                      productImages.isNotEmpty) ...[
+                    Column(
+                      children: [
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(12),
+                        //   child: Image.network(
+                        //     productNetworkImage!,
+                        //     height: size.width * 0.5,
+                        //     alignment: Alignment.center,
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: 130,
+                          width: size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: GridView.builder(
+                              itemCount: productImages.length,
+                              itemBuilder: (BuildContext context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 3.0),
+                                  child: Image.network(
+                                    (productImages[index]),
+                                    height: 60,
+                                    width: 40,
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                              },
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ] else if (isEditing &&
+                      productNetworkImage != null &&
+                      productImages.isEmpty &&
+                      imageFileList.isEmpty) ...[
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            productNetworkImage!,
+                            height: size.width * 0.5,
+                            alignment: Alignment.center,
+                          ),
+                        ),
+                        // SizedBox(
+                        //   height: 80,
+                        //   width: 250,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(8.0),
+                        //     child: GridView.builder(
+                        //       itemCount: productImages.length,
+                        //       itemBuilder: (BuildContext context, index) {
+                        //         return Padding(
+                        //           padding: const EdgeInsets.only(right: 8.0),
+                        //           child: Image.network(
+                        //             (productImages[index]),
+                        //             height: 30,
+                        //             width: 30,
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         );
+                        //       },
+                        //       gridDelegate:
+                        //           SliverGridDelegateWithFixedCrossAxisCount(
+                        //               crossAxisCount: 3),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
                     )
                   ] else if (_pickedImage == null) ...[
                     SizedBox(
@@ -354,7 +554,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                       height: size.width * 0.4,
                       child: GestureDetector(
                         onTap: () {
-                          localImagePicker();
+                          // localImagePicker();
+                          localMultipleImagePickerCameraGallery();
                         },
                         child: DottedBorder(
                           child: Center(
@@ -369,10 +570,11 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    localImagePicker();
+                                    // localImagePicker();
+                                    localMultipleImagePickerCameraGallery();
                                   },
                                   child: Text("اختر صورة للمنتج"),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -380,15 +582,48 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                       ),
                     )
                   ] else ...[
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.file(
-                          File(
-                            _pickedImage!.path,
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.file(
+                            File(
+                              _pickedImage!.path,
+                            ),
+                            height: size.width * 0.25,
+                            // width: size.width * 0.5,
+                            alignment: Alignment.center,
                           ),
-                          height: size.width * 0.4,
-                          alignment: Alignment.center,
-                        ))
+                        ),
+                        Visibility(
+                          visible: imageFileList.isNotEmpty,
+                          child: SizedBox(
+                            height: 80,
+                            width: 250,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GridView.builder(
+                                itemCount: imageFileList.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Image.file(
+                                      File(imageFileList[index].path),
+                                      height: 50,
+                                      width: 50,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                },
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                   _pickedImage != null || productNetworkImage != null
                       ? Row(
@@ -396,7 +631,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                localImagePicker();
+                                // localImagePicker();
+                                localMultipleImagePickerCameraGallery();
                               },
                               child: Text("اختر صورة آخرى"),
                             ),
@@ -413,7 +649,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         )
                       : SizedBox(),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   //DropDown Widget
                   // DropdownButton(
@@ -560,7 +796,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                               child: TextFormField(
                                 controller: _descriptionController,
                                 key: ValueKey("Description"),
-                                maxLength: 1000,
+                                maxLength: 500,
                                 maxLines: 5,
                                 minLines: 1,
                                 keyboardType: TextInputType.multiline,

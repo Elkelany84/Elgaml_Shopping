@@ -12,19 +12,20 @@ class ProductModel extends ChangeNotifier {
       productDescription,
       productImage,
       productQuantity;
+  final List? imageFileListString;
 
   Timestamp? createdAt;
 
-  ProductModel({
-    required this.productId,
-    required this.productTitle,
-    required this.productPrice,
-    required this.productCategory,
-    required this.productDescription,
-    required this.productImage,
-    required this.productQuantity,
-    this.createdAt,
-  });
+  ProductModel(
+      {required this.productId,
+      required this.productTitle,
+      required this.productPrice,
+      required this.productCategory,
+      required this.productDescription,
+      required this.productImage,
+      required this.productQuantity,
+      this.createdAt,
+      this.imageFileListString});
 
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;

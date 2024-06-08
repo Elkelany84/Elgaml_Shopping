@@ -131,8 +131,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         if (searchTextController.text.isNotEmpty &&
                             productListSearch.isEmpty) ...[
                           Center(
-                              child:
-                                  TitlesTextWidget(label: "No Products Found"))
+                              child: TitlesTextWidget(label: "لا توجد منتجات"))
                         ],
                         Expanded(
                           child: DynamicHeightGridView(

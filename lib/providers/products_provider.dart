@@ -118,6 +118,20 @@ class ProductsProvider with ChangeNotifier {
     });
   }
 
+  //create function to get product images from a list in firebase
+  Future<List<String>> getProductImages(String productId) async {
+    List<String> productImages = [];
+    final productDb =
+        FirebaseFirestore.instance.collection("products").doc(productId);
+    await productDb.get().then((productSnapshot) {
+      for (var element in productSnapshot.get("imageFileList")) {
+        productImages.add(element);
+      }
+    });
+    notifyListeners();
+    return productImages;
+  }
+
 // List<ProductModel> products = [
 //   // Phones
 //   ProductModel(

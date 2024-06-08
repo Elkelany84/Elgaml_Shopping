@@ -128,7 +128,23 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                                       child: Row(
                                         children: [
                                           FancyShimmerImage(
-                                            imageUrl: document['userImage'],
+                                            boxFit: BoxFit.contain,
+                                            imageUrl: document['userImage'] ??
+                                                // Container(
+                                                //   child: ClipRect(
+                                                //     child: Image.asset(
+                                                //         "assets/images/users/unknown.png"),
+                                                //   ),
+                                                // )
+
+                                                // Image.asset(
+                                                //   fit: BoxFit.contain,
+                                                //   "assets/images/users/unknown.png",
+                                                //   width: 60,
+                                                //   height: 60,
+                                                // ),
+                                                'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
+                                            // "assets/images/users/unknown.png",
                                             width: 60,
                                             height: 60,
                                           ),
