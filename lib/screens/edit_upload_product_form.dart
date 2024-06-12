@@ -108,15 +108,13 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     _clearPickedImage();
   }
 
-
-  void _clearPickedImage(){
+  void _clearPickedImage() {
     _pickedImage = null;
     productNetworkImage = null;
     imageFileList.clear();
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   void removePickedImage() {
     setState(() {
       _pickedImage = null;
@@ -147,7 +145,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         //store picked image to firebase storage
         final productId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref.child("productsImages").child('$productId.png');
+        final imageRef = ref.child("productsImages").child('$productId.jpg');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
@@ -157,7 +155,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         for (var image in imageFileList) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef =
-              ref.child("productsImages").child('${Uuid().v4()}.png');
+              ref.child("productsImages").child('${Uuid().v4()}.jpg');
           await imageRef.putFile(File(image.path));
           final imageUrl = await imageRef.getDownloadURL();
           // imageFileList.add(imageUrl);
@@ -241,7 +239,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           final ref = FirebaseStorage.instance.ref();
           final imageRef = ref
               .child("productsImages")
-              .child('${widget.productModel!.productId}.png');
+              .child('${widget.productModel!.productId}.jpg');
           await imageRef.putFile(File(_pickedImage!.path));
           productImageUrl = await imageRef.getDownloadURL();
         }
@@ -250,7 +248,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         for (var image in imageFileList) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef =
-              ref.child("productsImages").child('${Uuid().v4()}.png');
+              ref.child("productsImages").child('${Uuid().v4()}.jpg');
           await imageRef.putFile(File(image.path));
           final imageUrl = await imageRef.getDownloadURL();
           // imageFileList.add(imageUrl);
@@ -474,35 +472,41 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                       productImages.isNotEmpty) ...[
                     Column(
                       children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(12),
-                        //   child: Image.network(
-                        //     productNetworkImage!,
-                        //     height: size.width * 0.5,
-                        //     alignment: Alignment.center,
-                        //   ),
-                        // ),
-                        SizedBox(
-                          height: 130,
-                          width: size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: GridView.builder(
-                              itemCount: productImages.length,
-                              itemBuilder: (BuildContext context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 3.0),
-                                  child: Image.network(
-                                    (productImages[index]),
-                                    height: 60,
-                                    width: 40,
-                                    fit: BoxFit.fill,
-                                  ),
-                                );
-                              },
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
+                        Visibility(
+                          visible: productImages.length == 1,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              productNetworkImage!,
+                              height: size.width * 0.5,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: productImages.length > 1,
+                          child: SizedBox(
+                            height: 130,
+                            width: size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: GridView.builder(
+                                itemCount: productImages.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 3.0),
+                                    child: Image.network(
+                                      (productImages[index]),
+                                      height: 60,
+                                      width: 40,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  );
+                                },
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 4),
+                              ),
                             ),
                           ),
                         ),
@@ -598,15 +602,16 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         Visibility(
                           visible: imageFileList.isNotEmpty,
                           child: SizedBox(
-                            height: 80,
-                            width: 250,
+                            height: 160,
+                            width: double.infinity,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: GridView.builder(
                                 itemCount: imageFileList.length,
                                 itemBuilder: (BuildContext context, index) {
                                   return Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, top: 8),
                                     child: Image.file(
                                       File(imageFileList[index].path),
                                       height: 50,
@@ -617,7 +622,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 },
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3),
+                                        crossAxisCount: 4),
                               ),
                             ),
                           ),
