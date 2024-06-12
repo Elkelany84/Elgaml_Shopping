@@ -12,6 +12,7 @@ class SubtitleTextWidget extends StatelessWidget {
     this.fontStyle = FontStyle.normal,
     this.textOverflow,
     this.textDirection,
+    this.textAlign,
   });
   final String label;
   final double fontSize;
@@ -22,6 +23,7 @@ class SubtitleTextWidget extends StatelessWidget {
   final TextOverflow? textOverflow;
   final textDirection;
   final int maxLines;
+  final textAlign;
 
   @override
   Widget build(BuildContext context) {

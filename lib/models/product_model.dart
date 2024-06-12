@@ -14,6 +14,7 @@ class ProductModel extends ChangeNotifier {
       productQuantity;
 
   Timestamp? createdAt;
+  List<String>? imageFileList;
 
   ProductModel({
     required this.productId,
@@ -24,6 +25,7 @@ class ProductModel extends ChangeNotifier {
     required this.productImage,
     required this.productQuantity,
     this.createdAt,
+    this.imageFileList,
   });
 
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
@@ -38,6 +40,7 @@ class ProductModel extends ChangeNotifier {
       productDescription: data['productDescription'],
       productImage: data['productImage'],
       productQuantity: data['productQuantity'], createdAt: data['createdAt'],
+      // imageFileList: data['imageFileList'],
     );
   }
 }

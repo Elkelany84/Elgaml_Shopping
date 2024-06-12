@@ -7,6 +7,7 @@ var uuid = const Uuid();
 
 class ProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];
+
   List<ProductModel> get getProducts {
     return products;
   }
@@ -92,6 +93,35 @@ class ProductsProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  //create function to get product images from imageFileList array in firebase
+  Future<List<String>> fetchImageUrls({required String productId}) async {
+    final productDoc = await FirebaseFirestore.instance
+        .collection('products')
+        .doc(productId) // Replace with your actual product ID
+        .get();
+
+    final imageUrls = List<String>.from(productDoc['imageFileList']);
+    print(imageUrls);
+    return imageUrls;
+  }
+
+  //create function to add imageFileList array field to the products collection in firestore
+  // Future<void> addImageFileListToProduct({required String productId}) {
+  //   final productDoc = FirebaseFirestore.instance
+  //       .collection('products')
+  //       .doc(productId); // Replace with your actual product ID
+  //
+  //   final imageUrls = [
+  //     'imageUrl1',
+  //     'imageUrl2',
+  //     'imageUrl3'
+  //   ]; // Replace with your actual image URLs
+  //
+  //   return productDoc.update({
+  //     'imageFileList': imageUrls,
+  //   });
+  // }
 
   // List<ProductModel> products = [
   //   // Phones

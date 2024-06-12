@@ -38,11 +38,23 @@ class _ProductWidgetState extends State<ProductWidget> {
               onTap: () async {
                 viewedProdProvider.addViewedProd(
                     productId: getCurrentProduct.productId);
-                await Navigator.of(context).pushNamed(ProductDetails.routeName,
-                    arguments: getCurrentProduct.productId);
+                await Navigator.of(context).pushNamed(
+                  ProductDetails.routeName,
+                  arguments: getCurrentProduct.productId,
+                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => ProductDetails(
+                //             name: ProductDetails.routeName,
+                //             productId: getCurrentProduct.productId,
+                //           )),
+                // );
               },
               child: Column(
                 children: [
+                  //check if the product has imageFileList in the firebase to show swiper widget
+
                   Hero(
                     tag: getCurrentProduct.productImage,
                     child: ClipRRect(
@@ -111,6 +123,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                                     fct: () {},
                                     subTitle: error.toString());
                               }
+
+                              // await productsProvider.addImageFileListToProduct(
+                              //     productId: getCurrentProduct.productId);
                               // if (cartProvider.isProductInCart(
                               //     productId: getCurrentProduct.productId)) {
                               //   return;

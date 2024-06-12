@@ -87,7 +87,7 @@ class CartWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SubtitleTextWidget(
-                                label: "\$ ${getCurrentProduct.productPrice}",
+                                label: "${getCurrentProduct.productPrice} جنيه",
                                 color: Colors.blue,
                               ),
                               OutlinedButton.icon(

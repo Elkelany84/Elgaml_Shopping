@@ -315,7 +315,7 @@ mixin LocaleData {
     //Product Details
     productDetailsAddedAlready: "أضيف بالفعل لسلة التسوق",
     productDetailsAddedToCart: "أضف لسلة التسوق",
-    productDetailsAboutItem: "عن المنتج: ",
+    productDetailsAboutItem: "عن المنتج : ",
     productDetailsIn: "فى ",
 
     //Cart Screen

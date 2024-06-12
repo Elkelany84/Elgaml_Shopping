@@ -1,3 +1,5 @@
+import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -13,26 +15,63 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({
+  ProductDetails({
     super.key,
     this.name,
+    this.productId,
   });
   static String routeName = "ProductDetails";
   final String? name;
+  final String? productId;
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  List imageList = [];
+  Future<List<String>> fetchImageUrls({required String productId}) async {
+    final productDoc = await FirebaseFirestore.instance
+        .collection('products')
+        .doc(productId) // Replace with your actual product ID
+        .get();
+
+    final imageUrls = List<String>.from(productDoc['imageFileList']);
+    // print(imageUrls);
+    imageList = imageUrls;
+    return imageUrls;
+  }
+
+  @override
+  void initState() {
+    // final productsProvider =
+    //     Provider.of<ProductsProvider>(context, listen: false);
+    // final productId = ModalRoute.of(context)?.settings.arguments as String;
+    // final getCurrentProduct = productsProvider.findByProdId(productId);
+    // fetchImageUrls(productId: widget.productId.toString());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productsProvider = Provider.of<ProductsProvider>(context);
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final productId = ModalRoute.of(context)?.settings.arguments as String;
     final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
+    fetchImageUrls(productId: productId);
+
+    // Future<List<String>> fetchImageUrls({required String productId}) async {
+    //   final productDoc = await FirebaseFirestore.instance
+    //       .collection('products')
+    //       .doc(getCurrentProduct!.productId) // Replace with your actual product ID
+    //       .get();
+    //
+    //   final imageUrls = List<String>.from(productDoc['imageFileList']);
+    //   return imageUrls;
+    // }
     return Directionality(
       textDirection: themeProvider.currentLocaleProvider == "ar"
           ? TextDirection.rtl
@@ -67,17 +106,41 @@ class _ProductDetailsState extends State<ProductDetails> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Hero(
-                          tag: getCurrentProduct.productImage,
-                          child: FancyShimmerImage(
-                            imageUrl: getCurrentProduct.productImage,
-                            height: size.height * 0.38,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
+                      imageList.length > 1
+                          ? SizedBox(
+                              height: 300.0,
+                              child: ClipRRect(
+                                // borderRadius: BorderRadius.circular(20),
+                                child: Swiper(
+                                  autoplay: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return FancyShimmerImage(
+                                      imageUrl: imageList[index],
+                                      boxFit: BoxFit.fill,
+                                    );
+                                  },
+                                  itemCount: imageList.length,
+                                  pagination: const SwiperPagination(
+                                    builder: DotSwiperPaginationBuilder(
+                                        activeColor: Colors.red,
+                                        color: Colors.white),
+                                  ),
+                                  // control: SwiperControl(),
+                                ),
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Hero(
+                                tag: getCurrentProduct.productImage,
+                                child: FancyShimmerImage(
+                                  imageUrl: getCurrentProduct.productImage,
+                                  height: size.height * 0.38,
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -141,6 +204,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       fct: () {},
                                       subTitle: error.toString());
                                 }
+
                                 // if (cartProvider.isProductInCart(
                                 //     productId: getCurrentProduct.productId)) {
                                 //   return;
@@ -194,9 +258,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                         height: 5,
                       ),
                       Align(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.topRight,
                         child: SubtitleTextWidget(
                           textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
                           label: getCurrentProduct.productDescription,
                           textOverflow: TextOverflow.visible,
                         ),

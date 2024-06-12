@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
             home: const RootScreen(),
             routes: {
               RootScreen.routeName: (context) => const RootScreen(),
-              ProductDetails.routeName: (context) => const ProductDetails(),
+              ProductDetails.routeName: (context) => ProductDetails(),
               SearchScreen.routeName: (context) => const SearchScreen(),
               ViewedRecentlyScreen.routeName: (context) =>
                   const ViewedRecentlyScreen(),
