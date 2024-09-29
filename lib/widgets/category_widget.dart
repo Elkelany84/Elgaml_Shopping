@@ -61,12 +61,14 @@ class category_widget extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          document['categoryName'],
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                        Center(
+                          child: Text(
+                            document['categoryName'],
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),

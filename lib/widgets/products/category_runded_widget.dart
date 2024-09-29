@@ -14,6 +14,8 @@ class CategoryRoundedWidget extends StatelessWidget {
         Navigator.pushNamed(context, SearchScreen.routeName, arguments: name);
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           FancyShimmerImage(
             boxDecoration: BoxDecoration(
@@ -26,10 +28,16 @@ class CategoryRoundedWidget extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          SubtitleTextWidget(
-            label: name,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+          Expanded(
+            child: SubtitleTextWidget(
+              textOverflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.justify,
+              // softWrap: true,
+              maxLines: 1,
+              label: name,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           )
         ],
       ),

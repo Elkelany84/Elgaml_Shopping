@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
@@ -20,6 +21,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return viewedProdProvider.viewedProdsItems.isEmpty
         ? Scaffold(
             body: EmptyBag(
@@ -31,52 +33,57 @@ class ViewedRecentlyScreen extends StatelessWidget {
               buttonText: LocaleData.shopNow.getString(context), buttonFont: 18,
             ),
           )
-        : Scaffold(
-            // bottomSheet: CartBottomSheetWidget(),
-            appBar: AppBar(
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AssetsManager.orderBag),
-              ),
-              title: AppNameTextWidget(
-                label:
-                    "${LocaleData.viewedRecently.getString(context)} (${viewedProdProvider.viewedProdsItems.length})",
-                fontSize: 22,
-              ),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      MyAppFunctions.showErrorOrWarningDialog(
-                          fontSize: 16,
-                          isError: false,
-                          context: context,
-                          fct: () {
-                            viewedProdProvider.clearViewedProds();
-                          },
-                          subTitle: LocaleData.clearViewedRecently
-                              .getString(context));
-                    },
-                    icon: const Icon(
-                      Icons.delete_forever_rounded,
-                      color: Colors.red,
-                    ))
-              ],
-            ),
-            body: DynamicHeightGridView(
-              // mainAxisSpacing: 12,
-              // crossAxisSpacing: 12,
-              builder: (context, index) {
-                return Padding(
+        : Directionality(
+            textDirection: themeProvider.currentLocaleProvider == "ar"
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+            child: Scaffold(
+              // bottomSheet: CartBottomSheetWidget(),
+              appBar: AppBar(
+                leading: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ProductWidget(
-                    productId: viewedProdProvider.viewedProdsItems.values
-                        .toList()[index]
-                        .productId,
-                  ),
-                );
-              },
-              itemCount: viewedProdProvider.viewedProdsItems.length,
-              crossAxisCount: 2,
+                  child: Image.asset(AssetsManager.orderBag),
+                ),
+                title: AppNameTextWidget(
+                  label:
+                      "${LocaleData.viewedRecently.getString(context)} (${viewedProdProvider.viewedProdsItems.length})",
+                  fontSize: 22,
+                ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        MyAppFunctions.showErrorOrWarningDialog(
+                            fontSize: 16,
+                            isError: false,
+                            context: context,
+                            fct: () {
+                              viewedProdProvider.clearViewedProds();
+                            },
+                            subTitle: LocaleData.clearViewedRecently
+                                .getString(context));
+                      },
+                      icon: const Icon(
+                        Icons.delete_forever_rounded,
+                        color: Colors.red,
+                      ))
+                ],
+              ),
+              body: DynamicHeightGridView(
+                // mainAxisSpacing: 12,
+                // crossAxisSpacing: 12,
+                builder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ProductWidget(
+                      productId: viewedProdProvider.viewedProdsItems.values
+                          .toList()[index]
+                          .productId,
+                    ),
+                  );
+                },
+                itemCount: viewedProdProvider.viewedProdsItems.length,
+                crossAxisCount: 2,
+              ),
             ),
           );
   }

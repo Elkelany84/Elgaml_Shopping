@@ -13,6 +13,7 @@ class SubtitleTextWidget extends StatelessWidget {
     this.textOverflow,
     this.textDirection,
     this.textAlign,
+    this.softWrap,
   });
   final String label;
   final double fontSize;
@@ -24,6 +25,7 @@ class SubtitleTextWidget extends StatelessWidget {
   final textDirection;
   final int maxLines;
   final textAlign;
+  final softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,15 @@ class SubtitleTextWidget extends StatelessWidget {
       label,
       textDirection: textDirection,
       maxLines: maxLines,
+      softWrap: softWrap,
       style: TextStyle(
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          decoration: textDecoration,
-          color: color,
-          fontStyle: fontStyle,
-          overflow: textOverflow),
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        decoration: textDecoration,
+        color: color,
+        fontStyle: fontStyle,
+        overflow: textOverflow,
+      ),
     );
   }
 }

@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 15,
+                  height: 12,
                 ),
                 // Visibility(
                 //   visible: user == null ? false : true,
@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: productsProvider.getProducts.length < 10
                             ? productsProvider.getProducts.length
-                            : 5,
+                            : 7,
                         itemBuilder: (context, index) {
                           return ChangeNotifierProvider.value(
                               value: productsProvider.getProducts[index],
@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 6,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
