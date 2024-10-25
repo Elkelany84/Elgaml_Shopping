@@ -17,13 +17,16 @@ class CategoryRoundedWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          FancyShimmerImage(
-            boxDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: FancyShimmerImage(
+              boxDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              imageUrl: image,
+              height: 60,
+              width: 60,
             ),
-            imageUrl: image,
-            height: 50,
-            width: 50,
           ),
           const SizedBox(
             height: 5,

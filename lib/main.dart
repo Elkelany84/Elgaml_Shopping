@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
         builder: (builder, themeProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Elgaml Stores',
+            title: 'Elgaml Store',
             localizationsDelegates: localization.localizationsDelegates,
             supportedLocales: localization.supportedLocales,
 

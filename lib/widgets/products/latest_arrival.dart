@@ -82,6 +82,8 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                                     quantity: 1,
                                     context: context);
                               } catch (error) {
+                                // Navigator.pushReplacementNamed(
+                                //     context, LoginScreen.routeName);
                                 MyAppFunctions.showErrorOrWarningDialog(
                                     context: context,
                                     fct: () {},

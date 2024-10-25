@@ -224,18 +224,21 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: TitleTextWidget(
                       label: LocaleData.settings.getString(context)),
                 ),
-                SwitchListTile(
-                    secondary: Image.asset(
-                      AssetsManager.theme,
-                      height: 34,
-                    ),
-                    title: Text(themeProvider.getIsDarkTheme
-                        ? LocaleData.darkMode.getString(context)
-                        : LocaleData.lightMode.getString(context)),
-                    value: themeProvider.getIsDarkTheme,
-                    onChanged: (value) {
-                      themeProvider.setDarkTheme(value);
-                    }),
+                Visibility(
+                  visible: userModel == null ? false : true,
+                  child: SwitchListTile(
+                      secondary: Image.asset(
+                        AssetsManager.theme,
+                        height: 34,
+                      ),
+                      title: Text(themeProvider.getIsDarkTheme
+                          ? LocaleData.darkMode.getString(context)
+                          : LocaleData.lightMode.getString(context)),
+                      value: themeProvider.getIsDarkTheme,
+                      onChanged: (value) {
+                        themeProvider.setDarkTheme(value);
+                      }),
+                ),
                 const SizedBox(
                   height: 8,
                 ),

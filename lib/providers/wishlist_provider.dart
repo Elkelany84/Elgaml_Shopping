@@ -22,8 +22,12 @@ class WishlistProvider with ChangeNotifier {
     User? user = auth.currentUser;
     if (user == null) {
       MyAppFunctions.showErrorOrWarningDialog(
-          context: context, fct: () {}, subTitle: "Please Login First!");
+          isError: false,
+          context: context,
+          fct: () {},
+          subTitle: "Please Login First!");
       return;
+      // Navigator.pushNamed(context, LoginScreen.routeName);
     }
     final uid = user.uid;
     final wishListId = uuid.v4();
