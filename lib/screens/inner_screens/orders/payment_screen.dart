@@ -126,8 +126,11 @@ class _PaymentScreenState extends State<PaymentScreen>
                         backgroundColor: Colors.red,
                         textColor: Colors.white,
                         fontSize: 16.0)
+                    //navigate to personal profile with _isLoading argument to false
+
                     .then((value) => Navigator.pushNamed(
-                        context, PersonalProfile.routeName));
+                        context, PersonalProfile.routeName,
+                        arguments: _isLoading = false));
           },
           feesAmount: _categoryValue,
         ),

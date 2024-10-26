@@ -16,7 +16,9 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
 
 class PersonalProfile extends StatefulWidget {
-  const PersonalProfile({super.key});
+  const PersonalProfile({
+    super.key,
+  });
 
   static const String routeName = '/personal-profile';
 
@@ -29,14 +31,15 @@ class _PersonalProfileState extends State<PersonalProfile>
   @override
   bool get wantKeepAlive => true;
   User? user = FirebaseAuth.instance.currentUser;
+  // User? user = FirebaseAuth.instance.currentUser;
   UserModel? userModel;
-  bool _isLoading = true;
+  // bool? _isLoading = true;
 
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       setState(() {
-        _isLoading = true;
+        // _isLoading = true;
       });
       userModel = await userProvider.fetchUserInfo();
       setState(() {
@@ -53,7 +56,7 @@ class _PersonalProfileState extends State<PersonalProfile>
       );
     } finally {
       setState(() {
-        _isLoading = false;
+        // _isLoading = false;
       });
     }
   }
@@ -70,11 +73,14 @@ class _PersonalProfileState extends State<PersonalProfile>
   late final FocusNode _createdAtFocusNode;
   bool isLoading = false;
   final auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    fetchUserInfo();
+    // _isLoading == true ? null : fetchUserInfo();
+    // print(user);
+    user != null ? fetchUserInfo() : null;
     _firstNameController = TextEditingController();
     _userEmailController = TextEditingController();
     _addressController = TextEditingController();

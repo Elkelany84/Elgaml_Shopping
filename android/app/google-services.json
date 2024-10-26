@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1035545623294:android:474c46ad7f73ce4a4943af",
         "android_client_info": {
-          "package_name": "com.elgamlstore"
+          "package_name": "com.elgamlmoto"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "1035545623294-12ogpbndmucepmildsho42226llhpfhh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.elgamlstore",
+            "package_name": "com.elgamlmoto",
             "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
           }
         },

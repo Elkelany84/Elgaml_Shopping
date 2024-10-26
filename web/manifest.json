@@ -1,6 +1,6 @@
 {
-     "name": "elgaml_store",
-     "short_name": "elgaml_store",
+     "name": "elgaml_moto",
+     "short_name": "elgaml_moto",
      "start_url": ".",
      "display": "standalone",
      "background_color": "#0175C2",

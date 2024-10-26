@@ -119,9 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 color: Theme.of(context).cardColor,
                                 border: Border.all(
                                     width: 3,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background),
+                                    color:
+                                        Theme.of(context).colorScheme.surface),
                                 // image: DecorationImage(
                                 //     image: NetworkImage(userModel!.userImage),
                                 //     fit: BoxFit.fill),
@@ -162,7 +161,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                 ),
                 Visibility(
-                  visible: userModel == null ? false : true,
+                  visible: true,
+                  // userModel == null ? false : true,
                   child: CustomListTile(
                     label: LocaleData.allOrders.getString(context),
                     imagePath: AssetsManager.orderSvg,
@@ -176,7 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   height: 8,
                 ),
                 Visibility(
-                  visible: userModel == null ? false : true,
+                  visible: true,
+                  // userModel == null ? false : true,
                   child: CustomListTile(
                     label: LocaleData.wishList.getString(context),
                     imagePath: AssetsManager.wishlistSvg,
@@ -201,7 +202,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   height: 8,
                 ),
                 Visibility(
-                  visible: userModel == null ? false : true,
+                  visible: true,
+                  // userModel == null ? false : true,
                   child: CustomListTile(
                     label: LocaleData.profileScreen.getString(context),
                     imagePath: AssetsManager.profile,
@@ -225,7 +227,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       label: LocaleData.settings.getString(context)),
                 ),
                 Visibility(
-                  visible: userModel == null ? false : true,
+                  visible: true,
+                  // userModel == null ? false : true,
                   child: SwitchListTile(
                       secondary: Image.asset(
                         AssetsManager.theme,

@@ -44,9 +44,11 @@ class UserProvider with ChangeNotifier {
         userWish:
             userDocDic.containsKey("userWish") ? userDoc.get("userWish") : [],
       );
-      // notifyListeners();
+      notifyListeners();
       return _userModel;
     } on FirebaseException catch (error) {
+      print(error);
+      return null;
       rethrow;
     } catch (error) {
       rethrow;
