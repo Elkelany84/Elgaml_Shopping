@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/banners_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/banners_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/add_category_dashboard.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_details.dart';
@@ -60,6 +62,9 @@ class MyApp extends StatelessWidget {
           return CategoriesProvider();
         }),
         ChangeNotifierProvider(create: (_) {
+          return BannersProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
           return UserProvider();
         }),
         ChangeNotifierProvider(create: (_) {
@@ -89,6 +94,7 @@ class MyApp extends StatelessWidget {
             EditOrUploadProductForm.routeName: (context) =>
                 const EditOrUploadProductForm(),
             CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+            BannersScreen.routeName: (context) => const BannersScreen(),
             AllUsersScreen.routeName: (context) => const AllUsersScreen(),
             OrderStreamScreen.routeName: (context) => OrderStreamScreen(),
             OrdersScreenCompleted.routeName: (context) =>

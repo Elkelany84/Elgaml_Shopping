@@ -51,10 +51,13 @@ class category_widget extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              FancyShimmerImage(
-                                imageUrl: document['categoryImage'],
-                                height: 60,
-                                width: 60,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: FancyShimmerImage(
+                                  imageUrl: document['categoryImage'],
+                                  height: 60,
+                                  width: 60,
+                                ),
                               ),
                               SizedBox(
                                 width: 20,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/banners_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
@@ -47,22 +48,22 @@ class DashboardButtonsModel {
               Navigator.pushNamed(context, SearchScreen.routeName);
             }),
         DashboardButtonsModel(
-            text: "جميع العملاء",
-            imagePath: AssetsManager.allUsers,
+            text: "عرض الإعلانات",
+            imagePath: AssetsManager.addBanner,
             onPressed: () {
-              Navigator.pushNamed(context, AllUsersScreen.routeName);
+              Navigator.pushNamed(context, BannersScreen.routeName);
             }),
-        // DashboardButtonsModel(
-        //     text: "Add Category",
-        //     imagePath: AssetsManager.addCategory,
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, AddCategoryDashboard.routeName);
-        //     }),
         DashboardButtonsModel(
             text: "عرض جميع التصنيفات",
             imagePath: AssetsManager.categories,
             onPressed: () {
               Navigator.pushNamed(context, CategoriesScreen.routeName);
+            }),
+        DashboardButtonsModel(
+            text: "جميع العملاء",
+            imagePath: AssetsManager.allUsers,
+            onPressed: () {
+              Navigator.pushNamed(context, AllUsersScreen.routeName);
             }),
         DashboardButtonsModel(
             text: "طلبيات واردة",

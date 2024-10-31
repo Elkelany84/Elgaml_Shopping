@@ -6,23 +6,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/categories_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/banners_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-class AddCategoryBottomSheet extends StatefulWidget {
-  const AddCategoryBottomSheet({super.key});
-  static const routeName = '/add_category_bottomSheet';
+class AddBannerBottomSheet extends StatefulWidget {
+  const AddBannerBottomSheet({super.key});
+  static const routeName = '/add_banner_bottomSheet';
 
   @override
-  State<AddCategoryBottomSheet> createState() => _AddCategoryBottomSheetState();
+  State<AddBannerBottomSheet> createState() => _AddBannerBottomSheetState();
 }
 
-class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
+class _AddBannerBottomSheetState extends State<AddBannerBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   XFile? _pickedImage;
   bool isLoading = false;
@@ -53,7 +51,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
 //check if he choose image or not
     if (_pickedImage == null) {
       MyAppFunctions.showErrorOrWarningDialog(
-          context: context, fct: () {}, subtitle: "اختر صورة للتصنيف");
+          context: context, fct: () {}, subtitle: "اختر صورة الإعلان");
       return;
     }
     if (isValid) {
@@ -63,28 +61,28 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
         });
 
         //store picked image to firebase storage
-        final categoryId = Uuid().v4();
+        final bannerId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref.child("categoriesImages").child('$categoryId.png');
+        final imageRef = ref.child("banners").child('$bannerId.png');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
         //Register user in FirebaseFirestore
 
         await FirebaseFirestore.instance
-            .collection("categories")
-            .doc(categoryId)
+            .collection("banners")
+            .doc(bannerId)
             .set({
-          "categoryId": categoryId,
-          "categoryName": _titleController.text.trim(),
-          "categoryImage": imageUrl,
+          "bannerId": bannerId,
+          "bannerName": _titleController.text.trim(),
+          "bannerImage": imageUrl,
           "createdAt": Timestamp.now(),
         });
-        Navigator.pushReplacementNamed(context, CategoriesScreen.routeName);
+        Navigator.pushReplacementNamed(context, BannersScreen.routeName);
         // await categoriesProvider.countCategories();
         //SToast Message
         Fluttertoast.showToast(
-            msg: "تم إضافة التصنيف بنجاح !",
+            msg: "تم إضافة الإعلان بنجاح !",
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
@@ -144,9 +142,9 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesProvider = Provider.of<CategoriesProvider>(
-      context,
-    );
+    // final bannerProvider = Provider.of<BannersProvider>(
+    //   context,
+    // );
     Size size = MediaQuery.of(context).size;
     return LoadingManager(
       isLoading: isLoading,
@@ -198,7 +196,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                                         color: Colors.blue,
                                       ),
                                       Text(
-                                        "اختر صورة للتصنيف",
+                                        "اختر صورة الإعلان",
                                         style: TextStyle(fontSize: 12),
                                       )
                                     ],
@@ -248,7 +246,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                         height: 12,
                       ),
                       Text(
-                        "اسم التصنيف : ",
+                        "اسم الإعلان : ",
                         style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -267,12 +265,11 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                           minLines: 1,
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.newline,
-                          decoration:
-                              InputDecoration(hintText: "Category Name"),
+                          decoration: InputDecoration(hintText: "اكتب هنا..."),
                           validator: (value) {
                             return MyValidators.uploadProdTexts(
                                 value: value,
-                                toBeReturnedString: "اختر اسم صحيح للتصنيف");
+                                toBeReturnedString: "اختر اسم صحيح للإعلان");
                           },
                         ),
                       ),
@@ -296,7 +293,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                                 // await categoriesProvider.countCategories();
                               },
                               child: const Text(
-                                "اضف التصنيف",
+                                "اضف الإعلان",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               )),

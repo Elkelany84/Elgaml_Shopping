@@ -93,7 +93,7 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
         //store picked image to firebase storage
         final categoryId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref.child("categoriesImages").child('$categoryId.jpg');
+        final imageRef = ref.child("categoriesImages").child('$categoryId.png');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
@@ -156,7 +156,7 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
         if (_pickedImage != null) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef =
-              ref.child("categoriesImages").child('${widget.categoryId}.jpg');
+              ref.child("categoriesImages").child('${widget.categoryId}.png');
           await imageRef.putFile(File(_pickedImage!.path));
           widget.categoryImage = await imageRef.getDownloadURL();
         }

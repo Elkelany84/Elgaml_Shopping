@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/dashboard_buttons_model.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/banners_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/products_provider.dart';
@@ -31,6 +33,7 @@ class DashboardScreenState extends State<DashboardScreen> {
         Provider.of<ProductsProvider>(context, listen: false);
     final categoryProvider =
         Provider.of<CategoriesProvider>(context, listen: false);
+    final bannerProvider = Provider.of<BannersProvider>(context, listen: false);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     try {
@@ -41,6 +44,8 @@ class DashboardScreenState extends State<DashboardScreen> {
       await categoryProvider.fetchCategories();
       await productsProvider.countProducts();
       await categoryProvider.countCategories();
+      await bannerProvider.fetchBanners();
+      await bannerProvider.countBanners();
       await userProvider.countUsers();
       await orderProvider.fetchOrders();
       // await categoryProvider.fetchCategories();
@@ -59,12 +64,29 @@ class DashboardScreenState extends State<DashboardScreen> {
     return query.count;
   }
 
+  void setupPushNotification() async {
+    final fcm = FirebaseMessaging.instance;
+    await fcm.requestPermission();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint('Got a message whilst in the foreground!');
+      debugPrint('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        debugPrint(
+            'Message also contained a notification: ${message.notification}');
+      }
+    });
+    final token = await fcm.getToken();
+    print(token);
+  }
+
   @override
   void didChangeDependencies() {
     if (isLoadingProd) {
       fetchFct();
       countProducts();
     }
+    setupPushNotification();
     super.didChangeDependencies();
   }
 

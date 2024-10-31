@@ -1,6 +1,7 @@
 class AssetsManager {
   static String imagesPath = "assets/images";
   static String categoriesImagesPath = "assets/images/categories";
+  static String bannersImagesPath = "assets/images/banners";
   static String dashboardImagesPath = "assets/images/dashboard";
 
 // general images
@@ -13,6 +14,7 @@ class AssetsManager {
   // Categories path
   static String categories = "$categoriesImagesPath/categories.png";
   static String addCategory = "$categoriesImagesPath/addcategory.png";
+  static String addBanner = "$bannersImagesPath/addbanner.png";
   static String mobiles = "$categoriesImagesPath/mobiles.png";
   static String fashion = "$categoriesImagesPath/fashion.png";
   static String watch = "$categoriesImagesPath/watch.png";

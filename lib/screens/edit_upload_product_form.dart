@@ -145,7 +145,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         //store picked image to firebase storage
         final productId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref.child("productsImages").child('$productId.jpg');
+        final imageRef = ref.child("productsImages").child('$productId.png');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
@@ -155,7 +155,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         for (var image in imageFileList) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef =
-              ref.child("productsImages").child('${Uuid().v4()}.jpg');
+              ref.child("productsImages").child('${Uuid().v4()}.png');
           await imageRef.putFile(File(image.path));
           final imageUrl = await imageRef.getDownloadURL();
           // imageFileList.add(imageUrl);
@@ -239,7 +239,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           final ref = FirebaseStorage.instance.ref();
           final imageRef = ref
               .child("productsImages")
-              .child('${widget.productModel!.productId}.jpg');
+              .child('${widget.productModel!.productId}.png');
           await imageRef.putFile(File(_pickedImage!.path));
           productImageUrl = await imageRef.getDownloadURL();
         }
@@ -248,7 +248,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         for (var image in imageFileList) {
           final ref = FirebaseStorage.instance.ref();
           final imageRef =
-              ref.child("productsImages").child('${Uuid().v4()}.jpg');
+              ref.child("productsImages").child('${Uuid().v4()}.png');
           await imageRef.putFile(File(image.path));
           final imageUrl = await imageRef.getDownloadURL();
           // imageFileList.add(imageUrl);
