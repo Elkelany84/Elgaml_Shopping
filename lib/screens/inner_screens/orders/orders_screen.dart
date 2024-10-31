@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
@@ -6,7 +7,9 @@ import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/order_details.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/empty_bag.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +24,7 @@ class OrdersScreenFree extends StatefulWidget {
 
 class _OrdersScreenFreeState extends State<OrdersScreenFree> {
   // bool isEmptyOrders = false;
-
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
@@ -41,187 +44,198 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
             fontSize: 24,
           ),
         ),
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("ordersAdvanced")
-              .where("userId", isEqualTo: userProvider.uidd)
-              .orderBy("orderDate", descending: true)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OrderStreamScreen(
-                                    docName: snapshot.data!.docs[index]
-                                        ["sessionId"],
-                                    // userId: snapshot.data!.docs[index]["userId"],
-                                  )),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.all(8),
-                        height: 255,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label:
-                                        LocaleData.orderDate.getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label:
-                                            // timeago.format(
-                                            //   snapshot.data!.docs[index]["orderDate"]
-                                            //       .toDate(),
-                                            // ),
-                                            snapshot
-                                                .data!.docs[index]["orderDate"]
-                                                .toDate()
-                                                .toString()
-                                                .substring(0, 10)),
-                                  ),
-                                ],
+        body: user == null
+            ? EmptyBag(
+                imagePath: AssetsManager.orderBag,
+                title: "برجاء بدء التسوق أولا",
+                titleFont: 18,
+                // subtitle: "Looks Like Your Cart is Empty,Start Shopping!",
+                // details: "Looks Like Your Cart is Empty,Start Shopping!",
+                buttonText: LocaleData.shopNow.getString(context),
+                buttonFont: 18,
+              )
+            // const SizedBox.shrink()
+            : StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("ordersAdvanced")
+                    .where("userId", isEqualTo: userProvider.uidd)
+                    .orderBy("orderDate", descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderStreamScreen(
+                                          docName: snapshot.data!.docs[index]
+                                              ["sessionId"],
+                                          // userId: snapshot.data!.docs[index]["userId"],
+                                        )),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(8),
+                              height: 255,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.grey),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label: LocaleData.orderNumber
-                                        .getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                      label: snapshot.data!.docs[index]
-                                          ["sessionId"],
-                                      textOverflow: TextOverflow.ellipsis,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.orderDate
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                              label:
+                                                  // timeago.format(
+                                                  //   snapshot.data!.docs[index]["orderDate"]
+                                                  //       .toDate(),
+                                                  // ),
+                                                  snapshot.data!
+                                                      .docs[index]["orderDate"]
+                                                      .toDate()
+                                                      .toString()
+                                                      .substring(0, 10)),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label: LocaleData.orderStatus
-                                        .getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                      label: snapshot.data!.docs[index]
-                                          ["orderStatus"],
-                                      color: Colors.blue,
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                  ),
-                                ],
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.orderNumber
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                            label: snapshot.data!.docs[index]
+                                                ["sessionId"],
+                                            textOverflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.orderStatus
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                            label: snapshot.data!.docs[index]
+                                                ["orderStatus"],
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.orderTotalProducts
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                              label: snapshot.data!
+                                                  .docs[index]["totalProducts"]
+                                                  .toString(),
+                                              color: Colors.blue),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.totalPrice
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                              label:
+                                                  "${snapshot.data!.docs[index]["totalPrice"].toString()} جنيه ",
+                                              color: Colors.blue),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        TitleTextWidget(
+                                          label: LocaleData.paymentMethod
+                                              .getString(context),
+                                        ),
+                                        Expanded(
+                                          child: SubtitleTextWidget(
+                                              label: snapshot.data!.docs[index]
+                                                  ["paymentMethod"],
+                                              color: Colors.blue),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    // Row(
+                                    //   children: [
+                                    //     const TitleTextWidget(
+                                    //       label: "Shipping Date: ",
+                                    //     ),
+                                    //     Expanded(
+                                    //       child: SubtitleTextWidget(
+                                    //         label: snapshot
+                                    //             .data!.docs[index]["shippingDate"]
+                                    //             .toDate()
+                                    //             .toString()
+                                    //             .substring(0, 10),
+                                    //         color: Colors.blue,
+                                    //         textOverflow: TextOverflow.ellipsis,
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label: LocaleData.orderTotalProducts
-                                        .getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label: snapshot
-                                            .data!.docs[index]["totalProducts"]
-                                            .toString(),
-                                        color: Colors.blue),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label: LocaleData.totalPrice
-                                        .getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label:
-                                            "${snapshot.data!.docs[index]["totalPrice"].toString()} جنيه ",
-                                        color: Colors.blue),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitleTextWidget(
-                                    label: LocaleData.paymentMethod
-                                        .getString(context),
-                                  ),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label: snapshot.data!.docs[index]
-                                            ["paymentMethod"],
-                                        color: Colors.blue),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              // Row(
-                              //   children: [
-                              //     const TitleTextWidget(
-                              //       label: "Shipping Date: ",
-                              //     ),
-                              //     Expanded(
-                              //       child: SubtitleTextWidget(
-                              //         label: snapshot
-                              //             .data!.docs[index]["shippingDate"]
-                              //             .toDate()
-                              //             .toString()
-                              //             .substring(0, 10),
-                              //         color: Colors.blue,
-                              //         textOverflow: TextOverflow.ellipsis,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     );
-                  },
-                ),
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        ),
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
         //original futurebuilder to get the data from ordersummary arrayfield using fetchorders in orderProvider
         // FutureBuilder(
         //   future: orderProvider.fetchOrders(),

@@ -18,9 +18,7 @@ class WishListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishlistProvider = Provider.of<WishlistProvider>(
-      context,
-    );
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
     return wishlistProvider.wishlistItems.isEmpty
         ? Scaffold(

@@ -7,17 +7,107 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1035545623294:android:474c46ad7f73ce4a4943af",
+        "mobilesdk_app_id": "1:1035545623294:android:7bf00693b574ace44943af",
         "android_client_info": {
           "package_name": "com.elgamlmoto"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1035545623294-12ogpbndmucepmildsho42226llhpfhh.apps.googleusercontent.com",
+          "client_id": "1035545623294-uriam7cm2l357pcelncak6g7n1qb4b8f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.elgamlmoto",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAVrD1t3YlQhh3xG333nfjInaM5HGeBkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035545623294:android:474c46ad7f73ce4a4943af",
+        "android_client_info": {
+          "package_name": "com.elgamlstores"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035545623294-0m3f0t05hhhmcepi6tn40kf5ccnsslke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores",
+            "certificate_hash": "257578b2bd800ac426054f794df973376ed3885f"
+          }
+        },
+        {
+          "client_id": "1035545623294-12ogpbndmucepmildsho42226llhpfhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "1035545623294-6ddor0r0lprei67buuag07eehiq8ifb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores",
+            "certificate_hash": "c918291cfcd784847ada41e88be5c548997333e4"
+          }
+        },
+        {
+          "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAVrD1t3YlQhh3xG333nfjInaM5HGeBkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035545623294-i5ate81aancjlc3cssqvkn2d4m3j544h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035545623294:android:74841b51e955a20d4943af",
+        "android_client_info": {
+          "package_name": "com.elgamlstores_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035545623294-731peph4mnohecm9g1jpr4ave46f5524.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elgamlstores_admin",
             "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
           }
         },

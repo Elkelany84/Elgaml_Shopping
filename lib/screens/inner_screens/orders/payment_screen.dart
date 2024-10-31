@@ -107,9 +107,10 @@ class _PaymentScreenState extends State<PaymentScreen>
     final themeProvider = Provider.of<ThemeProvider>(context);
     // DateTime? maximumDate = dateTime;.add(const Duration(days: 7))
     return Directionality(
-      textDirection: themeProvider.currentLocaleProvider == "ar"
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection: TextDirection.rtl,
+      // themeProvider.currentLocaleProvider == "ar"
+      //     ? TextDirection.rtl
+      //     : TextDirection.ltr,
       child: Scaffold(
         bottomSheet: PaymentBottomSheetWidget(
           function: () async {

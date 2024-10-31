@@ -50,9 +50,10 @@ class _SearchScreenState extends State<SearchScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Directionality(
-        textDirection: themeProvider.currentLocaleProvider == "ar"
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection: TextDirection.rtl,
+        // themeProvider.currentLocaleProvider == "ar"
+        //     ? TextDirection.rtl
+        //     : TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(
             leading: Padding(

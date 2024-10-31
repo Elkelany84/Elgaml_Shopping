@@ -62,6 +62,7 @@ class GoogleButton extends StatelessWidget {
         fct: () {},
       );
     }
+    return null;
   }
 
   //google sign in

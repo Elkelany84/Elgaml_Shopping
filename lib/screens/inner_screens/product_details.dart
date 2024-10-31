@@ -73,9 +73,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     //   return imageUrls;
     // }
     return Directionality(
-      textDirection: themeProvider.currentLocaleProvider == "ar"
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection: TextDirection.rtl,
+      // themeProvider.currentLocaleProvider == "ar"
+      //     ? TextDirection.rtl
+      //     : TextDirection.ltr,
       child: Scaffold(
         // bottomSheet: const RootScreen(),
         appBar: AppBar(

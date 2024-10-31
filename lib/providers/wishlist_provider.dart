@@ -41,7 +41,7 @@ class WishlistProvider with ChangeNotifier {
           }
         ]),
       });
-      Fluttertoast.showToast(msg: "Item Added To WishList");
+      await Fluttertoast.showToast(msg: "تم الإضافة للمفضلة");
     } catch (error) {
       rethrow;
     }
@@ -49,14 +49,14 @@ class WishlistProvider with ChangeNotifier {
   }
 
   //delete product from wishlist in firebase
-  Future<void> deleteProductFromWishListFirebase({
-    required String wishListId,
-    required String productId,
-  }) async {
+  Future<void> deleteProductFromWishListFirebase(
+      {required String wishListId,
+      required String productId,
+      required BuildContext context}) async {
     final User? user = auth.currentUser;
     final uid = user!.uid;
     try {
-      _wishlistItems.remove(productId);
+      await _wishlistItems.remove(productId);
       await usersDb.doc(uid).update({
         "userWish": FieldValue.arrayRemove([
           {
@@ -66,7 +66,7 @@ class WishlistProvider with ChangeNotifier {
         ]),
       });
 
-      Fluttertoast.showToast(msg: "Item Deleted From WishList");
+      await Fluttertoast.showToast(msg: "تم المسح من المفضلة");
     } catch (error) {
       rethrow;
     }
@@ -88,7 +88,7 @@ class WishlistProvider with ChangeNotifier {
       }
       final length = userDoc.get("userWish").length;
       for (int index = 0; index < length; index++) {
-        _wishlistItems.putIfAbsent(
+        await _wishlistItems.putIfAbsent(
             userDoc.get("userWish")[index]["productId"],
             () => WishListModel(
                   productId: userDoc.get("userWish")[index]["productId"],
@@ -112,7 +112,7 @@ class WishlistProvider with ChangeNotifier {
       //get the cart items from firebase and show it in cart screen
       await getWishListItemsFromFirebase();
       clearWishlist();
-      Fluttertoast.showToast(msg: "WishList Cleared");
+      Fluttertoast.showToast(msg: "تم مسح المفضلة");
     } catch (error) {
       rethrow;
     }

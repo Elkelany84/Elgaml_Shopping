@@ -10,8 +10,10 @@ import 'package:hadi_ecommerce_firebase_admin/models/user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/empty_bag.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
 
@@ -186,7 +188,17 @@ class _PersonalProfileState extends State<PersonalProfile>
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: userModel == null
-              ? const SizedBox.shrink()
+              ? EmptyBag(
+                  imagePath: AssetsManager.orderBag,
+                  title: "برجاء بدء التسوق أولا",
+                  titleFont: 18,
+                  // subtitle: "Looks Like Your Cart is Empty,Start Shopping!",
+                  // details: "Looks Like Your Cart is Empty,Start Shopping!",
+                  buttonText: LocaleData.shopNow.getString(context),
+                  buttonFont: 18,
+                )
+
+              // const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(

@@ -37,7 +37,7 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
             await wishlistProvider.deleteProductFromWishListFirebase(
                 wishListId: wishlistProvider
                     .wishlistItems[widget.productId]!.wishListId,
-                productId: widget.productId);
+                productId: widget.productId,context: context);
           } else {
             await wishlistProvider.addToWishListFirebase(
                 productId: widget.productId, context: context);

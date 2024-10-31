@@ -39,6 +39,16 @@ class MyAppFunctions {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    TextButton(
+                      onPressed: () {
+                        fct();
+                        Navigator.pop(context);
+                      },
+                      child: const SubtitleTextWidget(
+                        label: "Ok",
+                        color: Colors.red,
+                      ),
+                    ),
                     Visibility(
                       visible: !isError,
                       child: TextButton(
@@ -49,16 +59,6 @@ class MyAppFunctions {
                           label: "Cancel",
                           color: Colors.green,
                         ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        fct();
-                        Navigator.pop(context);
-                      },
-                      child: const SubtitleTextWidget(
-                        label: "Ok",
-                        color: Colors.red,
                       ),
                     ),
                   ],

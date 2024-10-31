@@ -39,9 +39,10 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Directionality(
-        textDirection: themeProvider.currentLocaleProvider == "ar"
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection: TextDirection.rtl,
+        // themeProvider.currentLocaleProvider == "ar"
+        //     ? TextDirection.rtl
+        //     : TextDirection.ltr,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(

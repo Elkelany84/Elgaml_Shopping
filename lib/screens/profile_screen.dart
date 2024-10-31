@@ -242,36 +242,36 @@ class _ProfileScreenState extends State<ProfileScreen>
                         themeProvider.setDarkTheme(value);
                       }),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                ListTile(
-                  leading: Image.asset(
-                    AssetsManager.language,
-                    height: 34,
-                  ),
-                  title: SubtitleTextWidget(
-                    label: LocaleData.language.getString(context),
-                  ),
-                  trailing: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: _currentLocale,
-                      items: const [
-                        DropdownMenuItem(
-                          value: "en",
-                          child: Text("English"),
-                        ),
-                        DropdownMenuItem(
-                          value: "ar",
-                          child: Text("العربية"),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        _setLocale(value);
-                      },
-                    ),
-                  ),
-                ),
+                // const SizedBox(
+                //   height: 8,
+                // ),
+                // ListTile(
+                //   leading: Image.asset(
+                //     AssetsManager.language,
+                //     height: 34,
+                //   ),
+                //   title: SubtitleTextWidget(
+                //     label: LocaleData.language.getString(context),
+                //   ),
+                //   trailing: DropdownButtonHideUnderline(
+                //     child: DropdownButton(
+                //       value: _currentLocale,
+                //       items: const [
+                //         DropdownMenuItem(
+                //           value: "en",
+                //           child: Text("English"),
+                //         ),
+                //         DropdownMenuItem(
+                //           value: "ar",
+                //           child: Text("العربية"),
+                //         ),
+                //       ],
+                //       onChanged: (value) {
+                //         _setLocale(value);
+                //       },
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 12,
                 ),
