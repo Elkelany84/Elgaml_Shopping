@@ -24,7 +24,7 @@ class _OrdersScreenProcessingState extends State<OrdersScreenProcessing> {
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     Color _getTextColor(String textValue) {
       // Define your logic to return different colors based on textValue
-      if (textValue == 'Visa') {
+      if (textValue == 'Etissalat') {
         return Colors.red;
       } else if (textValue == 'Cash') {
         return Colors.green;
@@ -40,7 +40,7 @@ class _OrdersScreenProcessingState extends State<OrdersScreenProcessing> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
-            .where("orderStatus", isEqualTo: "جارى تجهيز الطلب")
+            .where("orderStatus", isEqualTo: "جارى مراجعة الطلب")
             .orderBy("orderDate", descending: true)
             .snapshots(),
         builder: (context, snapshot) {

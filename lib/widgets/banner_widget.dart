@@ -3,6 +3,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/banners_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class banner_widget extends StatelessWidget {
   const banner_widget({
@@ -49,12 +50,14 @@ class banner_widget extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: FancyShimmerImage(
-                                  imageUrl: document['bannerImage'],
-                                  height: 300,
-                                  width: screenWidth / 2,
+                              InstaImageViewer(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: FancyShimmerImage(
+                                    imageUrl: document['bannerImage'],
+                                    height: 300,
+                                    width: screenWidth / 2,
+                                  ),
                                 ),
                               ),
                               SizedBox(

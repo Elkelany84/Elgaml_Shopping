@@ -76,6 +76,7 @@ class DashboardScreenState extends State<DashboardScreen> {
             'Message also contained a notification: ${message.notification}');
       }
     });
+    fcm.subscribeToTopic("ordersAdvanced");
     final token = await fcm.getToken();
     print(token);
   }
