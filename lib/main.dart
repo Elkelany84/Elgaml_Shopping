@@ -38,6 +38,7 @@ void main() async {
           ),
         )
       : await Firebase.initializeApp();
+  // Create a Firestore instance
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(const MyApp());

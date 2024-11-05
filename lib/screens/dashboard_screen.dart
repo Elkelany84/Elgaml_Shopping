@@ -66,18 +66,27 @@ class DashboardScreenState extends State<DashboardScreen> {
 
   void setupPushNotification() async {
     final fcm = FirebaseMessaging.instance;
-    await fcm.requestPermission();
+    var token = await FirebaseMessaging.instance.getToken();
+    NotificationSettings settings = await fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    print('User granted permission: ${settings.authorizationStatus}');
+    await fcm.subscribeToTopic("ordersAdvanced"); // Add this line
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint('Got a message whilst in the foreground!');
-      debugPrint('Message data: ${message.data}');
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
 
       if (message.notification != null) {
-        debugPrint(
-            'Message also contained a notification: ${message.notification}');
+        print('Message also contained a notification: ${message.notification}');
       }
     });
-    fcm.subscribeToTopic("ordersAdvanced");
-    final token = await fcm.getToken();
+
     print(token);
   }
 
@@ -87,8 +96,14 @@ class DashboardScreenState extends State<DashboardScreen> {
       fetchFct();
       countProducts();
     }
-    setupPushNotification();
+
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    setupPushNotification();
+    super.initState();
   }
 
   @override

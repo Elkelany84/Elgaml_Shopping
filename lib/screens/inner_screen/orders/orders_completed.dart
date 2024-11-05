@@ -201,11 +201,11 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                                           .doc(snapshot.data!.docs[index]
                                               ["sessionId"])
                                           .update({
-                                        "orderStatus": "جارى مراجعة الطلب",
+                                        "orderStatus": "جارى تجهيز الطلب",
                                       });
                                     },
                                     child: Text(
-                                      "جارى مراجعة الطلب",
+                                      "جارى تجهيز الطلب",
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                   ),
