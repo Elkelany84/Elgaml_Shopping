@@ -7,9 +7,11 @@ import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival_inside_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -49,16 +51,29 @@ class _ProductDetailsState extends State<ProductDetails> {
     // final productId = ModalRoute.of(context)?.settings.arguments as String;
     // final getCurrentProduct = productsProvider.findByProdId(productId);
     // fetchImageUrls(productId: widget.productId.toString());
+    // screens = [
+    //   const HomeScreen(),
+    //   const SearchScreen(),
+    //   const CartScreen(),
+    //   const ProfileScreen()
+    // ];
+    // controller = PageController(initialPage: currentScreen);
     super.initState();
   }
 
+  // late List<Widget> screens;
+  // late PageController controller;
+  // int currentScreen = 0;
   @override
   Widget build(BuildContext context) {
     final productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     final productId = ModalRoute.of(context)?.settings.arguments as String;
+    // final productId = widget.productId;
+
     final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
     fetchImageUrls(productId: productId);
@@ -100,6 +115,44 @@ class _ProductDetailsState extends State<ProductDetails> {
           //   fontSize: 26,
           // ),
         ),
+        // bottomNavigationBar: NavigationBar(
+        //   // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        //   elevation: 5,
+        //   height: kBottomNavigationBarHeight,
+        //   selectedIndex: currentScreen,
+        //   onDestinationSelected: (index) {
+        //     setState(() {
+        //       currentScreen = index;
+        //     });
+        //     controller.jumpToPage(currentScreen);
+        //   },
+        //   destinations: [
+        //     NavigationDestination(
+        //       selectedIcon: const Icon(IconlyBold.home),
+        //       icon: const Icon(IconlyLight.home),
+        //       label: LocaleData.home.getString(context),
+        //     ),
+        //     NavigationDestination(
+        //       selectedIcon: const Icon(IconlyBold.search),
+        //       icon: const Icon(IconlyLight.search),
+        //       label: LocaleData.search.getString(context),
+        //     ),
+        //     NavigationDestination(
+        //       selectedIcon: const Icon(IconlyBold.bag2),
+        //       icon: Badge(
+        //           backgroundColor: Colors.blue,
+        //           textColor: Colors.white,
+        //           label: Text("${cartProvider.cartItems.length}"),
+        //           child: const Icon(IconlyLight.bag2)),
+        //       label: LocaleData.cart.getString(context),
+        //     ),
+        //     NavigationDestination(
+        //       selectedIcon: const Icon(IconlyBold.profile),
+        //       icon: const Icon(IconlyLight.profile),
+        //       label: LocaleData.profile.getString(context),
+        //     ),
+        //   ],
+        // ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: getCurrentProduct == null
@@ -109,7 +162,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       imageList.length > 1
                           ? SizedBox(
-                              height: 300.0,
+                              height: size.height * 0.38,
                               child: ClipRRect(
                                 // borderRadius: BorderRadius.circular(20),
                                 child: Swiper(
@@ -134,7 +187,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Hero(
-                                tag: getCurrentProduct.productImage,
+                                tag:
+                                    // "click",
+                                    getCurrentProduct.productImage,
                                 child: FancyShimmerImage(
                                   imageUrl: getCurrentProduct.productImage,
                                   height: size.height * 0.38,
@@ -220,7 +275,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         .getString(context)
                                     : LocaleData.productDetailsAddedToCart
                                         .getString(context),
-                                style: const TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 18),
                               ),
                               icon: Icon(cartProvider.isProductInCart(
                                       productId: getCurrentProduct.productId)
@@ -265,6 +320,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                           textAlign: TextAlign.right,
                           label: getCurrentProduct.productDescription,
                           textOverflow: TextOverflow.visible,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: TitleTextWidget(
+                            textDirection: TextDirection.rtl,
+                            label: "أحدث المنتجات :"),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Visibility(
+                        visible: viewedProdProvider.viewedProdsItems.isNotEmpty,
+                        child: SizedBox(
+                          height: size.height * 0.2,
+                          width: size.width,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: productsProvider.getProducts.length,
+                              itemBuilder: (context, index) {
+                                return ChangeNotifierProvider.value(
+                                    value: productsProvider.getProducts[index],
+                                    child: LatestArrivalProductDetails());
+                              }),
                         ),
                       ),
                     ],

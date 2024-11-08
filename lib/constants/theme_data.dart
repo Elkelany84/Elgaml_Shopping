@@ -5,6 +5,7 @@ class Styles {
   static ThemeData themeData(
       {required bool isDarkTheme, required BuildContext context}) {
     return ThemeData(
+      fontFamily: "Almarai",
       scaffoldBackgroundColor: isDarkTheme
           ? AppColors.darkScaffoldColor
           : AppColors.lightScaffoldColor,

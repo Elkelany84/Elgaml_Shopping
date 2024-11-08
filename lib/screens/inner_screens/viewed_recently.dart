@@ -69,6 +69,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
                 ],
               ),
               body: DynamicHeightGridView(
+                physics: ScrollPhysics(),
                 // mainAxisSpacing: 12,
                 // crossAxisSpacing: 12,
                 builder: (context, index) {

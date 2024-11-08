@@ -84,12 +84,16 @@ class _PaymentScreenState extends State<PaymentScreen>
     // });
   }
 
+  late FlutterLocalization _flutterLocalization;
+  late String _currentLocale;
   @override
   void initState() {
     // _sessionId = const Uuid().v4();
     _sessionId = randomAlphaNumeric(6);
     print(_sessionId);
     fetchUserInfo();
+    _flutterLocalization = FlutterLocalization.instance;
+    _currentLocale = _flutterLocalization.currentLocale!.languageCode;
     super.initState();
   }
 
@@ -129,7 +133,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                         fontSize: 16.0)
                     //navigate to personal profile with _isLoading argument to false
 
-                    .then((value) => Navigator.pushNamed(
+                    .then((value) => Navigator.pushReplacementNamed(
                         context, PersonalProfile.routeName,
                         arguments: _isLoading = false));
           },
@@ -502,7 +506,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
       await cartProvider.clearCartFirebase();
       cartProvider.clearCart();
-      Navigator.pushNamed(context, PaymentSuccess.routeName);
+      Navigator.pushReplacementNamed(context, PaymentSuccess.routeName);
     } catch (error) {
       MyAppFunctions.showErrorOrWarningDialog(
           context: context, fct: () {}, subTitle: error.toString());

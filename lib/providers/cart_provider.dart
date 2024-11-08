@@ -42,7 +42,7 @@ class CartProvider with ChangeNotifier {
       });
       //get the cart items from firebase and show it in cart screen
       await getCartItemsFromFirebase();
-      Fluttertoast.showToast(msg: "Item Added To Cart");
+      Fluttertoast.showToast(msg: "تمت الإضافة للسلة");
     } catch (error) {
       rethrow;
     }
@@ -93,7 +93,7 @@ class CartProvider with ChangeNotifier {
       //get the cart items from firebase and show it in cart screen
       await getCartItemsFromFirebase();
       cartItems.remove(productId);
-      Fluttertoast.showToast(msg: "Item Deleted From Cart");
+      Fluttertoast.showToast(msg: "تم الحذف من السلة");
     } catch (error) {
       rethrow;
     }

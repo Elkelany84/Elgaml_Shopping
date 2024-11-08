@@ -24,6 +24,7 @@ class TitleTextWidget extends StatelessWidget {
       label,
       maxLines: maxLines,
       style: TextStyle(
+          fontFamily: "Almarai",
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
           color: color,

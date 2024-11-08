@@ -71,7 +71,8 @@ class EmptyBag extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RootScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(RootScreen.routeName);
                 },
                 child: TitleTextWidget(
                   label: buttonText,

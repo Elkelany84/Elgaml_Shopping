@@ -9,9 +9,9 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
 
-class LatestArrivalProductWidgets extends StatelessWidget {
+class LatestArrivalProductDetails extends StatelessWidget {
   // final String productId;
-  const LatestArrivalProductWidgets({
+  const LatestArrivalProductDetails({
     super.key,
   });
 
@@ -28,7 +28,8 @@ class LatestArrivalProductWidgets extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           viewedProdProvider.addViewedProd(productId: productModel.productId);
-          await Navigator.pushNamed(context, ProductDetails.routeName,
+          await Navigator.pushReplacementNamed(
+              context, ProductDetails.routeName,
               arguments: productModel.productId);
           // Navigator.of(context).push(
           //   PageRouteBuilder(
@@ -59,15 +60,12 @@ class LatestArrivalProductWidgets extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                child: Hero(
-                  tag: productModel.productImage,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: FancyShimmerImage(
-                      imageUrl: productModel.productImage,
-                      height: size.height * 0.12,
-                      width: size.width * 0.25,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: FancyShimmerImage(
+                    imageUrl: productModel.productImage,
+                    height: size.height * 0.12,
+                    width: size.width * 0.25,
                   ),
                 ),
               ),

@@ -7,9 +7,19 @@ var uuid = const Uuid();
 
 class ProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];
+  List<ProductModel> ProductsLessThan100 = [];
+  List copilotList = [];
 
   List<ProductModel> get getProducts {
     return products;
+  }
+
+  List<ProductModel> get getProductsLessThan1000 {
+    return ProductsLessThan100;
+  }
+
+  List get getCopilotList {
+    return copilotList;
   }
 
   //Show Product and Product Details
@@ -44,6 +54,8 @@ class ProductsProvider with ChangeNotifier {
 
   // Fetch products from firebase
   final productDb = FirebaseFirestore.instance.collection("products");
+  // final productLessThan100Db =
+  //     FirebaseFirestore.instance.collection("products");
   Future<List<ProductModel>> fetchProducts() async {
     try {
       await productDb
@@ -70,6 +82,87 @@ class ProductsProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  //create function to fetch products which price string value is less than 100 from firebase
+  // Future<List<ProductModel>> fetchProductsLessThan100() async {
+  //   //convert productPrice field to double
+  //   // final productPrice = double.parse("productPrice");
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //
+  //   QuerySnapshot querySnapshot = await firestore.collection('products').get();
+  //
+  //   List<Map<String, dynamic>> affordableProducts = [];
+  //
+  //   for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+  //     // Convert productPrice field from string to number
+  //     double productPrice = double.parse(doc.get('productPrice'));
+  //
+  //     // Check if the productPrice is less than 100
+  //     if (productPrice < 100) {
+  //       affordableProducts.add(doc.data() as Map<String, dynamic>);
+  //     }
+  //   }
+  //   try {
+  //     await productLessThan100Db
+  //         .where("productPrice", isLessThan: 100)
+  //         .orderBy("createdAt", descending: false)
+  //         .get()
+  //         .then((productSnapshot) {
+  //       ProductsLessThan100.clear();
+  //       for (var element in productSnapshot.docs) {
+  //         ProductsLessThan100.insert(0, ProductModel.fromFirestore(element)
+  //             // ProductModel(
+  //             //     productId: element.get("productId"),
+  //             //     productTitle: element.get("productTitle"),
+  //             //     productPrice: element.get("productPrice"),
+  //             //     productCategory: element.get("productCategory"),
+  //             //     productDescription: element.get("productDescription"),
+  //             //     productImage: element.get("productImage"),
+  //             //     productQuantity: "productQuantity")
+  //             );
+  //       }
+  //     });
+  //     notifyListeners();
+  //     return ProductsLessThan100;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  //
+  // //bing copilot function
+  // Future<List<Map<String, dynamic>>> fetchAffordableProducts() async {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //
+  //   // Fetch all documents from the 'products' collection
+  //   QuerySnapshot querySnapshot = await firestore.collection('products').get();
+  //
+  //   List<Map<String, dynamic>> affordableProducts = [];
+  //
+  //   for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+  //     // Convert productPrice field from string to number
+  //     double productPrice = double.parse(doc.get('productPrice'));
+  //
+  //     // Check if the productPrice is less than 100
+  //     if (productPrice < 100) {
+  //       affordableProducts.add(doc.data() as Map<String, dynamic>);
+  //     }
+  //   }
+  //   // print(affordableProducts[0]['productTitle']);
+  //   return affordableProducts;
+  // }
+  //
+  // tryThis() async {
+  //   List<Map<String, dynamic>> products = await fetchAffordableProducts();
+  //
+  //   for (var product in products) {
+  //     print(
+  //         'Product: ${product['productTitle']}, Price: ${product['productPrice']}');
+  //   }
+  //   //add products list to copilotList
+  //
+  //   copilotList = products;
+  //   // print(copilotList);
+  // }
 
   Stream<List<ProductModel>> fetchProductStream() {
     try {
@@ -104,6 +197,30 @@ class ProductsProvider with ChangeNotifier {
     final imageUrls = List<String>.from(productDoc['imageFileList']);
     print(imageUrls);
     return imageUrls;
+  }
+
+  //convert productPrice field from string to number
+  Future<void> convertProductPrices() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a string
+      String priceString = doc.get('productPrice');
+
+      // Convert the price string to a number
+      double priceNumber = double.parse(priceString);
+
+      // Update the document with the new price field
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'productPrice': priceNumber,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $priceNumber');
+    }
   }
 
   //create function to add imageFileList array field to the products collection in firestore

@@ -20,55 +20,58 @@ class PaymentBottomSheetWidget extends StatelessWidget {
     final cartProvider = Provider.of<CartProvider>(context);
     cartProvider.fees = feesAmount.toDouble();
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        border: const Border(
-          top: BorderSide(width: 1, color: Colors.grey),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          border: const Border(
+            top: BorderSide(width: 1, color: Colors.grey),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: kBottomNavigationBarHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleTextWidget(
-                      label:
-                          "${LocaleData.total.getString(context)} (${cartProvider.cartItems.length} ${LocaleData.products.getString(context)} / ${cartProvider.getQty()} ${LocaleData.items.getString(context)})",
-                      fontSize: 17,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: SubtitleTextWidget(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: kBottomNavigationBarHeight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TitleTextWidget(
                         label:
-                            "${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)} جنيه ",
-                        color: Colors.blue,
+                            "${LocaleData.total.getString(context)} (${cartProvider.cartItems.length} ${LocaleData.products.getString(context)} / ${cartProvider.getQty()} ${LocaleData.items.getString(context)})",
+                        fontSize: 17,
                       ),
-                    )
-                  ],
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await function();
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                      GestureDetector(
+                        onTap: () {},
+                        child: SubtitleTextWidget(
+                          label:
+                              "${cartProvider.getTotalForPayment(productsProvider: productsProvider).toStringAsFixed(2)} جنيه ",
+                          color: Colors.blue,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                child: Text(
-                  LocaleData.checkOut.getString(context),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
+                ElevatedButton(
+                  onPressed: () async {
+                    await function();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    LocaleData.checkOut.getString(context),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

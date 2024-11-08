@@ -38,10 +38,38 @@ class _ProductWidgetState extends State<ProductWidget> {
               onTap: () async {
                 viewedProdProvider.addViewedProd(
                     productId: getCurrentProduct.productId);
-                await Navigator.of(context).pushNamed(
+                await Navigator.pushNamed(
+                  context,
                   ProductDetails.routeName,
                   arguments: getCurrentProduct.productId,
                 );
+                // Navigator.of(context).push(
+                //   PageRouteBuilder(
+                //     pageBuilder: (BuildContext context,
+                //         Animation<double> animation,
+                //         Animation<double> secondaryAnimation) {
+                //       return ProductDetails(
+                //         productId: getCurrentProduct.productId,
+                //       );
+                //     },
+                //     transitionsBuilder: (BuildContext context,
+                //         Animation<double> animation,
+                //         Animation<double> secondaryAnimation,
+                //         Widget child) {
+                //       return Align(
+                //         child: SizeTransition(
+                //           sizeFactor: animation,
+                //           child: child,
+                //         ),
+                //       );
+                //     },
+                //     transitionDuration: Duration(milliseconds: 500),
+                //   ),
+                // );
+                // Navigator.of(context).pushNamed(
+                //   ProductDetails.routeName,
+                //   arguments: getCurrentProduct.productId,
+                // );
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
@@ -56,7 +84,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                   //check if the product has imageFileList in the firebase to show swiper widget
 
                   Hero(
-                    tag: getCurrentProduct.productImage,
+                    tag:
+                        // "click",
+                        getCurrentProduct.productImage,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: FancyShimmerImage(

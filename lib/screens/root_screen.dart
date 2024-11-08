@@ -60,7 +60,11 @@ class _RootScreenState extends State<RootScreen> {
       // await userProvider.fetchUserInfo();
       Future.wait({
         productsProvider.fetchProducts(),
+        // productsProvider.fetchProductsLessThan100(),
+        // productsProvider.fetchAffordableProducts(),
+        // productsProvider.tryThis(),
         categoriesProvider.fetchCategories(),
+        categoriesProvider.fetchBanners(),
         userProvider.fetchUserInfo(),
         // orderProvider.getFirebase()
         // orderProvider.fetchOrders()
