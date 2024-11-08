@@ -80,7 +80,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     _priceController = TextEditingController(
         text: widget.productModel == null
             ? ""
-            : widget.productModel!.productPrice);
+            : widget.productModel!.productPrice.toString());
     _descriptionController =
         TextEditingController(text: widget.productModel?.productDescription);
     _quantityController = TextEditingController(
@@ -172,7 +172,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productId": productId,
           "productTitle": _titleController.text.trim(),
           "productCategory": _categoryValue,
-          "productPrice": _priceController.text,
+          "productPrice": int.parse(_priceController.text),
           "productDescription": _descriptionController.text,
           // "productImage": imageUrl,
           "productImage": imageUrl ?? imageFileListString![0],
@@ -265,7 +265,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productTitle": _titleController.text.trim(),
           "productCategory": _categoryValue,
           "productBeforeDiscount": "",
-          "productPrice": _priceController.text,
+          "productPrice": int.parse(_priceController.text),
           "productDescription": _descriptionController.text,
           // "productImage": productImageUrl ?? productNetworkImage,
           "productImage":

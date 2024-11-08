@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/dashboard_buttons_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/banners_provider.dart';
@@ -64,31 +63,31 @@ class DashboardScreenState extends State<DashboardScreen> {
     return query.count;
   }
 
-  void setupPushNotification() async {
-    final fcm = FirebaseMessaging.instance;
-    var token = await FirebaseMessaging.instance.getToken();
-    NotificationSettings settings = await fcm.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    print('User granted permission: ${settings.authorizationStatus}');
-    await fcm.subscribeToTopic("ordersAdvanced"); // Add this line
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
-
-    print(token);
-  }
+  // void setupPushNotification() async {
+  //   final fcm = FirebaseMessaging.instance;
+  //   var token = await FirebaseMessaging.instance.getToken();
+  //   NotificationSettings settings = await fcm.requestPermission(
+  //     alert: true,
+  //     announcement: false,
+  //     badge: true,
+  //     carPlay: false,
+  //     criticalAlert: false,
+  //     provisional: false,
+  //     sound: true,
+  //   );
+  //   print('User granted permission: ${settings.authorizationStatus}');
+  //   await fcm.subscribeToTopic("ordersAdvanced"); // Add this line
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     print('Got a message whilst in the foreground!');
+  //     print('Message data: ${message.data}');
+  //
+  //     if (message.notification != null) {
+  //       print('Message also contained a notification: ${message.notification}');
+  //     }
+  //   });
+  //
+  //   print(token);
+  // }
 
   @override
   void didChangeDependencies() {
@@ -102,7 +101,7 @@ class DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
-    setupPushNotification();
+    // setupPushNotification();
     super.initState();
   }
 

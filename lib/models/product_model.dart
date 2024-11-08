@@ -7,13 +7,12 @@ var uuid = Uuid();
 class ProductModel extends ChangeNotifier {
   final String productId,
       productTitle,
-      productPrice,
       productCategory,
       productDescription,
       productImage,
       productQuantity;
   final List? imageFileListString;
-
+  final num productPrice;
   Timestamp? createdAt;
 
   ProductModel(
