@@ -7,12 +7,11 @@ var uuid = const Uuid();
 class ProductModel extends ChangeNotifier {
   final String productId,
       productTitle,
-      productPrice,
       productCategory,
       productDescription,
       productImage,
       productQuantity;
-
+  final num productPrice;
   Timestamp? createdAt;
   List<String>? imageFileList;
 

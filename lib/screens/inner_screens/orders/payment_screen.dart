@@ -474,7 +474,8 @@ class _PaymentScreenState extends State<PaymentScreen>
               "productId": value.productId,
               "productTitle": getCurrProd!.productTitle,
               "imageUrl": getCurrProd.productImage,
-              "price": double.parse(getCurrProd.productPrice) * value.quantity,
+              // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+              "price": getCurrProd.productPrice * value.quantity,
               "totalPrice": cartProvider.getTotalForPayment(
                   productsProvider: productProvider),
               "quantity": value.quantity,

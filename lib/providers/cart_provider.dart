@@ -145,7 +145,8 @@ class CartProvider with ChangeNotifier {
       if (getCurrentProduct == null) {
         total += 0;
       } else {
-        total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+        // total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+        total += getCurrentProduct.productPrice * value.quantity;
       }
     });
     return total;
@@ -160,7 +161,9 @@ class CartProvider with ChangeNotifier {
       if (getCurrentProduct == null) {
         total += 0;
       } else {
-        total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+        // total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+        total += getCurrentProduct.productPrice * value.quantity;
+
         // total = total + fees;
 
         // total += 10;
