@@ -132,6 +132,102 @@ class ProductsProvider with ChangeNotifier {
     return productImages;
   }
 
+//increment prices  by fixed Number in productPrice field
+  Future<void> incrementProductPrices(int addPrice) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a number
+      double currentPrice = doc.get('productPrice');
+
+      // Increment the price by 10
+      double newPrice = currentPrice + addPrice;
+
+      // Update the document with the new price field
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'productPrice': newPrice,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $newPrice');
+    }
+  }
+
+  //increment prices  by Percentage in productPrice field
+  Future<void> incrementProductPricesPercent(int addPrice) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a number
+      double currentPrice = doc.get('productPrice');
+
+      // Increment the price by 10 %
+      double newPrice = currentPrice * (1 + addPrice / 100);
+
+      // Update the document with the new price field
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'productPrice': newPrice,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $newPrice');
+    }
+  }
+
+  //decrement prices in productPrice field
+  Future<void> decrementProductPrices(int addPrice) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a number
+      double currentPrice = doc.get('productPrice');
+
+      // Decrement the price by 10
+      double newPrice = currentPrice - addPrice;
+
+      // Update the document with the new price field
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'productPrice': newPrice,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $newPrice');
+    }
+  }
+
+  //decrement prices by Percentage in productPrice field
+  Future<void> decrementProductPricesPercent(int addPrice) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a number
+      double currentPrice = doc.get('productPrice');
+
+      // Decrement the price by 10 %
+      double newPrice = currentPrice * (1 - addPrice / 100);
+
+      // Update the document with the new price field
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'productPrice': newPrice,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $newPrice');
+    }
+  }
+
 // List<ProductModel> products = [
 //   // Phones
 //   ProductModel(

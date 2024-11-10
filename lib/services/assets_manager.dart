@@ -11,6 +11,7 @@ class AssetsManager {
   static String shoppingCart = "$imagesPath/shopping_cart.png";
   static String allUsers = "$imagesPath/all_users.png";
 
+
   // Categories path
   static String categories = "$categoriesImagesPath/categories.png";
   static String addCategory = "$categoriesImagesPath/addcategory.png";
@@ -28,6 +29,7 @@ class AssetsManager {
   static String orderCompleted = "$dashboardImagesPath/orderCompleted.png";
   static String orderCanceled = "$dashboardImagesPath/cancelOrders.png";
   static String deliveryFees = "$dashboardImagesPath/deliveryFees.png";
+  static String editPrice = "$dashboardImagesPath/editPrice.png";
 
   static String cloud = "$dashboardImagesPath/cloud.png";
 }

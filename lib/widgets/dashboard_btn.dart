@@ -20,7 +20,7 @@ class DashboardButtonsWidget extends StatelessWidget {
         padding: const EdgeInsets.only(right: 8.0, left: 8.0),
         child: Container(
           margin: EdgeInsets.only(top: 10, bottom: 10),
-          height: 150,
+          height: 120,
           child: Card(
             semanticContainer: true,
             child: Column(

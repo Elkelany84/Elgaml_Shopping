@@ -87,6 +87,7 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                   // Step 2: Create a Stream
                   stream: FirebaseFirestore.instance
                       .collection('users')
+                      .orderBy("createdAt", descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {

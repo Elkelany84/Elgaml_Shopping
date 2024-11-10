@@ -9,6 +9,7 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/banners_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/editPrices.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/add_category_dashboard.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_details.dart';
@@ -104,6 +105,7 @@ class MyApp extends StatelessWidget {
                 OrdersScreenCancelled(),
             FeesScreen.routeName: (context) => const FeesScreen(),
             AddCategoryDashboard.routeName: (context) => AddCategoryDashboard(),
+            EditPricesScreen.routeName: (context) => const EditPricesScreen(),
             // PersonalProfile.routeName: (context) => const PersonalProfile(),
           },
         );

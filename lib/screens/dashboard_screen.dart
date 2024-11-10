@@ -39,7 +39,6 @@ class DashboardScreenState extends State<DashboardScreen> {
       //fetch many future functions
       // Future.wait({productsProvider.fetchProducts()});
       await productsProvider.fetchProducts();
-
       await categoryProvider.fetchCategories();
       await productsProvider.countProducts();
       await categoryProvider.countCategories();
@@ -99,11 +98,11 @@ class DashboardScreenState extends State<DashboardScreen> {
     super.didChangeDependencies();
   }
 
-  @override
-  void initState() {
-    // setupPushNotification();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // setupPushNotification();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
