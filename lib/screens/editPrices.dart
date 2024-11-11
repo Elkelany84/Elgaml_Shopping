@@ -24,6 +24,10 @@ class EditPricesScreen extends StatefulWidget {
 class _EditPricesScreenState extends State<EditPricesScreen> {
   TextEditingController incrementPriceController = TextEditingController();
   TextEditingController decrementPriceController = TextEditingController();
+  TextEditingController incrementPercentPriceController =
+      TextEditingController();
+  TextEditingController decrementPercentPriceController =
+      TextEditingController();
   bool _inIsLoading = true;
   bool _deIsLoading = true;
   @override
@@ -36,6 +40,9 @@ class _EditPricesScreenState extends State<EditPricesScreen> {
   @override
   void dispose() {
     incrementPriceController.clear();
+    decrementPriceController.clear();
+    incrementPercentPriceController.clear();
+    decrementPercentPriceController.clear();
     super.dispose();
   }
 
@@ -68,54 +75,92 @@ class _EditPricesScreenState extends State<EditPricesScreen> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: SizedBox(
-                    child: Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TitlesTextWidget(
-                              label: ": زيادة جميع أسعار المنتجات بمقدار "),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextField(
-                            controller: incrementPriceController,
-                            key: ValueKey("Price \$"),
-                            // maxLength: 5,
-                            maxLines: 1,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,2}'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              hintText: " مقدار الزيادة بالجنيه ",
-                              prefix: SubtitleTextWidget(
-                                label: "\$",
-                                color: Colors.blue,
-                                fontSize: 16,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TitlesTextWidget(
+                            label: ": زيادة جميع أسعار المنتجات بمقدار "),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: incrementPriceController,
+                                key: ValueKey("Price \$"),
+                                // maxLength: 5,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: " مقدار الزيادة بالجنيه ",
+                                  prefix: SubtitleTextWidget(
+                                    label: "\$",
+                                    color: Colors.blue,
+                                    fontSize: 10,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Center(
-                            child: _inIsLoading
-                                ? ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                        // textStyle: TextStyle(color: Colors.white),
-                                        padding: const EdgeInsets.all(12),
-                                        backgroundColor: Colors.green,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                    onPressed: () async {
-                                      setState(() {
-                                        _inIsLoading = false;
-                                      });
+                            SizedBox(
+                              width: 3,
+                            ),
+                            TitlesTextWidget(label: "أو"),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: TextField(
+                                controller: incrementPercentPriceController,
+                                key: ValueKey("Percentage \%"),
+                                // maxLength: 5,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: " الزيادة بالنسبة المئوية ",
+                                  prefix: SubtitleTextWidget(
+                                    label: "\%",
+                                    color: Colors.blue,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: _inIsLoading
+                              ? ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                      // textStyle: TextStyle(color: Colors.white),
+                                      padding: const EdgeInsets.all(12),
+                                      backgroundColor: Colors.green,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                  onPressed: () async {
+                                    setState(() {
+                                      _inIsLoading = false;
+                                    });
+                                    if (incrementPriceController
+                                            .text.isNotEmpty &&
+                                        incrementPercentPriceController
+                                            .text.isEmpty) {
                                       FocusScope.of(context).unfocus();
                                       await productProvider
                                           .incrementProductPrices(int.parse(
@@ -128,28 +173,53 @@ class _EditPricesScreenState extends State<EditPricesScreen> {
                                       setState(() {
                                         _inIsLoading = true;
                                       });
-                                    },
-                                    icon: const Icon(Icons.upload),
-                                    label: const Text(
-                                      "اضغط لإضافة المبلغ",
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ))
-                                : Column(
-                                    children: [
-                                      CircularProgressIndicator(),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TitlesTextWidget(
-                                        label: "انتظر من فضلك حتى يتم التحديث",
-                                        color: Colors.purple,
-                                      )
-                                    ],
-                                  ),
-                          ),
-                        ],
-                      ),
+                                    } else if (incrementPercentPriceController
+                                            .text.isNotEmpty &&
+                                        incrementPriceController.text.isEmpty) {
+                                      FocusScope.of(context).unfocus();
+                                      await productProvider
+                                          .incrementProductPricesPercent(
+                                              int.parse(
+                                                  incrementPercentPriceController
+                                                      .text));
+
+                                      Fluttertoast.showToast(
+                                          backgroundColor: Colors.purple,
+                                          msg:
+                                              "تم زيادة جميع الأسعار بقيمة ${incrementPercentPriceController.text} %");
+                                      setState(() {
+                                        _inIsLoading = true;
+                                      });
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          backgroundColor: Colors.purple,
+                                          msg:
+                                              "من فضلك أدخل قيمة واحدة فقط للزيادة المطلوبة بالجنيه أو بالنسبة المئوية");
+                                      setState(() {
+                                        _inIsLoading = true;
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.upload),
+                                  label: const Text(
+                                    "اضغط لإضافة المبلغ",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  ))
+                              : Column(
+                                  children: [
+                                    CircularProgressIndicator(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    TitlesTextWidget(
+                                      label: "انتظر من فضلك حتى يتم التحديث",
+                                      color: Colors.purple,
+                                    )
+                                  ],
+                                ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -173,26 +243,62 @@ class _EditPricesScreenState extends State<EditPricesScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          TextField(
-                            controller: decrementPriceController,
-                            key: ValueKey("Price \$"),
-                            // maxLength: 5,
-                            maxLines: 1,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,2}'),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: decrementPriceController,
+                                  key: ValueKey("Price \$"),
+                                  // maxLength: 5,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
+                                  decoration: InputDecoration(
+                                    hintText: " مقدار التخفيض بالجنيه ",
+                                    prefix: SubtitleTextWidget(
+                                      label: "\$",
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              TitlesTextWidget(label: "أو"),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  controller: decrementPercentPriceController,
+                                  key: ValueKey("Price \%"),
+                                  // maxLength: 5,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
+                                  decoration: InputDecoration(
+                                    hintText: " التخفيض بالنسبة المئوية ",
+                                    prefix: SubtitleTextWidget(
+                                      label: "\%",
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
-                            decoration: InputDecoration(
-                              hintText: " مقدار التخفيض بالجنيه ",
-                              prefix: SubtitleTextWidget(
-                                label: "\$",
-                                color: Colors.blue,
-                                fontSize: 16,
-                              ),
-                            ),
                           ),
                           SizedBox(
                             height: 20,
@@ -212,18 +318,49 @@ class _EditPricesScreenState extends State<EditPricesScreen> {
                                       setState(() {
                                         _deIsLoading = false;
                                       });
-                                      FocusScope.of(context).unfocus();
-                                      await productProvider
-                                          .decrementProductPrices(int.parse(
-                                              decrementPriceController.text));
+                                      if (decrementPriceController
+                                              .text.isNotEmpty &&
+                                          decrementPercentPriceController
+                                              .text.isEmpty) {
+                                        FocusScope.of(context).unfocus();
+                                        await productProvider
+                                            .decrementProductPrices(int.parse(
+                                                decrementPriceController.text));
 
-                                      Fluttertoast.showToast(
-                                          backgroundColor: Colors.purple,
-                                          msg:
-                                              "تم تخفيض جميع الأسعار بقيمة ${decrementPriceController.text} جنيه");
-                                      setState(() {
-                                        _deIsLoading = true;
-                                      });
+                                        Fluttertoast.showToast(
+                                            backgroundColor: Colors.purple,
+                                            msg:
+                                                "تم تخفيض جميع الأسعار بقيمة ${decrementPriceController.text} جنيه");
+                                        setState(() {
+                                          _deIsLoading = true;
+                                        });
+                                      } else if (decrementPercentPriceController
+                                              .text.isNotEmpty &&
+                                          decrementPriceController
+                                              .text.isEmpty) {
+                                        FocusScope.of(context).unfocus();
+                                        await productProvider
+                                            .decrementProductPricesPercent(
+                                                int.parse(
+                                                    decrementPercentPriceController
+                                                        .text));
+
+                                        Fluttertoast.showToast(
+                                            backgroundColor: Colors.purple,
+                                            msg:
+                                                "تم تخفيض جميع الأسعار بقيمة ${decrementPercentPriceController.text} %");
+                                        setState(() {
+                                          _deIsLoading = true;
+                                        });
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            backgroundColor: Colors.purple,
+                                            msg:
+                                                "من فضلك أدخل قيمة واحدة فقط للتخفيض المطلوب بالجنيه أو بالنسبة المئوية");
+                                        setState(() {
+                                          _deIsLoading = true;
+                                        });
+                                      }
                                     },
                                     icon: const Icon(Icons.download),
                                     label: const Text(

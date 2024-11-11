@@ -133,7 +133,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
 //increment prices  by fixed Number in productPrice field
-  Future<void> incrementProductPrices(int addPrice) async {
+  Future<void> incrementProductPrices(num addPrice) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Fetch all documents from the 'products' collection
@@ -142,22 +142,25 @@ class ProductsProvider with ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current price field as a number
-      double currentPrice = doc.get('productPrice');
+      int currentPrice = doc.get('productPrice');
 
       // Increment the price by 10
-      double newPrice = currentPrice + addPrice;
+      num newPrice = currentPrice + addPrice;
+
+      //convert newPrice to integer
+      int newPriceInt = newPrice.toInt();
 
       // Update the document with the new price field
       await firestore.collection('newProducts').doc(doc.id).update({
-        'productPrice': newPrice,
+        'productPrice': newPriceInt,
       });
 
-      print('Updated document ID: ${doc.id} with new price: $newPrice');
+      print('Updated document ID: ${doc.id} with new price: $newPriceInt');
     }
   }
 
   //increment prices  by Percentage in productPrice field
-  Future<void> incrementProductPricesPercent(int addPrice) async {
+  Future<void> incrementProductPricesPercent(num addPrice) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Fetch all documents from the 'products' collection
@@ -166,22 +169,25 @@ class ProductsProvider with ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current price field as a number
-      double currentPrice = doc.get('productPrice');
+      int currentPrice = doc.get('productPrice');
 
       // Increment the price by 10 %
       double newPrice = currentPrice * (1 + addPrice / 100);
 
+      //convert newPrice to int
+      int newPriceInt = newPrice.toInt();
+
       // Update the document with the new price field
       await firestore.collection('newProducts').doc(doc.id).update({
-        'productPrice': newPrice,
+        'productPrice': newPriceInt,
       });
 
-      print('Updated document ID: ${doc.id} with new price: $newPrice');
+      print('Updated document ID: ${doc.id} with new price: $newPriceInt');
     }
   }
 
   //decrement prices in productPrice field
-  Future<void> decrementProductPrices(int addPrice) async {
+  Future<void> decrementProductPrices(num addPrice) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Fetch all documents from the 'products' collection
@@ -190,22 +196,25 @@ class ProductsProvider with ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current price field as a number
-      double currentPrice = doc.get('productPrice');
+      int currentPrice = doc.get('productPrice');
 
       // Decrement the price by 10
-      double newPrice = currentPrice - addPrice;
+      num newPrice = currentPrice - addPrice;
+
+      //convert newPrice to integer
+      int newPriceInt = newPrice.toInt();
 
       // Update the document with the new price field
       await firestore.collection('newProducts').doc(doc.id).update({
-        'productPrice': newPrice,
+        'productPrice': newPriceInt,
       });
 
-      print('Updated document ID: ${doc.id} with new price: $newPrice');
+      print('Updated document ID: ${doc.id} with new price: $newPriceInt');
     }
   }
 
   //decrement prices by Percentage in productPrice field
-  Future<void> decrementProductPricesPercent(int addPrice) async {
+  Future<void> decrementProductPricesPercent(num addPrice) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Fetch all documents from the 'products' collection
@@ -214,17 +223,20 @@ class ProductsProvider with ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current price field as a number
-      double currentPrice = doc.get('productPrice');
+      int currentPrice = doc.get('productPrice');
 
       // Decrement the price by 10 %
       double newPrice = currentPrice * (1 - addPrice / 100);
 
+      //convert newPrice to int
+      int newPriceInt = newPrice.toInt();
+
       // Update the document with the new price field
       await firestore.collection('newProducts').doc(doc.id).update({
-        'productPrice': newPrice,
+        'productPrice': newPriceInt,
       });
 
-      print('Updated document ID: ${doc.id} with new price: $newPrice');
+      print('Updated document ID: ${doc.id} with new price: $newPriceInt');
     }
   }
 

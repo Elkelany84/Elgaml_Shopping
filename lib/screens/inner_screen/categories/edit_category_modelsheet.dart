@@ -202,6 +202,28 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
     }
   }
 
+  //function to edit the category in the products collection
+  Future<void> updateCategoryNameInProducts(
+      String specificValue, String newValue) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Check if the document contains the specific value
+      if (doc.get('productCategory') == specificValue) {
+        // Update the categoryName field with the new value
+        await firestore.collection('products').doc(doc.id).update({
+          'productCategory': newValue,
+        });
+
+        print(
+            'Updated document ID: ${doc.id} with new categoryName: $newValue');
+      }
+    }
+  }
+
   Future<void> localImagePicker() async {
     final picker = ImagePicker();
     await MyAppFunctions.imagePickerDialog(
@@ -391,6 +413,9 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
                                     )),
                                 onPressed: () {
                                   _editCategory();
+                                  updateCategoryNameInProducts(
+                                      widget.categoryName!,
+                                      _titleController.text.trim());
                                 },
                                 child: const Text(
                                   "Edit Category",

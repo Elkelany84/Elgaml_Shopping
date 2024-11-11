@@ -435,6 +435,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           _editProduct();
                         } else {
                           _uploadProduct();
+                          // imageFileList.clear();
+                          imageFileListString!.clear();
                         }
                       },
                       icon: const Icon(Icons.upload),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/banners_screen.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/editPrices.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/categories/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/fees/fees_screen.dart';
@@ -90,11 +89,11 @@ class DashboardButtonsModel {
             onPressed: () {
               Navigator.pushNamed(context, FeesScreen.routeName);
             }),
-        DashboardButtonsModel(
-            text: "تعديل الأسعار",
-            imagePath: AssetsManager.editPrice,
-            onPressed: () {
-              Navigator.pushNamed(context, EditPricesScreen.routeName);
-            }),
+        // DashboardButtonsModel(
+        //     text: "تعديل الأسعار",
+        //     imagePath: AssetsManager.editPrice,
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, EditPricesScreen.routeName);
+        //     }),
       ];
 }
