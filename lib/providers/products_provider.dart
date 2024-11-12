@@ -200,29 +200,29 @@ class ProductsProvider with ChangeNotifier {
   }
 
   //convert productPrice field from string to number
-  // Future<void> convertProductPrices() async {
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //
-  //   // Fetch all documents from the 'products' collection
-  //   QuerySnapshot querySnapshot = await firestore.collection('products').get();
-  //
-  //   for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-  //     // Get the current price field as a string
-  //     String priceString = doc.get('productPrice');
-  //
-  //     // Convert the price string to a number
-  //     // double priceNumber = double.parse(priceString);
-  //     // Convert the price string to integer
-  //     int priceNumber = int.parse(priceString);
-  //
-  //     // Update the document with the new price field
-  //     await firestore.collection('products').doc(doc.id).update({
-  //       'productPrice': priceNumber,
-  //     });
-  //
-  //     print('Updated document ID: ${doc.id} with new price: $priceNumber');
-  //   }
-  // }
+  Future<void> convertProductPrices() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current price field as a string
+      String priceString = doc.get('productPrice');
+
+      // Convert the price string to a number
+      // double priceNumber = double.parse(priceString);
+      // Convert the price string to integer
+      int priceNumber = int.parse(priceString);
+
+      // Update the document with the new price field
+      await firestore.collection('products').doc(doc.id).update({
+        'productPrice': priceNumber,
+      });
+
+      print('Updated document ID: ${doc.id} with new price: $priceNumber');
+    }
+  }
 
   //create function to add imageFileList array field to the products collection in firestore
   // Future<void> addImageFileListToProduct({required String productId}) {

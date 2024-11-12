@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
@@ -68,10 +69,11 @@ class HomeScreen extends StatelessWidget {
                     child: Swiper(
                       autoplay: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return Image.network(
-                          categoriesProvider.banners[index].bannerImage,
+                        return FancyShimmerImage(
+                          imageUrl:
+                              categoriesProvider.banners[index].bannerImage,
                           // AppConstants.bannerImages[index],
-                          fit: BoxFit.fill,
+                          boxFit: BoxFit.fill,
                         );
                       },
                       itemCount: categoriesProvider.banners.length,
@@ -125,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        // productsProvider.convertProductPrices();
+                        // await productsProvider.convertProductPrices();
                         Navigator.pushNamed(
                             context, CategoriesScreen.routeName);
                       },

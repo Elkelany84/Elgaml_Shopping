@@ -97,7 +97,8 @@ class _PaymentScreenState extends State<PaymentScreen>
     super.initState();
   }
 
-  int hobby = 1;
+  //was edited from 1 to 2 to remove the cash option asle radioPaymentIndex from 1 to 2 in the payment_radio_option_widget.dart
+  int hobby = 2;
   DateTime dateTime = DateTime.now(); // 获取当前时间
   // String defaultTimeString = "Choose Delivery Time";
 

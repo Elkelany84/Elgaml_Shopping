@@ -21,26 +21,26 @@ class PaymentMethodWidget extends StatefulWidget {
 
 class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
   ///newHobby
-  int? radioPaymentIndex = 1;
+  int? radioPaymentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildRadioPayment(
-            name: LocaleData.cashOnDelivery.getString(context),
-            image: AssetsManager.paymentCash,
-            // scale: 0.5,
-            value: 1,
-            onChange: (value) {
-              setState(() {
-                radioPaymentIndex = value;
-                widget.changedHobby(radioPaymentIndex!);
-              });
-            }),
-        const SizedBox(
-          height: 10,
-        ),
+        // buildRadioPayment(
+        //     name: LocaleData.cashOnDelivery.getString(context),
+        //     image: AssetsManager.paymentCash,
+        //     // scale: 0.5,
+        //     value: 1,
+        //     onChange: (value) {
+        //       setState(() {
+        //         radioPaymentIndex = value;
+        //         widget.changedHobby(radioPaymentIndex!);
+        //       });
+        //     }),
+        // const SizedBox(
+        //   height: 10,
+        // ),
         buildRadioPayment(
             name: LocaleData.etissalatWallet.getString(context),
             image: AssetsManager.paymentWallet,
@@ -97,8 +97,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
           Radio(
               value: value,
               groupValue: radioPaymentIndex,
-              fillColor:
-                  MaterialStateColor.resolveWith((states) => Colors.black),
+              fillColor: WidgetStateColor.resolveWith((states) => Colors.black),
               onChanged: (value) {
                 onChange(value);
               })
