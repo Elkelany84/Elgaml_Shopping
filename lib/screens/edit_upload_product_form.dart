@@ -6,12 +6,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/consts/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/color_picker.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -380,6 +382,15 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           });
         });
   }
+
+  int currentColor = 0;
+  final List<Color> colorSelected = [
+    kCOlor1,
+    kCOlor2,
+    kCOlor3,
+    kCOlor4,
+    kCOlor5,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -818,6 +829,38 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                       toBeReturnedString: "الوصف مفقود");
                                 },
                               ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              height: 50,
+                              width: 200,
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          currentColor = index;
+                                          print(currentColor);
+                                        });
+                                      },
+                                      child: ColorPicker(
+                                          outerBorder: currentColor == index,
+                                          color: colorSelected[index]),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: 3,
+                                    );
+                                  },
+                                  itemCount: colorSelected.length),
                             ),
                           ],
                         )),

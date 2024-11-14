@@ -80,11 +80,14 @@ class _SearchScreenState extends State<SearchScreen> {
             : StreamBuilder<List<ProductModel>>(
                 stream: productsProvider.fetchProductStream(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting &&
+                      snapshot.data == null) {
                     return const MaterialApp(
                       debugShowCheckedModeBanner: false,
                       home: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
                       ),
                     );
                   } else if (snapshot.hasError) {
@@ -135,7 +138,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         //   },
                         // ),
                         TypeAheadField(
+                            // showOnFocus: false,
                             hideOnLoading: true,
+                            hideOnError: true,
                             builder: (context, controller, focusNode) {
                               return TextField(
                                 controller: controller,
@@ -145,6 +150,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                     border: OutlineInputBorder(),
                                     labelText: "بحث",
                                     prefixIcon: Icon(Icons.search)),
+                              );
+                            },
+                            errorBuilder: (context, error) =>
+                                const Text('لا توجد منتجات مطابقة للبحث'),
+                            emptyBuilder: (context) =>
+                                const Text('لا توجد منتجات مطابقة للبحث'),
+                            transitionBuilder: (context, animation, child) {
+                              return FadeTransition(
+                                opacity: CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.fastOutSlowIn,
+                                ),
+                                child: child,
                               );
                             },
                             itemBuilder: (context, String suggestions) {

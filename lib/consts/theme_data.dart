@@ -59,3 +59,9 @@ class Styles {
         ));
   }
 }
+
+const Color kCOlor1 = Color(0xFF1307EA);
+const Color kCOlor2 = Color(0xFFEA1C07);
+const Color kCOlor3 = Color(0xFF07EA11);
+const Color kCOlor4 = Color(0xFFC3EA07);
+const Color kCOlor5 = Color(0xFF0A0707);
