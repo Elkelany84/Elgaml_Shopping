@@ -11,6 +11,54 @@ class ProductsProvider with ChangeNotifier {
     return products;
   }
 
+  List<String> productNameFields = [];
+
+  // List get getProductNameFields {
+  //   return productNameFields;
+  // }
+
+  List<String> getSuggestions(String query) {
+    productNameFields.toSet().toList();
+    List<String> matches = [];
+    matches.addAll(productNameFields);
+    // print(matches);
+    List<String> filteredProductNameFields = matches.toSet().toList();
+    matches.toSet().toList();
+    filteredProductNameFields.retainWhere(
+        (element) => element.toLowerCase().contains(query.toLowerCase()));
+    matches.toSet().toList();
+    return filteredProductNameFields;
+  }
+
+  //used to get the productNames in a list
+  Future<List<String>> fetchProductNames() async {
+    productNameFields.clear();
+    List<String> productNames = [];
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the productName field and add it to the list
+      String productName = doc.get('productTitle');
+      productNames.add(productName);
+    }
+    productNames.toSet().toList();
+    print(productNames);
+    productNames.toSet().toList();
+    print(productNames.length);
+    print(productNameFields.length);
+    print(productNames);
+    productNameFields.addAll(productNames);
+//add the productNames to productNameFields
+
+//     productNameFields == productNames;
+//     print(productNames);
+    return productNames;
+  }
+
   //Show Product and Product Details
   ProductModel? findByProdId(String productId) {
     if (products.where((element) => element.productId == productId).isEmpty) {

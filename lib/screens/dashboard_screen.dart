@@ -41,6 +41,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       await productsProvider.fetchProducts();
       await categoryProvider.fetchCategories();
       await productsProvider.countProducts();
+      await productsProvider.fetchProductNames();
       await categoryProvider.countCategories();
       await bannerProvider.fetchBanners();
       await bannerProvider.countBanners();
