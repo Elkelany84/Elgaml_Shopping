@@ -288,6 +288,31 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
+  //convert field productQuantity from string to int
+  Future<void> convertProductQuantities() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current productQuantity field as a string
+      String quantityString = doc.get('quantity');
+
+      // Convert the quantity string to an integer
+      int quantityInt = int.parse(quantityString);
+
+      // Update the document with the new productQuantity field as an integer
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'quantity': quantityInt,
+      });
+
+      print(
+          'Updated document ID: ${doc.id} with new productQuantity: $quantityInt');
+    }
+  }
+
 // List<ProductModel> products = [
 //   // Phones
 //   ProductModel(

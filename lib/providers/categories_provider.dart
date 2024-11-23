@@ -105,7 +105,63 @@ class CategoriesProvider extends ChangeNotifier {
     });
   }
 
-  //create function to edit category in firebase
+  //convert field productQuantity from string to int
+  Future<void> convertProductQuantities() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the current productQuantity field as a string
+      String quantityString = doc.get('productQuantity');
+
+      // Convert the quantity string to an integer
+      int quantityInt = int.parse(quantityString);
+
+      // Update the document with the new productQuantity field as an integer
+      await firestore.collection('products').doc(doc.id).update({
+        'productQuantity': quantityInt,
+      });
+
+      print(
+          'Updated document ID: ${doc.id} with new productQuantity: $quantityInt');
+    }
+  }
+
+  //create function to add colors array field to products
+  Future<void> addColorsFieldToProducts() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot =
+        await firestore.collection('newProducts').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Add an empty 'colors' array field to each document
+      await firestore.collection('newProducts').doc(doc.id).update({
+        'colors': [],
+      });
+
+      print('Updated document ID: ${doc.id} with an empty colors array');
+    }
+  }
+
+//get list value from firebase
+  Future<List<dynamic>> getProductList() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection('newProducts')
+        .doc('CKle6aKVL73Xm3qtB814')
+        .get();
+    List<dynamic> productList = documentSnapshot['colors'];
+    print(productList);
+    List<dynamic> unique = productList.toSet().toList();
+    print(unique);
+    return productList;
+  }
+
+//create function to edit category in firebase
   // Future<void> editCategory(
   //     {categoryId, String categoryName, String categoryImage}) {
   //   return categoryList.doc(categoryId).update({

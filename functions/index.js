@@ -5,21 +5,21 @@
 
     initializeApp();
 
-    exports.dispatchMessage = onDocumentCreated("ordersAdvanced/{sessionId}", (event) => {
-      const snapshot = event.data;
-      const data = snapshot.data();
-      const message = getMessaging();
-      message.send({
-        topic: "ordersAdvanced",
-        notification: {
-          title: "Store",
-          body: "New Order Arrived",
-        },
-        data: {
-          click_action: "FLUTTER_NOTIFICATION_CLICK",
-        },
-      });
-    });
+//    exports.dispatchMessage = onDocumentCreated("ordersAdvanced/{sessionId}", (event) => {
+//      const snapshot = event.data;
+//      const data = snapshot.data();
+//      const message = getMessaging();
+//      message.send({
+//        topic: "ordersAdvanced",
+//        notification: {
+//          title: "Store",
+//          body: "New Order Arrived",
+//        },
+//        data: {
+//          click_action: "FLUTTER_NOTIFICATION_CLICK",
+//        },
+//      });
+//    });
     exports.orderCreated = onDocumentCreated("ordersAdvanced/{sessionId}", (event) => {
           const snapshot = event.data;
           const data = snapshot.data();

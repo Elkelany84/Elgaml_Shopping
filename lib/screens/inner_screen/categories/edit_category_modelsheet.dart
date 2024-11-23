@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -287,8 +288,8 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
                         Center(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              widget.categoryImage!,
+                            child: FancyShimmerImage(
+                              imageUrl: widget.categoryImage!,
                               height: size.width * 0.4,
                               alignment: Alignment.center,
                             ),

@@ -60,8 +60,13 @@ class Styles {
   }
 }
 
-const Color kCOlor1 = Color(0xFF1307EA);
+int blue = 0xFF1307EA;
+Color kCOlor1 = Color(blue);
 const Color kCOlor2 = Color(0xFFEA1C07);
 const Color kCOlor3 = Color(0xFF07EA11);
 const Color kCOlor4 = Color(0xFFC3EA07);
 const Color kCOlor5 = Color(0xFF0A0707);
+const Color kCOlor6 = Color(0xFFEA0773);
+const Color kCOlor7 = Color(0xFF07EA7C);
+const Color kCOlor8 = Color(0xFFEA7307);
+//create grey color

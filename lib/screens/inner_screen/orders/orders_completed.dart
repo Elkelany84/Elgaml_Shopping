@@ -24,7 +24,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     Color _getTextColor(String textValue) {
       // Define your logic to return different colors based on textValue
-      if (textValue == 'Visa') {
+      if (textValue == 'Etissalat') {
         return Colors.red;
       } else if (textValue == 'Cash') {
         return Colors.green;
@@ -76,7 +76,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "SessionId: ",
+                                  label: "رقم الطلبية: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(
@@ -88,7 +88,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "OrderDate: ",
+                                  label: "تاريخ الطلبية: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(
@@ -101,7 +101,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "OrderStatus: ",
+                                  label: "حالة الطلبية: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(
@@ -113,7 +113,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "TotalProducts: ",
+                                  label: "مجموع المنتجات: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(
@@ -128,7 +128,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "TotalPrice: ",
+                                  label: "السعر الكلى: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(
@@ -143,7 +143,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                             Row(
                               children: [
                                 TitlesTextWidget(
-                                  label: "PaymentMethod: ",
+                                  label: "طريقة الدفع: ",
                                 ),
                                 Expanded(
                                   child: SubtitleTextWidget(

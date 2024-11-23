@@ -57,7 +57,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.purpleAccent,
             onPressed: () {
-              //create modelbottomsheet to add category
+              // categoriesProvider.convertProductQuantities();
+              // create modelbottomsheet to add category
               showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,

@@ -21,255 +21,280 @@ class OrderStreamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppNameTextWidget(label: "Orders Screen"),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(userId)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
-                  default:
-                    if (!snapshot.hasData) {
-                      return Text('No data found');
-                    }
-                    var document = snapshot.data!;
-                    // var arrayData =
-                    //     document['userOrder'] as List<dynamic>? ?? [];
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8, left: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey)),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 5, right: 8, left: 8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  TitlesTextWidget(label: "UserName: "),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label: "${document['userName']}"),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TitlesTextWidget(label: "Address: "),
-                                  SubtitleTextWidget(
-                                    label: "${document['userAddress']}",
-                                    maxLines: 2,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Row(
-                                children: [
-                                  TitlesTextWidget(label: "Phone: "),
-                                  SubtitleTextWidget(
-                                      label: "${document['userPhone']}"),
-                                  Spacer(),
-                                  IconButton(
-                                      onPressed: () async {
-                                        final Uri url = Uri(
-                                            scheme: "tel",
-                                            path: document['userPhone']);
-                                        if (await canLaunchUrl(url)) {
-                                          await launchUrl(url);
-                                        } else {
-                                          print("can not launch");
-                                        }
-                                      },
-                                      icon: Icon(
-                                        Icons.call,
-                                      ))
-                                ],
-                              ),
-                            ],
+    void sendWhatsapp(String phoneNumber, String orderId) {
+      // "+20$"; // Replace with the desired phone number
+      String message =
+          "ElgamlStore يرحب بكم \n رقم $orderIdبخصوص طلبيتكم "; // Replace with the desired message
+
+      String url =
+          "https://wa.me/+2$phoneNumber?text=${Uri.encodeFull(message)}";
+      launchUrl(Uri.parse(url));
+    }
+
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: AppNameTextWidget(label: "تفاصيل الطلبية"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(userId)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return CircularProgressIndicator();
+                    default:
+                      if (!snapshot.hasData) {
+                        return Text('No data found');
+                      }
+                      var document = snapshot.data!;
+                      // var arrayData =
+                      //     document['userOrder'] as List<dynamic>? ?? [];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8, left: 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5, right: 8, left: 8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    TitlesTextWidget(label: "اسم المستخدم: "),
+                                    Expanded(
+                                      child: SubtitleTextWidget(
+                                          label: "${document['userName']}"),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TitlesTextWidget(label: "العنوان: "),
+                                    SubtitleTextWidget(
+                                      label: "${document['userAddress']}",
+                                      maxLines: 2,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Row(
+                                  children: [
+                                    TitlesTextWidget(label: "التليفون: "),
+                                    SubtitleTextWidget(
+                                        label: "${document['userPhone']}"),
+                                    Spacer(),
+                                    IconButton(
+                                        onPressed: () async {
+                                          final Uri url = Uri(
+                                              scheme: "tel",
+                                              path: document['userPhone']);
+                                          if (await canLaunchUrl(url)) {
+                                            await launchUrl(url);
+                                          } else {
+                                            print("can not launch");
+                                          }
+                                        },
+                                        icon: Icon(
+                                          Icons.call,
+                                        )),
+                                    IconButton(
+                                        onPressed: () async {
+                                          sendWhatsapp(
+                                              document['userPhone'], docName!);
+                                        },
+                                        icon: Icon(
+                                          Icons.message_outlined,
+                                          color: Colors.green,
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                }
-              },
+                      );
+                  }
+                },
+              ),
             ),
-          ),
-          Expanded(
-            flex: 8,
-            child: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('ordersAdvanced')
-                  .doc(docName)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
-                  default:
-                    if (!snapshot.hasData) {
-                      return Text('No data found');
-                    }
-                    var document = snapshot.data!;
-                    var arrayData =
-                        document['userOrder'] as List<dynamic>? ?? [];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  TitlesTextWidget(label: "SessionId: "),
-                                  Expanded(
-                                    child: SubtitleTextWidget(
-                                        label: "${document['sessionId']}"),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  TitlesTextWidget(label: "Order Status: "),
-                                  SubtitleTextWidget(
-                                      label: "${document['orderStatus']}"),
-                                  Spacer(),
-                                  // SizedBox(
-                                  //   height: kBottomNavigationBarHeight - 10,
-                                  //   width: kBottomNavigationBarHeight + 60,
-                                  //   child: ElevatedButton(
-                                  //     style: ElevatedButton.styleFrom(
-                                  //       padding: const EdgeInsets.all(12),
-                                  //       backgroundColor: Colors.purpleAccent,
-                                  //       shape: RoundedRectangleBorder(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(10),
-                                  //       ),
-                                  //     ),
-                                  //     onPressed: () {
-                                  //       FirebaseFirestore.instance
-                                  //           .collection('ordersAdvanced')
-                                  //           .doc(docName)
-                                  //           .update({
-                                  //         'orderStatus': 'Completed',
-                                  //       });
-                                  //       Navigator.pop(context);
-                                  //     },
-                                  //     child: const Text(
-                                  //       "Completed",
-                                  //       style: TextStyle(fontSize: 18),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: arrayData.length,
-                                  itemBuilder: (context, index) {
-                                    var item = arrayData[index];
-                                    // Assuming each item in the array is a Map
-                                    var itemName = item['productTitle'];
-                                    var itemPrice = item['price'].toString();
-                                    var itemImage = item['imageUrl'];
-                                    var itemQty = item['quantity'];
-                                    return Container(
-                                      padding: EdgeInsets.only(top: 7),
-                                      margin:
-                                          EdgeInsets.only(top: 5, bottom: 5),
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border:
-                                              Border.all(color: Colors.grey)),
-                                      child:
-                                          // Image.network(itemImage),
-                                          ListTile(
-                                        leading: SizedBox(
-                                          height: 70,
-                                          width: 70,
-                                          child: ClipRRect(
-                                            child: FancyShimmerImage(
-                                              imageUrl: itemImage,
-                                              height: 80,
-                                              width: 60,
+            Expanded(
+              flex: 8,
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('ordersAdvanced')
+                    .doc(docName)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return CircularProgressIndicator();
+                    default:
+                      if (!snapshot.hasData) {
+                        return Text('No data found');
+                      }
+                      var document = snapshot.data!;
+                      var arrayData =
+                          document['userOrder'] as List<dynamic>? ?? [];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    TitlesTextWidget(label: "رقم الطلبية: "),
+                                    Expanded(
+                                      child: SubtitleTextWidget(
+                                          label: "${document['sessionId']}"),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    TitlesTextWidget(label: "حالة الطلبية: "),
+                                    SubtitleTextWidget(
+                                        label: "${document['orderStatus']}"),
+                                    Spacer(),
+                                    // SizedBox(
+                                    //   height: kBottomNavigationBarHeight - 10,
+                                    //   width: kBottomNavigationBarHeight + 60,
+                                    //   child: ElevatedButton(
+                                    //     style: ElevatedButton.styleFrom(
+                                    //       padding: const EdgeInsets.all(12),
+                                    //       backgroundColor: Colors.purpleAccent,
+                                    //       shape: RoundedRectangleBorder(
+                                    //         borderRadius:
+                                    //             BorderRadius.circular(10),
+                                    //       ),
+                                    //     ),
+                                    //     onPressed: () {
+                                    //       FirebaseFirestore.instance
+                                    //           .collection('ordersAdvanced')
+                                    //           .doc(docName)
+                                    //           .update({
+                                    //         'orderStatus': 'Completed',
+                                    //       });
+                                    //       Navigator.pop(context);
+                                    //     },
+                                    //     child: const Text(
+                                    //       "Completed",
+                                    //       style: TextStyle(fontSize: 18),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: arrayData.length,
+                                    itemBuilder: (context, index) {
+                                      var item = arrayData[index];
+                                      // Assuming each item in the array is a Map
+                                      var itemName = item['productTitle'];
+                                      var itemPrice = item['price'].toString();
+                                      var itemImage = item['imageUrl'];
+                                      var itemQty = item['quantity'];
+                                      return Container(
+                                        padding: EdgeInsets.only(top: 7),
+                                        margin:
+                                            EdgeInsets.only(top: 5, bottom: 5),
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child:
+                                            // Image.network(itemImage),
+                                            ListTile(
+                                          leading: SizedBox(
+                                            height: 70,
+                                            width: 70,
+                                            child: ClipRRect(
+                                              child: FancyShimmerImage(
+                                                imageUrl: itemImage,
+                                                height: 80,
+                                                width: 60,
+                                              ),
                                             ),
                                           ),
+                                          title: Row(
+                                            children: [
+                                              TitlesTextWidget(
+                                                label: itemName,
+                                                fontSize: 16,
+                                              ),
+                                            ],
+                                          ),
+                                          subtitle: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              TitlesTextWidget(
+                                                label: "$itemPrice جنيه ",
+                                                color: Colors.blue,
+                                              ),
+                                              SubtitleTextWidget(
+                                                label: "الكمية: $itemQty",
+                                                color: Colors.blue,
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        title: Row(
-                                          children: [
-                                            TitlesTextWidget(label: itemName),
-                                          ],
-                                        ),
-                                        subtitle: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TitlesTextWidget(
-                                              label: "\$ $itemPrice",
-                                              color: Colors.blue,
-                                            ),
-                                            SubtitleTextWidget(
-                                              label: "Qty: $itemQty",
-                                              color: Colors.blue,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                }
-              },
+                      );
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

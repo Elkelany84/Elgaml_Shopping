@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,6 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/widgets/color_picker.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -89,6 +89,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         text: widget.productModel == null
             ? ""
             : widget.productModel!.productQuantity);
+    // getColorValue('CKle6aKVL73Xm3qtB814', 4279437290);
     super.initState();
   }
 
@@ -391,6 +392,34 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     kCOlor4,
     kCOlor5,
   ];
+  bool isChecked1 = false;
+  int color1 = 0;
+
+  bool isChecked2 = false;
+  int color2 = 0;
+  List<int> colorsProducts = [];
+  //futurebuilder
+  getColorValue(String docId, String colorKey) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot documentSnapshot =
+        await firestore.collection('newProducts').doc(docId).get();
+    Map<String, dynamic> colorsMap = documentSnapshot['colorsmap'];
+    print(colorsMap);
+    return colorsMap[colorKey];
+  }
+
+  //streambuilder
+
+  Stream<dynamic> getColorStream(String docId, String colorKey) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    return firestore
+        .collection('newProducts')
+        .doc(docId)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.data()?['colorsmap'][colorKey];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -399,6 +428,18 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     // final productsProvider = Provider.of<ProductsProvider>(
     //   context,
     // );
+
+    List<int> uniqueProductList = [];
+    Future<List> returnedList = categoryProvider.getProductList();
+    returnedList.then((value) {
+      // print(value);
+    });
+    void addNonZeroValues() {
+      color1 != 0 ? uniqueProductList.add(color1) : null;
+      color2 != 0 ? uniqueProductList.add(color2) : null;
+      // print(uniqueProductList);
+    }
+
     return LoadingManager(
       isLoading: isLoading,
       child: GestureDetector(
@@ -408,6 +449,19 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
+            floatingActionButton: FloatingActionButton(onPressed: () async {
+              // categoryProvider.addColorsFieldToProducts();
+              //test the colors feature
+              // categoryProvider.getProductList();
+              // print(returnedList);
+              getColorValue('CKle6aKVL73Xm3qtB814', "4279437290");
+              // addNonZeroValues();
+              // await FirebaseFirestore.instance
+              //     .collection("newProducts")
+              //     .doc('CKle6aKVL73Xm3qtB814')
+              //     .update(
+              //         {'colorsmap.$color1': isChecked1, 'colorsmap.red': 20});
+            }),
             resizeToAvoidBottomInset: true,
             bottomSheet: SizedBox(
               height: kBottomNavigationBarHeight + 10,
@@ -489,8 +543,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           visible: productImages.length == 1,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              productNetworkImage!,
+                            child: FancyShimmerImage(
+                              imageUrl: productNetworkImage!,
                               height: size.width * 0.5,
                               alignment: Alignment.center,
                             ),
@@ -508,11 +562,13 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 itemBuilder: (BuildContext context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.only(right: 3.0),
-                                    child: Image.network(
-                                      (productImages[index]),
-                                      height: 60,
-                                      width: 40,
-                                      fit: BoxFit.fill,
+                                    child: ClipRRect(
+                                      child: FancyShimmerImage(
+                                        imageUrl: (productImages[index]),
+                                        height: 60,
+                                        width: 40,
+                                        boxFit: BoxFit.fill,
+                                      ),
                                     ),
                                   );
                                 },
@@ -533,8 +589,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            productNetworkImage!,
+                          child: FancyShimmerImage(
+                            imageUrl: productNetworkImage!,
                             height: size.width * 0.5,
                             alignment: Alignment.center,
                           ),
@@ -833,35 +889,160 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                             SizedBox(
                               width: 15,
                             ),
-                            Container(
-                              height: 50,
-                              width: 200,
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          currentColor = index;
-                                          print(currentColor);
-                                        });
-                                      },
-                                      child: ColorPicker(
-                                          outerBorder: currentColor == index,
-                                          color: colorSelected[index]),
-                                    );
+                            Row(
+                              children: [
+                                // CheckBoxWidget(),
+                                StreamBuilder<dynamic>(
+                                  stream: getColorStream(
+                                      'CKle6aKVL73Xm3qtB814', "4279437290"),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('hhh');
+                                    }
+                                    if (snapshot.hasData) {
+                                      dynamic colorValue = snapshot.data;
+                                      return Checkbox(
+                                          activeColor: Colors.blue,
+                                          value: colorValue == true
+                                              ? colorValue
+                                              : isChecked1,
+                                          onChanged: (value) {
+                                            setState(() async {
+                                              colorValue = value!;
+                                              await FirebaseFirestore.instance
+                                                  .collection("newProducts")
+                                                  .doc('CKle6aKVL73Xm3qtB814')
+                                                  .update({
+                                                'colorsmap.4279437290':
+                                                    colorValue,
+                                              });
+                                              // color1 = isChecked1 == true
+                                              //     ? 0xFF1307EA
+                                              //     : 0;
+                                              // color1 != 0
+                                              //     ? colorsProducts.add(color1)
+                                              //     : null;
+
+                                              // uniqueProductList =
+                                              //     colorsProducts.toSet().toList();
+                                              // colorsProducts.remove(color1);
+                                              // print('aftereffect: $colorsProducts');
+                                              print("$isChecked1 + $color1");
+                                            });
+                                            // colorsProducts.toSet().toList();
+
+                                            print(isChecked1);
+                                            print(color1);
+                                            // print(colorsProducts);
+                                          });
+                                      // Center(
+                                      //   child:
+                                      //       Text('Color value: $colorValue'));
+                                    }
+                                    return Text('gfhgfhgfhgfh');
                                   },
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      height: 3,
-                                    );
+                                ),
+                                SizedBox(
+                                  width: 1,
+                                ),
+                                SubtitleTextWidget(
+                                  label: "أزرق",
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                StreamBuilder<dynamic>(
+                                  stream: getColorStream(
+                                      'CKle6aKVL73Xm3qtB814', "4279437290"),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('hhh');
+                                    }
+                                    if (snapshot.hasData) {
+                                      dynamic colorValue = snapshot.data;
+                                      return Checkbox(
+                                          activeColor: Colors.blue,
+                                          value: colorValue == true
+                                              ? colorValue
+                                              : isChecked1,
+                                          onChanged: (value) {
+                                            setState(() async {
+                                              colorValue = value!;
+                                              await FirebaseFirestore.instance
+                                                  .collection("newProducts")
+                                                  .doc('CKle6aKVL73Xm3qtB814')
+                                                  .update({
+                                                'colorsmap.4279437290':
+                                                    colorValue,
+                                              });
+                                              // color1 = isChecked1 == true
+                                              //     ? 0xFF1307EA
+                                              //     : 0;
+                                              // color1 != 0
+                                              //     ? colorsProducts.add(color1)
+                                              //     : null;
+
+                                              // uniqueProductList =
+                                              //     colorsProducts.toSet().toList();
+                                              // colorsProducts.remove(color1);
+                                              // print('aftereffect: $colorsProducts');
+                                              print("$isChecked1 + $color1");
+                                            });
+                                            // colorsProducts.toSet().toList();
+
+                                            print(isChecked1);
+                                            print(color1);
+                                            // print(colorsProducts);
+                                          });
+                                      // Center(
+                                      //   child:
+                                      //       Text('Color value: $colorValue'));
+                                    }
+                                    return Text('gfhgfhgfhgfh');
                                   },
-                                  itemCount: colorSelected.length),
-                            ),
+                                ),
+                                SizedBox(
+                                  width: 1,
+                                ),
+                                SubtitleTextWidget(
+                                  label: "أخضر",
+                                  color: Colors.green,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            )
+                            // Container(
+                            //   height: 50,
+                            //   width: 200,
+                            //   padding: EdgeInsets.all(8),
+                            //   decoration: BoxDecoration(
+                            //       color: Colors.black.withOpacity(0.3),
+                            //       borderRadius: BorderRadius.circular(30)),
+                            //   child: ListView.separated(
+                            //       scrollDirection: Axis.horizontal,
+                            //       itemBuilder: (context, index) {
+                            //         return GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               currentColor = index;
+                            //               print(currentColor);
+                            //             });
+                            //           },
+                            //           child: ColorPicker(
+                            //               outerBorder: currentColor == index,
+                            //               color: colorSelected[index]),
+                            //         );
+                            //       },
+                            //       separatorBuilder: (context, index) {
+                            //         return SizedBox(
+                            //           height: 3,
+                            //         );
+                            //       },
+                            //       itemCount: colorSelected.length),
+                            // ),
                           ],
                         )),
                   ),
