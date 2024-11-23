@@ -147,6 +147,28 @@ class CategoriesProvider extends ChangeNotifier {
     }
   }
 
+  //create function to add colors map field to products
+
+  Future<void> addColorsMapToProducts() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    Map<String, bool> colorsMap = {
+      '4279437290': false,
+      '0xFF0A0707': false,
+      '0xFFC3EA07': false,
+      '0xFFEA1C07': false,
+      '0xffad9c00': false,
+    };
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.update({'colorsMap': colorsMap});
+      print('Updated document ID: ${doc.id}');
+    }
+  }
+
 //get list value from firebase
   Future<List<dynamic>> getProductList() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
