@@ -266,12 +266,15 @@ class OrderStreamScreen extends StatelessWidget {
                                                 label: itemName,
                                                 fontSize: 16,
                                               ),
-                                              SubtitleTextWidget(
-                                                label: itemColor == 'Normal'
-                                                    ? 'بدون لون'
-                                                    : itemColor,
-                                                color: Colors.blue,
-                                              )
+                                              itemColor != null
+                                                  ? SubtitleTextWidget(
+                                                      label:
+                                                          itemColor == 'Normal'
+                                                              ? 'بدون لون'
+                                                              : itemColor,
+                                                      color: Colors.blue,
+                                                    )
+                                                  : Text('')
                                             ],
                                           ),
                                           subtitle: Row(
