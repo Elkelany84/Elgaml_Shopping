@@ -65,7 +65,7 @@ class _OrdersScreenCompletedState extends State<OrdersScreenCompleted> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      height: 250,
+                      height: 270,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey)),

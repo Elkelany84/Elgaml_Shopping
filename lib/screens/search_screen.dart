@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:provider/provider.dart';
 
@@ -102,85 +103,85 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        TextField(
-                          controller: searchTextController,
-                          decoration: InputDecoration(
-                            hintText: "Search",
-                            prefixIcon: Icon(
-                              Icons.search,
-                            ),
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                searchTextController.clear();
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                          //Decrease The Performance a little bit
-                          onChanged: (value) {
-                            // setState(() {
-                            productListSearch = productsProvider.searchQuery(
-                                searchText: searchTextController.text,
-                                passedList: productList);
-                            // });
-                          },
-                          onSubmitted: (value) {
-                            setState(() {
-                              productListSearch = productsProvider.searchQuery(
-                                  searchText: searchTextController.text,
-                                  passedList: productList);
-                            });
-                          },
-                        ),
-                        // TypeAheadField(
-                        //     // showOnFocus: false,
-                        //     hideOnLoading: true,
-                        //     hideOnError: true,
-                        //     builder: (context, controller, focusNode) {
-                        //       return TextField(
-                        //         controller: controller,
-                        //         focusNode: focusNode,
-                        //         autofocus: false,
-                        //         decoration: InputDecoration(
-                        //             border: OutlineInputBorder(),
-                        //             labelText: "بحث",
-                        //             prefixIcon: Icon(Icons.search)),
-                        //       );
-                        //     },
-                        //     errorBuilder: (context, error) =>
-                        //         const Text('لا توجد منتجات مطابقة للبحث'),
-                        //     emptyBuilder: (context) =>
-                        //         const Text('لا توجد منتجات مطابقة للبحث'),
-                        //     transitionBuilder: (context, animation, child) {
-                        //       return FadeTransition(
-                        //         opacity: CurvedAnimation(
-                        //           parent: animation,
-                        //           curve: Curves.fastOutSlowIn,
-                        //         ),
-                        //         child: child,
-                        //       );
-                        //     },
-                        //     itemBuilder: (context, String suggestions) {
-                        //       return ListTile(
-                        //         title: Text(suggestions),
-                        //       );
-                        //     },
-                        //     onSelected: (value) {
-                        //       setState(() {
-                        //         searchTextController.text = value;
-                        //         productListSearch =
-                        //             productsProvider.searchQuery(
-                        //                 searchText: searchTextController.text,
-                        //                 passedList: productList);
-                        //       });
-                        //     },
-                        //     suggestionsCallback: (String search) {
-                        //       return productsProvider.getSuggestions(search);
-                        //     }),
+                        // TextField(
+                        //   controller: searchTextController,
+                        //   decoration: InputDecoration(
+                        //     hintText: "Search",
+                        //     prefixIcon: Icon(
+                        //       Icons.search,
+                        //     ),
+                        //     suffixIcon: GestureDetector(
+                        //       onTap: () {
+                        //         searchTextController.clear();
+                        //         FocusScope.of(context).unfocus();
+                        //       },
+                        //       child: Icon(
+                        //         Icons.clear,
+                        //         color: Colors.red,
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   //Decrease The Performance a little bit
+                        //   onChanged: (value) {
+                        //     // setState(() {
+                        //     productListSearch = productsProvider.searchQuery(
+                        //         searchText: searchTextController.text,
+                        //         passedList: productList);
+                        //     // });
+                        //   },
+                        //   onSubmitted: (value) {
+                        //     setState(() {
+                        //       productListSearch = productsProvider.searchQuery(
+                        //           searchText: searchTextController.text,
+                        //           passedList: productList);
+                        //     });
+                        //   },
+                        // ),
+                        TypeAheadField(
+                            // showOnFocus: false,
+                            hideOnLoading: true,
+                            hideOnError: true,
+                            builder: (context, controller, focusNode) {
+                              return TextField(
+                                controller: controller,
+                                focusNode: focusNode,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: "بحث",
+                                    prefixIcon: Icon(Icons.search)),
+                              );
+                            },
+                            errorBuilder: (context, error) =>
+                                const Text('لا توجد منتجات مطابقة للبحث'),
+                            emptyBuilder: (context) =>
+                                const Text('لا توجد منتجات مطابقة للبحث'),
+                            transitionBuilder: (context, animation, child) {
+                              return FadeTransition(
+                                opacity: CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.fastOutSlowIn,
+                                ),
+                                child: child,
+                              );
+                            },
+                            itemBuilder: (context, String suggestions) {
+                              return ListTile(
+                                title: Text(suggestions),
+                              );
+                            },
+                            onSelected: (value) {
+                              setState(() {
+                                searchTextController.text = value;
+                                productListSearch =
+                                    productsProvider.searchQuery(
+                                        searchText: searchTextController.text,
+                                        passedList: productList);
+                              });
+                            },
+                            suggestionsCallback: (String search) {
+                              return productsProvider.getSuggestions(search);
+                            }),
                         SizedBox(
                           height: 15,
                         ),

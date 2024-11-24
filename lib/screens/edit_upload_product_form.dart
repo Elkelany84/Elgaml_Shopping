@@ -456,20 +456,20 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            floatingActionButton: FloatingActionButton(onPressed: () async {
-              categoryProvider.addColorsMapToProducts();
-              // categoryProvider.addColorsFieldToProducts();
-              //test the colors feature
-              // categoryProvider.getProductList();
-              // print(returnedList);
-              // getColorValue('CKle6aKVL73Xm3qtB814', "4279437290");
-              // addNonZeroValues();
-              // await FirebaseFirestore.instance
-              //     .collection("newProducts")
-              //     .doc('CKle6aKVL73Xm3qtB814')
-              //     .update(
-              //         {'colorsmap.$color1': isChecked1, 'colorsmap.red': 20});
-            }),
+            // floatingActionButton: FloatingActionButton(onPressed: () async {
+            //   categoryProvider.addColorsMapToProducts();
+            //   // categoryProvider.addColorsFieldToProducts();
+            //   //test the colors feature
+            //   // categoryProvider.getProductList();
+            //   // print(returnedList);
+            //   // getColorValue('CKle6aKVL73Xm3qtB814', "4279437290");
+            //   // addNonZeroValues();
+            //   // await FirebaseFirestore.instance
+            //   //     .collection("newProducts")
+            //   //     .doc('CKle6aKVL73Xm3qtB814')
+            //   //     .update(
+            //   //         {'colorsmap.$color1': isChecked1, 'colorsmap.red': 20});
+            // }),
             resizeToAvoidBottomInset: true,
             bottomSheet: SizedBox(
               height: kBottomNavigationBarHeight + 10,
@@ -900,330 +900,360 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                             Row(
                               children: [
                                 // CheckBoxWidget(),
-                                StreamBuilder<dynamic>(
-                                  stream: getColorStream(
-                                      widget.productModel!.productId,
-                                      "4279437290"),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('hhh');
-                                    }
-                                    if (snapshot.hasData) {
-                                      dynamic colorValue = snapshot.data;
-                                      return Checkbox(
-                                          activeColor: Colors.blue,
-                                          value: colorValue == true
-                                              ? colorValue
-                                              : isChecked1,
-                                          onChanged: (value) {
-                                            setState(() async {
-                                              colorValue = value!;
-                                              await FirebaseFirestore.instance
-                                                  .collection("products")
-                                                  .doc(
-                                                    widget.productModel!
-                                                        .productId,
-                                                  )
-                                                  .update({
-                                                'colorsMap.4279437290':
-                                                    colorValue,
-                                              });
-                                              // color1 = isChecked1 == true
-                                              //     ? 0xFF1307EA
-                                              //     : 0;
-                                              // color1 != 0
-                                              //     ? colorsProducts.add(color1)
-                                              //     : null;
+                                isEditing
+                                    ? StreamBuilder<dynamic>(
+                                        stream: getColorStream(
+                                            widget.productModel!.productId,
+                                            "4279437290"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('hhh');
+                                          }
+                                          if (snapshot.hasData) {
+                                            dynamic colorValue = snapshot.data;
+                                            return Checkbox(
+                                                activeColor: Colors.blue,
+                                                value: colorValue == true
+                                                    ? colorValue
+                                                    : isChecked1,
+                                                onChanged: (value) {
+                                                  setState(() async {
+                                                    colorValue = value!;
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("products")
+                                                        .doc(
+                                                          widget.productModel!
+                                                              .productId,
+                                                        )
+                                                        .update({
+                                                      'colorsMap.4279437290':
+                                                          colorValue,
+                                                    });
+                                                    // color1 = isChecked1 == true
+                                                    //     ? 0xFF1307EA
+                                                    //     : 0;
+                                                    // color1 != 0
+                                                    //     ? colorsProducts.add(color1)
+                                                    //     : null;
 
-                                              // uniqueProductList =
-                                              //     colorsProducts.toSet().toList();
-                                              // colorsProducts.remove(color1);
-                                              // print('aftereffect: $colorsProducts');
-                                              print("$isChecked1 + $color1");
-                                            });
-                                            // colorsProducts.toSet().toList();
+                                                    // uniqueProductList =
+                                                    //     colorsProducts.toSet().toList();
+                                                    // colorsProducts.remove(color1);
+                                                    // print('aftereffect: $colorsProducts');
+                                                    print(
+                                                        "$isChecked1 + $color1");
+                                                  });
+                                                  // colorsProducts.toSet().toList();
 
-                                            print(isChecked1);
-                                            print(color1);
-                                            // print(colorsProducts);
-                                          });
-                                      // Center(
-                                      //   child:
-                                      //       Text('Color value: $colorValue'));
-                                    }
-                                    return Text('no blue');
-                                  },
-                                ),
+                                                  print(isChecked1);
+                                                  print(color1);
+                                                  // print(colorsProducts);
+                                                });
+                                            // Center(
+                                            //   child:
+                                            //       Text('Color value: $colorValue'));
+                                          }
+                                          return Text('no blue');
+                                        },
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                SubtitleTextWidget(
-                                  label: "أزرق",
-                                  color: Colors.blue,
-                                  fontSize: 14,
-                                ),
+                                isEditing
+                                    ? SubtitleTextWidget(
+                                        label: "أزرق",
+                                        color: Colors.blue,
+                                        fontSize: 14,
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                StreamBuilder<dynamic>(
-                                  stream: getColorStream(
-                                      widget.productModel!.productId,
-                                      "0xffad9c00"),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('hhh');
-                                    }
-                                    if (snapshot.hasData) {
-                                      dynamic colorValue = snapshot.data;
-                                      return Checkbox(
-                                          activeColor: Color(0xffad9c00),
-                                          value: colorValue == true
-                                              ? colorValue
-                                              : isChecked2,
-                                          onChanged: (value) {
-                                            setState(() async {
-                                              colorValue = value!;
-                                              await FirebaseFirestore.instance
-                                                  .collection("products")
-                                                  .doc(
-                                                    widget.productModel!
-                                                        .productId,
-                                                  )
-                                                  .update({
-                                                'colorsMap.0xffad9c00':
-                                                    colorValue,
-                                              });
-                                              // color1 = isChecked1 == true
-                                              //     ? 0xFF1307EA
-                                              //     : 0;
-                                              // color1 != 0
-                                              //     ? colorsProducts.add(color1)
-                                              //     : null;
+                                isEditing
+                                    ? StreamBuilder<dynamic>(
+                                        stream: getColorStream(
+                                            widget.productModel!.productId,
+                                            "0xffad9c00"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('hhh');
+                                          }
+                                          if (snapshot.hasData) {
+                                            dynamic colorValue = snapshot.data;
+                                            return Checkbox(
+                                                activeColor: Color(0xffad9c00),
+                                                value: colorValue == true
+                                                    ? colorValue
+                                                    : isChecked2,
+                                                onChanged: (value) {
+                                                  setState(() async {
+                                                    colorValue = value!;
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("products")
+                                                        .doc(
+                                                          widget.productModel!
+                                                              .productId,
+                                                        )
+                                                        .update({
+                                                      'colorsMap.0xffad9c00':
+                                                          colorValue,
+                                                    });
+                                                    // color1 = isChecked1 == true
+                                                    //     ? 0xFF1307EA
+                                                    //     : 0;
+                                                    // color1 != 0
+                                                    //     ? colorsProducts.add(color1)
+                                                    //     : null;
 
-                                              // uniqueProductList =
-                                              //     colorsProducts.toSet().toList();
-                                              // colorsProducts.remove(color1);
-                                              // print('aftereffect: $colorsProducts');
-                                              print("$isChecked2 + $color2");
-                                            });
-                                            // colorsProducts.toSet().toList();
+                                                    // uniqueProductList =
+                                                    //     colorsProducts.toSet().toList();
+                                                    // colorsProducts.remove(color1);
+                                                    // print('aftereffect: $colorsProducts');
+                                                    print(
+                                                        "$isChecked2 + $color2");
+                                                  });
+                                                  // colorsProducts.toSet().toList();
 
-                                            print(isChecked1);
-                                            print(color1);
-                                            // print(colorsProducts);
-                                          });
-                                      // Center(
-                                      //   child:
-                                      //       Text('Color value: $colorValue'));
-                                    }
-                                    return Text('gfhgfhgfhgfh');
-                                  },
-                                ),
+                                                  print(isChecked1);
+                                                  print(color1);
+                                                  // print(colorsProducts);
+                                                });
+                                            // Center(
+                                            //   child:
+                                            //       Text('Color value: $colorValue'));
+                                          }
+                                          return Text('gfhgfhgfhgfh');
+                                        },
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                SubtitleTextWidget(
-                                  label: "ذهبى",
-                                  color: Color(0xffad9c00),
-                                  fontSize: 14,
-                                ),
+                                isEditing
+                                    ? SubtitleTextWidget(
+                                        label: "ذهبى",
+                                        color: Color(0xffad9c00),
+                                        fontSize: 14,
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                StreamBuilder<dynamic>(
-                                  stream: getColorStream(
-                                      widget.productModel!.productId,
-                                      "0xFFEA1C07"),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('hhh');
-                                    }
-                                    if (snapshot.hasData) {
-                                      dynamic colorValue = snapshot.data;
-                                      return Checkbox(
-                                          activeColor: Colors.red,
-                                          value: colorValue == true
-                                              ? colorValue
-                                              : isChecked3,
-                                          onChanged: (value) {
-                                            setState(() async {
-                                              colorValue = value!;
-                                              await FirebaseFirestore.instance
-                                                  .collection("products")
-                                                  .doc(
-                                                    widget.productModel!
-                                                        .productId,
-                                                  )
-                                                  .update({
-                                                'colorsMap.0xFFEA1C07':
-                                                    colorValue,
-                                              });
-                                              // color1 = isChecked1 == true
-                                              //     ? 0xFF1307EA
-                                              //     : 0;
-                                              // color1 != 0
-                                              //     ? colorsProducts.add(color1)
-                                              //     : null;
+                                isEditing
+                                    ? StreamBuilder<dynamic>(
+                                        stream: getColorStream(
+                                            widget.productModel!.productId,
+                                            "0xFFEA1C07"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('hhh');
+                                          }
+                                          if (snapshot.hasData) {
+                                            dynamic colorValue = snapshot.data;
+                                            return Checkbox(
+                                                activeColor: Colors.red,
+                                                value: colorValue == true
+                                                    ? colorValue
+                                                    : isChecked3,
+                                                onChanged: (value) {
+                                                  setState(() async {
+                                                    colorValue = value!;
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("products")
+                                                        .doc(
+                                                          widget.productModel!
+                                                              .productId,
+                                                        )
+                                                        .update({
+                                                      'colorsMap.0xFFEA1C07':
+                                                          colorValue,
+                                                    });
+                                                    // color1 = isChecked1 == true
+                                                    //     ? 0xFF1307EA
+                                                    //     : 0;
+                                                    // color1 != 0
+                                                    //     ? colorsProducts.add(color1)
+                                                    //     : null;
 
-                                              // uniqueProductList =
-                                              //     colorsProducts.toSet().toList();
-                                              // colorsProducts.remove(color1);
-                                              // print('aftereffect: $colorsProducts');
-                                              print("$isChecked2 + $color2");
-                                            });
-                                            // colorsProducts.toSet().toList();
+                                                    // uniqueProductList =
+                                                    //     colorsProducts.toSet().toList();
+                                                    // colorsProducts.remove(color1);
+                                                    // print('aftereffect: $colorsProducts');
+                                                    print(
+                                                        "$isChecked2 + $color2");
+                                                  });
+                                                  // colorsProducts.toSet().toList();
 
-                                            print(isChecked1);
-                                            print(color1);
-                                            // print(colorsProducts);
-                                          });
-                                      // Center(
-                                      //   child:
-                                      //       Text('Color value: $colorValue'));
-                                    }
-                                    return SubtitleTextWidget(
-                                        label: 'لا يوجد ألوان');
-                                  },
-                                ),
+                                                  print(isChecked1);
+                                                  print(color1);
+                                                  // print(colorsProducts);
+                                                });
+                                            // Center(
+                                            //   child:
+                                            //       Text('Color value: $colorValue'));
+                                          }
+                                          return SubtitleTextWidget(
+                                              label: 'لا يوجد ألوان');
+                                        },
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                SubtitleTextWidget(
-                                  label: "أحمر",
-                                  color: Colors.red,
-                                  fontSize: 14,
-                                ),
+                                isEditing
+                                    ? SubtitleTextWidget(
+                                        label: "أحمر",
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                StreamBuilder<dynamic>(
-                                  stream: getColorStream(
-                                      widget.productModel!.productId,
-                                      "0xFFC3EA07"),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('hhh');
-                                    }
-                                    if (snapshot.hasData) {
-                                      dynamic colorValue = snapshot.data;
-                                      return Checkbox(
-                                          activeColor: Colors.yellow,
-                                          value: colorValue == true
-                                              ? colorValue
-                                              : isChecked4,
-                                          onChanged: (value) {
-                                            setState(() async {
-                                              colorValue = value!;
-                                              await FirebaseFirestore.instance
-                                                  .collection("products")
-                                                  .doc(
-                                                    widget.productModel!
-                                                        .productId,
-                                                  )
-                                                  .update({
-                                                'colorsMap.0xFFC3EA07':
-                                                    colorValue,
-                                              });
-                                              // color1 = isChecked1 == true
-                                              //     ? 0xFF1307EA
-                                              //     : 0;
-                                              // color1 != 0
-                                              //     ? colorsProducts.add(color1)
-                                              //     : null;
+                                isEditing
+                                    ? StreamBuilder<dynamic>(
+                                        stream: getColorStream(
+                                            widget.productModel!.productId,
+                                            "0xFFC3EA07"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('hhh');
+                                          }
+                                          if (snapshot.hasData) {
+                                            dynamic colorValue = snapshot.data;
+                                            return Checkbox(
+                                                activeColor: Colors.yellow,
+                                                value: colorValue == true
+                                                    ? colorValue
+                                                    : isChecked4,
+                                                onChanged: (value) {
+                                                  setState(() async {
+                                                    colorValue = value!;
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("products")
+                                                        .doc(
+                                                          widget.productModel!
+                                                              .productId,
+                                                        )
+                                                        .update({
+                                                      'colorsMap.0xFFC3EA07':
+                                                          colorValue,
+                                                    });
+                                                    // color1 = isChecked1 == true
+                                                    //     ? 0xFF1307EA
+                                                    //     : 0;
+                                                    // color1 != 0
+                                                    //     ? colorsProducts.add(color1)
+                                                    //     : null;
 
-                                              // uniqueProductList =
-                                              //     colorsProducts.toSet().toList();
-                                              // colorsProducts.remove(color1);
-                                              // print('aftereffect: $colorsProducts');
-                                              print("$isChecked4 + $color4");
-                                            });
-                                            // colorsProducts.toSet().toList();
+                                                    // uniqueProductList =
+                                                    //     colorsProducts.toSet().toList();
+                                                    // colorsProducts.remove(color1);
+                                                    // print('aftereffect: $colorsProducts');
+                                                    print(
+                                                        "$isChecked4 + $color4");
+                                                  });
+                                                  // colorsProducts.toSet().toList();
 
-                                            print(isChecked4);
-                                            print(color4);
-                                            // print(colorsProducts);
-                                          });
-                                      // Center(
-                                      //   child:
-                                      //       Text('Color value: $colorValue'));
-                                    }
-                                    return Text('gfhgfhgfhgfh');
-                                  },
-                                ),
+                                                  print(isChecked4);
+                                                  print(color4);
+                                                  // print(colorsProducts);
+                                                });
+                                            // Center(
+                                            //   child:
+                                            //       Text('Color value: $colorValue'));
+                                          }
+                                          return Text('gfhgfhgfhgfh');
+                                        },
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                SubtitleTextWidget(
-                                  label: "أصفر",
-                                  color: Colors.yellow[700],
-                                  fontSize: 14,
-                                ),
+                                isEditing
+                                    ? SubtitleTextWidget(
+                                        label: "أصفر",
+                                        color: Colors.yellow[700],
+                                        fontSize: 14,
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
 
-                                StreamBuilder<dynamic>(
-                                  stream: getColorStream(
-                                      widget.productModel!.productId,
-                                      "0xFF0A0707"),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('hhh');
-                                    }
-                                    if (snapshot.hasData) {
-                                      dynamic colorValue = snapshot.data;
-                                      return Checkbox(
-                                          activeColor: Colors.black,
-                                          value: colorValue == true
-                                              ? colorValue
-                                              : isChecked4,
-                                          onChanged: (value) {
-                                            setState(() async {
-                                              colorValue = value!;
-                                              await FirebaseFirestore.instance
-                                                  .collection("products")
-                                                  .doc(
-                                                    widget.productModel!
-                                                        .productId,
-                                                  )
-                                                  .update({
-                                                'colorsMap.0xFF0A0707':
-                                                    colorValue,
-                                              });
-                                              // color1 = isChecked1 == true
-                                              //     ? 0xFF1307EA
-                                              //     : 0;
-                                              // color1 != 0
-                                              //     ? colorsProducts.add(color1)
-                                              //     : null;
+                                isEditing
+                                    ? StreamBuilder<dynamic>(
+                                        stream: getColorStream(
+                                            widget.productModel!.productId,
+                                            "0xFF0A0707"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('hhh');
+                                          }
+                                          if (snapshot.hasData) {
+                                            dynamic colorValue = snapshot.data;
+                                            return Checkbox(
+                                                activeColor: Colors.black,
+                                                value: colorValue == true
+                                                    ? colorValue
+                                                    : isChecked4,
+                                                onChanged: (value) {
+                                                  setState(() async {
+                                                    colorValue = value!;
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("products")
+                                                        .doc(
+                                                          widget.productModel!
+                                                              .productId,
+                                                        )
+                                                        .update({
+                                                      'colorsMap.0xFF0A0707':
+                                                          colorValue,
+                                                    });
+                                                    // color1 = isChecked1 == true
+                                                    //     ? 0xFF1307EA
+                                                    //     : 0;
+                                                    // color1 != 0
+                                                    //     ? colorsProducts.add(color1)
+                                                    //     : null;
 
-                                              // uniqueProductList =
-                                              //     colorsProducts.toSet().toList();
-                                              // colorsProducts.remove(color1);
-                                              // print('aftereffect: $colorsProducts');
-                                              print("$isChecked4 + $color4");
-                                            });
-                                            // colorsProducts.toSet().toList();
+                                                    // uniqueProductList =
+                                                    //     colorsProducts.toSet().toList();
+                                                    // colorsProducts.remove(color1);
+                                                    // print('aftereffect: $colorsProducts');
+                                                    print(
+                                                        "$isChecked4 + $color4");
+                                                  });
+                                                  // colorsProducts.toSet().toList();
 
-                                            print(isChecked4);
-                                            print(color4);
-                                            // print(colorsProducts);
-                                          });
-                                      // Center(
-                                      //   child:
-                                      //       Text('Color value: $colorValue'));
-                                    }
-                                    return Text('aa');
-                                  },
-                                ),
+                                                  print(isChecked4);
+                                                  print(color4);
+                                                  // print(colorsProducts);
+                                                });
+                                            // Center(
+                                            //   child:
+                                            //       Text('Color value: $colorValue'));
+                                          }
+                                          return Text('aa');
+                                        },
+                                      )
+                                    : Container(),
                                 SizedBox(
                                   width: 1,
                                 ),
-                                SubtitleTextWidget(
-                                  label: "أسود",
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                ),
+                                isEditing
+                                    ? SubtitleTextWidget(
+                                        label: "أسود",
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      )
+                                    : Container(),
                               ],
                             )
                             // Container(

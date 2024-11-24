@@ -43,7 +43,7 @@ class _OrdersScreenCancelledState extends State<OrdersScreenCancelled> {
           stream: FirebaseFirestore.instance
               .collection("ordersAdvanced")
               .where("orderStatus", isEqualTo: "تم إلغاء الطلب")
-              .orderBy("orderDate", descending: false)
+              .orderBy("orderDate", descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

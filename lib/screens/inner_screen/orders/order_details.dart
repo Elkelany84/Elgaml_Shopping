@@ -233,6 +233,7 @@ class OrderStreamScreen extends StatelessWidget {
                                       var itemPrice = item['price'].toString();
                                       var itemImage = item['imageUrl'];
                                       var itemQty = item['quantity'];
+                                      var itemColor = item['color'];
                                       return Container(
                                         padding: EdgeInsets.only(top: 7),
                                         margin:
@@ -258,11 +259,19 @@ class OrderStreamScreen extends StatelessWidget {
                                             ),
                                           ),
                                           title: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               TitlesTextWidget(
                                                 label: itemName,
                                                 fontSize: 16,
                                               ),
+                                              SubtitleTextWidget(
+                                                label: itemColor == 'Normal'
+                                                    ? 'بدون لون'
+                                                    : itemColor,
+                                                color: Colors.blue,
+                                              )
                                             ],
                                           ),
                                           subtitle: Row(
