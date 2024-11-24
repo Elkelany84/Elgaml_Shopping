@@ -10,11 +10,12 @@ class OrdersModelAdvanced with ChangeNotifier {
   final String totalPrice;
   final String imageUrl;
   final String quantity;
+  final String color;
   final String sessionId;
 
   final Timestamp orderDate;
 
-  OrdersModelAdvanced(
+  OrdersModelAdvanced(this.color,
       {required this.orderId,
       required this.userId,
       required this.productId,

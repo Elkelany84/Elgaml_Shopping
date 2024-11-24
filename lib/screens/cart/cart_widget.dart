@@ -67,7 +67,8 @@ class CartWidget extends StatelessWidget {
                                               cartId: cartModel.cartId,
                                               productId:
                                                   getCurrentProduct.productId,
-                                              quantity: cartModel.quantity);
+                                              quantity: cartModel.quantity,
+                                              color: cartModel.color);
                                       // cartProvider.removeFromCart(
                                       //     getCurrentProduct.productId);
                                     },

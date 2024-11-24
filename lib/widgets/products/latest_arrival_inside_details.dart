@@ -104,6 +104,7 @@ class LatestArrivalProductDetails extends StatelessWidget {
                                 await cartProvider.addToCartFirebase(
                                     productId: productModel.productId,
                                     quantity: 1,
+                                    color: 'normal',
                                     context: context);
                               } catch (error) {
                                 // Navigator.pushReplacementNamed(

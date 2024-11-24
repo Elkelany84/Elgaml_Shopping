@@ -480,6 +480,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               "totalPrice": cartProvider.getTotalForPayment(
                   productsProvider: productProvider),
               "quantity": value.quantity,
+              'color': value.color,
               "orderDate": Timestamp.now(),
               "shippingDate": dateTime,
             }

@@ -81,6 +81,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   // }
 
   bool showPallette = false;
+  String colorChosen = '';
   bool isBlue = false; //4279437290
   bool isBlueSelected = false;
   bool isRed = false; // #EA1C07>> 0xFFEA1C07
@@ -227,7 +228,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       imageList.length > 1
                           ? SizedBox(
-                              height: size.height * 0.30,
+                              height: showPallette
+                                  ? size.height * 0.30
+                                  : size.height * 0.38,
                               child: ClipRRect(
                                 // borderRadius: BorderRadius.circular(20),
                                 child: Swiper(
@@ -257,7 +260,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     getCurrentProduct.productImage,
                                 child: FancyShimmerImage(
                                   imageUrl: getCurrentProduct.productImage,
-                                  height: size.height * 0.30,
+                                  height: showPallette
+                                      ? size.height * 0.30
+                                      : size.height * 0.38,
                                   width: double.infinity,
                                 ),
                               ),
@@ -326,6 +331,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        colorChosen = "Black";
                                         setState(() {});
                                       },
                                       child: Visibility(
@@ -358,6 +364,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = true;
                                         isYellowSelected = false;
+                                        colorChosen = "Blue";
                                         print(isBlueSelected);
                                         setState(() {});
                                       },
@@ -391,6 +398,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        colorChosen = "Gold";
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                           print(isGoldSelected);
@@ -426,6 +434,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = true;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        colorChosen = "Red";
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                         });
@@ -460,6 +469,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = true;
+                                        colorChosen = "Yellow";
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                         });
@@ -617,7 +627,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   await cartProvider.addToCartFirebase(
                                       productId: getCurrentProduct.productId,
                                       quantity: 1,
-                                      context: context);
+                                      context: context,
+                                      color: colorChosen);
                                 } catch (error) {
                                   MyAppFunctions.showErrorOrWarningDialog(
                                       context: context,

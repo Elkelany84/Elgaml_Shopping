@@ -20,10 +20,12 @@ class CartProvider with ChangeNotifier {
   final auth = FirebaseAuth.instance;
 
   //add products to firebase
-  Future<void> addToCartFirebase(
-      {required String productId,
-      required int quantity,
-      required BuildContext context}) async {
+  Future<void> addToCartFirebase({
+    required String productId,
+    required int quantity,
+    required BuildContext context,
+    required String color,
+  }) async {
     User? user = auth.currentUser;
     if (user == null) {
       MyAppFunctions.showErrorOrWarningDialog(
@@ -43,7 +45,12 @@ class CartProvider with ChangeNotifier {
     try {
       await usersDb.doc(uid).update({
         "userCart": FieldValue.arrayUnion([
-          {"cartId": cartId, "productId": productId, "quantity": quantity}
+          {
+            "cartId": cartId,
+            "productId": productId,
+            "quantity": quantity,
+            "color": color
+          }
         ]),
       });
       //get the cart items from firebase and show it in cart screen
@@ -73,9 +80,11 @@ class CartProvider with ChangeNotifier {
         _cartItems.putIfAbsent(
             userDoc.get("userCart")[index]["productId"],
             () => CartModel(
-                productId: userDoc.get("userCart")[index]["productId"],
-                cartId: userDoc.get("userCart")[index]["cartId"],
-                quantity: userDoc.get("userCart")[index]["quantity"]));
+                  productId: userDoc.get("userCart")[index]["productId"],
+                  cartId: userDoc.get("userCart")[index]["cartId"],
+                  quantity: userDoc.get("userCart")[index]["quantity"],
+                  color: userDoc.get("userCart")[index]["color"],
+                ));
       }
     } catch (error) {
       rethrow;
@@ -87,13 +96,19 @@ class CartProvider with ChangeNotifier {
   Future<void> deleteProductFromCartFirebase(
       {required String cartId,
       required String productId,
-      required int quantity}) async {
+      required int quantity,
+      required String color}) async {
     final User? user = auth.currentUser;
     final uid = user!.uid;
     try {
       await usersDb.doc(uid).update({
         "userCart": FieldValue.arrayRemove([
-          {"cartId": cartId, "productId": productId, "quantity": quantity}
+          {
+            "cartId": cartId,
+            "productId": productId,
+            "quantity": quantity,
+            'color': color
+          }
         ]),
       });
       //get the cart items from firebase and show it in cart screen
@@ -125,9 +140,16 @@ class CartProvider with ChangeNotifier {
   }
 
   // Add the product to the cart
-  void addToCart({required String productId}) {
-    _cartItems.putIfAbsent(productId,
-        () => CartModel(productId: productId, cartId: uuid.v4(), quantity: 1));
+  void addToCart({
+    required String productId,
+  }) {
+    _cartItems.putIfAbsent(
+        productId,
+        () => CartModel(
+            productId: productId,
+            cartId: uuid.v4(),
+            quantity: 1,
+            color: 'Normal'));
     // Notify listeners that the cart has changed
     notifyListeners();
   }
@@ -188,11 +210,17 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  void updateQty({required String productId, required int qty}) {
+  void updateQty({
+    required String productId,
+    required int qty,
+  }) {
     _cartItems.update(
         productId,
         (cartItem) => CartModel(
-            productId: productId, cartId: cartItem.cartId, quantity: qty));
+            productId: productId,
+            cartId: cartItem.cartId,
+            quantity: qty,
+            color: 'Normal'));
     // _cartItems[productId]!.quantity++;
     notifyListeners();
   }

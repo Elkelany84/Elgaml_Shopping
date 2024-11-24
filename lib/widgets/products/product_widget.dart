@@ -146,6 +146,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                 await cartProvider.addToCartFirebase(
                                     productId: getCurrentProduct.productId,
                                     quantity: 1,
+                                    color: 'Normal',
                                     context: context);
                               } catch (error) {
                                 MyAppFunctions.showErrorOrWarningDialog(
