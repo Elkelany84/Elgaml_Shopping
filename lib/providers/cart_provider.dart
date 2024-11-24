@@ -7,6 +7,8 @@ import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:uuid/uuid.dart';
 
+import '../screens/auth/login_screen.dart';
+
 var uuid = const Uuid();
 
 class CartProvider with ChangeNotifier {
@@ -27,10 +29,14 @@ class CartProvider with ChangeNotifier {
       MyAppFunctions.showErrorOrWarningDialog(
           isError: false,
           context: context,
-          fct: () {},
-          subTitle: "Please Login First!");
+          fct: () {
+            // print("kkkk");
+            Navigator.pop(context);
+            Navigator.pushNamed(context, LoginScreen.routeName);
+          },
+          subTitle: "برجاء تسجيل الدخول أولا");
       return;
-      // Navigator.pushNamed(context, LoginScreen.routeName);
+      Navigator.pushNamed(context, LoginScreen.routeName);
     }
     final uid = user.uid;
     final cartId = uuid.v4();

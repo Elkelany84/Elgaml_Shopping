@@ -16,6 +16,8 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/login_screen.dart';
+
 class ProductDetails extends StatefulWidget {
   ProductDetails({
     super.key,
@@ -46,6 +48,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
+    print(widget.productId);
     // final productsProvider =
     //     Provider.of<ProductsProvider>(context, listen: false);
     // final productId = ModalRoute.of(context)?.settings.arguments as String;
@@ -58,12 +61,36 @@ class _ProductDetailsState extends State<ProductDetails> {
     //   const ProfileScreen()
     // ];
     // controller = PageController(initialPage: currentScreen);
+    // _checkDeltaColor();
     super.initState();
   }
 
+  int currentColor = 0;
+  List colorSelected = [];
   // late List<Widget> screens;
   // late PageController controller;
   // int currentScreen = 0;
+
+  // Color hexToColor(String hexString) {
+  //   hexString = hexString.replaceFirst('#', '');
+  //   if (hexString.length == 6) {
+  //     hexString = 'FF' + hexString; // Add opacity if not provided
+  //   }
+  //   print(Color(int.parse(hexString, radix: 16)));
+  //   return Color(int.parse(hexString, radix: 16));
+  // }
+
+  bool showPallette = false;
+  bool isBlue = false; //4279437290
+  bool isBlueSelected = false;
+  bool isRed = false; // #EA1C07>> 0xFFEA1C07
+  bool isRedSelected = false;
+  bool isGold = false; // >> #AD9C00 >> 0xffad9c00
+  bool isGoldSelected = false;
+  bool isYellow = false; //#C3EA07FF >> 0xFFC3EA07
+  bool isYellowSelected = false;
+  bool isBlack = false;
+  bool isBlackSelected = false; //#0A0707FF >> 0xFF0A0707
   @override
   Widget build(BuildContext context) {
     final productsProvider =
@@ -77,7 +104,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
     fetchImageUrls(productId: productId);
-
     // Future<List<String>> fetchImageUrls({required String productId}) async {
     //   final productDoc = await FirebaseFirestore.instance
     //       .collection('products')
@@ -87,6 +113,45 @@ class _ProductDetailsState extends State<ProductDetails> {
     //   final imageUrls = List<String>.from(productDoc['imageFileList']);
     //   return imageUrls;
     // }
+
+//check if the colorsMap has any true value to show the colors palette
+//     bool checkIfAnyColorTrue(Map<String, dynamic> colorsMap) {
+//       return colorsMap.values.contains(true);
+//     }
+
+    // anyColorTrue(String docId) async {
+    //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+    //   DocumentSnapshot documentSnapshot =
+    //       await firestore.collection('products').doc(docId).get();
+    //   Map<String, dynamic> colorsMap = documentSnapshot['colorsMap'];
+    //   showPallette = true;
+    //   setState(() {});
+    //   print(' show palette $showPallette');
+    //   return colorsMap.values.contains(true);
+    //   return false;
+    // }
+
+    //check every key in the colorsMap to show available colors
+    void _checkDeltaColor() async {
+      DocumentSnapshot productDoc = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get();
+
+      Map<String, bool> colors =
+          Map<String, bool>.from(productDoc['colorsMap']);
+
+      setState(() {
+        isBlue = colors['4279437290'] ?? false;
+        isBlack = colors['0xFF0A0707'] ?? false;
+        isGold = colors['0xffad9c00'] ?? false;
+        isRed = colors['0xFFEA1C07'] ?? false;
+        isYellow = colors['0xFFC3EA07'] ?? false;
+      });
+    }
+
+    // anyColorTrue(productId);
+    _checkDeltaColor();
     return Directionality(
       textDirection: TextDirection.rtl,
       // themeProvider.currentLocaleProvider == "ar"
@@ -162,7 +227,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       imageList.length > 1
                           ? SizedBox(
-                              height: size.height * 0.38,
+                              height: size.height * 0.30,
                               child: ClipRRect(
                                 // borderRadius: BorderRadius.circular(20),
                                 child: Swiper(
@@ -192,7 +257,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     getCurrentProduct.productImage,
                                 child: FancyShimmerImage(
                                   imageUrl: getCurrentProduct.productImage,
-                                  height: size.height * 0.38,
+                                  height: size.height * 0.30,
                                   width: double.infinity,
                                 ),
                               ),
@@ -227,6 +292,305 @@ class _ProductDetailsState extends State<ProductDetails> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Visibility(
+                        visible:
+                            isBlue || isBlack || isGold || isRed || isYellow,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SubtitleTextWidget(
+                              textDirection: TextDirection.rtl,
+                              label: "الألوان المتاحة: ",
+                              color: Colors.black, fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              // maxLines: 2,
+                            ),
+                            FittedBox(
+                              child: Container(
+                                height: 50,
+                                // width: 220,
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[100],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    //Black Color
+                                    GestureDetector(
+                                      onTap: () {
+                                        print(isBlackSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = true;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isBlack,
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isBlackSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(15),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Blue Color
+                                    GestureDetector(
+                                      onTap: () {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = true;
+                                        isYellowSelected = false;
+                                        print(isBlueSelected);
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isBlue,
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isBlueSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(15),
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Golden Color
+                                    GestureDetector(
+                                      onTap: () {
+                                        isGoldSelected = true;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                          print(isGoldSelected);
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isGold,
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isGoldSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(15),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffad9c00),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Red Color
+                                    GestureDetector(
+                                      onTap: () {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = true;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isRed,
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isRedSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(15),
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Yellow Color
+                                    GestureDetector(
+                                      onTap: () {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = true;
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isYellow,
+                                        child: Container(
+                                          padding: EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isYellowSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(15),
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // ColorPicker(outerBorder: false, color: Colors.green)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      // Center(
+                      //   child: SizedBox(
+                      //     height: 100,
+                      //     width: 400,
+                      //     child: FutureBuilder<List<MapEntry<String, dynamic>>>(
+                      //       future:
+                      //           productsProvider.getColorsMapAsList(productId),
+                      //       builder: (context, snapshot) {
+                      //         if (snapshot.connectionState ==
+                      //             ConnectionState.waiting) {
+                      //           return Center(
+                      //               child: CircularProgressIndicator());
+                      //         } else if (snapshot.hasError) {
+                      //           return Center(
+                      //               child: Text('Error: ${snapshot.error}'));
+                      //         } else {
+                      //           List<MapEntry<String, dynamic>> colorsList =
+                      //               snapshot.data ?? [];
+                      //           hexToColor('#ff8800');
+                      //           return Center(
+                      //             child: ListView.builder(
+                      //                 // scrollDirection: Axis.horizontal,
+                      //                 itemCount: colorsList.length,
+                      //                 itemBuilder: (context, index) {
+                      //                   return
+                      //                       //   Center(
+                      //                       //   child: GestureDetector(
+                      //                       //     onTap: () {
+                      //                       //       setState(() {
+                      //                       //         currentColor = index;
+                      //                       //         print(currentColor);
+                      //                       //       });
+                      //                       //     },
+                      //                       //     child: ColorPicker(
+                      //                       //         outerBorder:
+                      //                       //             colorsList[index].value,
+                      //                       //         color: Colors.red),
+                      //                       //   ),
+                      //                       // );
+                      //                       ListTile(
+                      //                     title: Text(
+                      //                         'Color: ${colorsList[index].key}'),
+                      //                     subtitle: Row(
+                      //                       children: [
+                      //                         Text(
+                      //                             'Value: ${colorsList[index].value}'),
+                      //                         Container(
+                      //                           child: Text(
+                      //                             'hhhh',
+                      //                             style:
+                      //                                 TextStyle(fontSize: 20),
+                      //                           ),
+                      //                           decoration: BoxDecoration(
+                      //                               color: Colors.green),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   );
+                      //                 }),
+                      //           );
+                      //         }
+                      //       },
+                      //       // child: Container(
+                      //       //   height: 50,
+                      //       //   width: 200,
+                      //       //   padding: EdgeInsets.all(8),
+                      //       //   decoration: BoxDecoration(
+                      //       //       color: Colors.black.withOpacity(0.3),
+                      //       //       borderRadius: BorderRadius.circular(30)),
+                      //       //   child: ListView.separated(
+                      //       //       scrollDirection: Axis.horizontal,
+                      //       //       itemBuilder: (context, index) {
+                      //       //         return GestureDetector(
+                      //       //           onTap: () {
+                      //       //             setState(() {
+                      //       //               currentColor = index;
+                      //       //               print(currentColor);
+                      //       //             });
+                      //       //           },
+                      //       //           child: ColorPicker(
+                      //       //               outerBorder: currentColor == index,
+                      //       //               color: colorSelected[index]),
+                      //       //         );
+                      //       //       },
+                      //       //       separatorBuilder: (context, index) {
+                      //       //         return SizedBox(
+                      //       //           height: 3,
+                      //       //         );
+                      //       //       },
+                      //       //       itemCount: colorSelected.length),
+                      //       // ),
+                      //     ),
+                      //   ),
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -257,7 +621,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 } catch (error) {
                                   MyAppFunctions.showErrorOrWarningDialog(
                                       context: context,
-                                      fct: () {},
+                                      fct: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, LoginScreen.routeName);
+                                        print("hhhhhh");
+                                        // Navigator.pushReplacementNamed(
+                                        //     context, LoginScreen.routeName);
+                                      },
                                       subTitle: error.toString());
                                 }
 

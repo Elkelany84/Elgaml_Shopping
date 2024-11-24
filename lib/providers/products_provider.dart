@@ -83,6 +83,19 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
+  //create function to convert map to list in firebase
+  Future<List<MapEntry<String, dynamic>>> getColorsMapAsList(
+      String docId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot documentSnapshot =
+        await firestore.collection('products').doc(docId).get();
+    Map<String, dynamic> colorsMap = documentSnapshot['colorsMap'];
+
+    List<MapEntry<String, dynamic>> colorsList = colorsMap.entries.toList();
+    print(colorsList);
+    return colorsList;
+  }
+
   //create function to fetch products which price string value is less than 100 from firebase
   // Future<List<ProductModel>> fetchProductsLessThan100() async {
   //   //convert productPrice field to double

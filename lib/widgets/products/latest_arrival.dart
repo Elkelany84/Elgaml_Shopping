@@ -1,4 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
@@ -8,6 +9,8 @@ import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
+
+import '../../screens/auth/login_screen.dart';
 
 class LatestArrivalProductWidgets extends StatelessWidget {
   // final String productId;
@@ -23,6 +26,29 @@ class LatestArrivalProductWidgets extends StatelessWidget {
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     // final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
+    User? user = FirebaseAuth.instance.currentUser;
+    void showAlertDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Alert'),
+            content: Text('You need to log in to continue.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+                child: Text('Login'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -107,21 +133,18 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                                     productId: productModel.productId,
                                     quantity: 1,
                                     context: context);
+                                // print("hhhhhh");
                               } catch (error) {
-                                // Navigator.pushReplacementNamed(
-                                //     context, LoginScreen.routeName);
                                 MyAppFunctions.showErrorOrWarningDialog(
-                                    context: context,
-                                    fct: () {},
-                                    subTitle: error.toString());
+                                  context: context,
+                                  fct: () {
+                                    // Navigator.pushReplacementNamed(
+                                    //     context, LoginScreen.routeName);
+                                  },
+                                  subTitle: "Error adding to cart",
+                                );
+                                print("hhhhhh");
                               }
-
-                              // if (cartProvider.isProductInCart(
-                              //     productId: productModel.productId)) {
-                              //   return;
-                              // }
-                              // cartProvider.addToCart(
-                              //     productId: productModel.productId);
                             },
                             icon: Icon(
                               cartProvider.isProductInCart(

@@ -17,6 +17,7 @@ import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -72,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     final themeProvider = Provider.of<ThemeProvider>(context);
     themeProvider.currentLocaleProvider = _currentLocale;
     print(themeProvider.currentLocaleProvider);
+    final InAppReview inAppReview = InAppReview.instance;
 
     return Directionality(
       textDirection: themeProvider.currentLocaleProvider == "ar"
@@ -215,6 +217,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                 const SizedBox(
                   height: 8,
                 ),
+                CustomListTile(
+                  label: "يسعدنا تقييمك",
+                  imagePath: AssetsManager.rateApp,
+                  onTab: () {
+                    inAppReview.openStoreListing();
+                  },
+                ),
                 const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Divider(
@@ -242,9 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         themeProvider.setDarkTheme(value);
                       }),
                 ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
+
                 // ListTile(
                 //   leading: Image.asset(
                 //     AssetsManager.language,

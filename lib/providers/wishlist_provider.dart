@@ -24,8 +24,10 @@ class WishlistProvider with ChangeNotifier {
       MyAppFunctions.showErrorOrWarningDialog(
           isError: false,
           context: context,
-          fct: () {},
-          subTitle: "Please Login First!");
+          fct: () {
+            // Navigator.pushNamed(context, LoginScreen.routeName);
+          },
+          subTitle: "برجاء تسجيل الدخول أولا");
       return;
       // Navigator.pushNamed(context, LoginScreen.routeName);
     }
