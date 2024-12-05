@@ -12,6 +12,7 @@ class ProductModel extends ChangeNotifier {
       productImage,
       productQuantity;
   final num productPrice;
+
   Timestamp? createdAt;
   List<String>? imageFileList;
 

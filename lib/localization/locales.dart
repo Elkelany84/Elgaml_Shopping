@@ -56,6 +56,7 @@ mixin LocaleData {
   //Product Details
   static const String productDetailsAddedAlready = "Added Already";
   static const String productDetailsAddedToCart = "Added To Cart";
+  static const String productUnavailable = "المنتج غير متوفر حاليا";
   static const String productDetailsAboutItem = "About This Item :";
   static const String productDetailsIn = "In";
   //Cart Screen
@@ -315,6 +316,7 @@ mixin LocaleData {
     //Product Details
     productDetailsAddedAlready: "أضيف بالفعل لسلة التسوق",
     productDetailsAddedToCart: "أضف لسلة التسوق",
+    productUnavailable: "المنتج غير متوفر حاليا",
     productDetailsAboutItem: "عن المنتج : ",
     productDetailsIn: "فى ",
 

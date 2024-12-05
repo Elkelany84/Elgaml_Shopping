@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
@@ -153,6 +154,10 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     // anyColorTrue(productId);
     _checkDeltaColor();
+    String productQuant = getCurrentProduct!.productQuantity;
+    bool productAvailable = productQuant == '0' ? true : false;
+    // print(productQuant);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       // themeProvider.currentLocaleProvider == "ar"
@@ -229,8 +234,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       imageList.length > 1
                           ? SizedBox(
                               height: showPallette
-                                  ? size.height * 0.30
-                                  : size.height * 0.38,
+                                  ? size.height * 0.25
+                                  : size.height * 0.35,
                               child: ClipRRect(
                                 // borderRadius: BorderRadius.circular(20),
                                 child: Swiper(
@@ -261,8 +266,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: FancyShimmerImage(
                                   imageUrl: getCurrentProduct.productImage,
                                   height: showPallette
-                                      ? size.height * 0.30
-                                      : size.height * 0.38,
+                                      ? size.height * 0.25
+                                      : size.height * 0.35,
                                   width: double.infinity,
                                 ),
                               ),
@@ -324,7 +329,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   children: [
                                     //Black Color
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         print(isBlackSelected);
                                         isGoldSelected = false;
                                         isBlackSelected = true;
@@ -332,6 +337,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isBlueSelected = false;
                                         isYellowSelected = false;
                                         colorChosen = "Black";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأسود");
+
                                         setState(() {});
                                       },
                                       child: Visibility(
@@ -358,7 +366,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     //Blue Color
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         isGoldSelected = false;
                                         isBlackSelected = false;
                                         isRedSelected = false;
@@ -366,6 +374,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isYellowSelected = false;
                                         colorChosen = "Blue";
                                         print(isBlueSelected);
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأزرق");
+
                                         setState(() {});
                                       },
                                       child: Visibility(
@@ -392,13 +403,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     //Golden Color
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         isGoldSelected = true;
                                         isBlackSelected = false;
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
                                         colorChosen = "Gold";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الذهبى");
+
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                           print(isGoldSelected);
@@ -428,13 +442,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     //Red Color
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         isGoldSelected = false;
                                         isBlackSelected = false;
                                         isRedSelected = true;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
                                         colorChosen = "Red";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأحمر");
+
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                         });
@@ -463,13 +480,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     //Yellow Color
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         isGoldSelected = false;
                                         isBlackSelected = false;
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = true;
                                         colorChosen = "Yellow";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأصفر");
+
                                         setState(() {
                                           // isBlueSelected != isBlueSelected;
                                         });
@@ -620,7 +640,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               onPressed: () async {
                                 //check if already in cart
                                 if (cartProvider.isProductInCart(
-                                    productId: getCurrentProduct.productId)) {
+                                        productId:
+                                            getCurrentProduct.productId) ||
+                                    productAvailable == true) {
                                   return;
                                 }
                                 try {
@@ -650,16 +672,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 //     productId: getCurrentProduct.productId);
                               },
                               label: Text(
-                                cartProvider.isProductInCart(
-                                        productId: getCurrentProduct.productId)
-                                    ? LocaleData.productDetailsAddedAlready
-                                        .getString(context)
-                                    : LocaleData.productDetailsAddedToCart
-                                        .getString(context),
+                                productAvailable
+                                    ? 'المنتج غير متوفر حاليا'
+                                    : cartProvider.isProductInCart(
+                                            productId:
+                                                getCurrentProduct.productId)
+                                        ? LocaleData.productDetailsAddedAlready
+                                            .getString(context)
+                                        : LocaleData.productDetailsAddedToCart
+                                            .getString(context),
                                 style: const TextStyle(fontSize: 18),
                               ),
                               icon: Icon(cartProvider.isProductInCart(
-                                      productId: getCurrentProduct.productId)
+                                          productId:
+                                              getCurrentProduct.productId) &&
+                                      productAvailable != true
                                   ? Icons.check
                                   : Icons.add_shopping_cart),
                             ),

@@ -6,7 +6,6 @@ import 'package:hadi_ecommerce_firebase_admin/localization/locales.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/category_runded_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival.dart';
@@ -126,10 +125,10 @@ class HomeScreen extends StatelessWidget {
                       width: 2,
                     ),
                     TextButton(
-                      onPressed: () {
-                        // await productsProvider.convertProductPrices();
-                        Navigator.pushNamed(
-                            context, CategoriesScreen.routeName);
+                      onPressed: () async {
+                        await productsProvider.convertProductPrices();
+                        // Navigator.pushNamed(
+                        //     context, CategoriesScreen.routeName);
                       },
                       child: SubtitleTextWidget(
                         label: LocaleData.showAll.getString(context),

@@ -9,6 +9,7 @@ class ProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];
   List<ProductModel> ProductsLessThan100 = [];
   List copilotList = [];
+  List<String> productNameFields = [];
 
   List<ProductModel> get getProducts {
     return products;
@@ -94,6 +95,62 @@ class ProductsProvider with ChangeNotifier {
     List<MapEntry<String, dynamic>> colorsList = colorsMap.entries.toList();
     print(colorsList);
     return colorsList;
+  }
+
+  //used for the search screen
+  List<String> getSuggestions(String query) {
+    productNameFields.toSet().toList();
+    List<String> matches = [];
+    matches.addAll(productNameFields);
+    // print(matches);
+    List<String> filteredProductNameFields = matches.toSet().toList();
+    matches.toSet().toList();
+    filteredProductNameFields.retainWhere(
+        (element) => element.toLowerCase().contains(query.toLowerCase()));
+    matches.toSet().toList();
+    return filteredProductNameFields;
+  }
+
+  //used to get the productNames in a list
+  Future<List<String>> fetchProductNames() async {
+    productNameFields.clear();
+    List<String> productNames = [];
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the 'products' collection
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      // Get the productName field and add it to the list
+      String productName = doc.get('productTitle');
+      productNames.add(productName);
+    }
+    productNames.toSet().toList();
+    // print(productNames);
+    productNames.toSet().toList();
+    // print(productNames.length);
+    // print(productNameFields.length);
+    // print(productNames);
+    productNameFields.addAll(productNames);
+//add the productNames to productNameFields
+
+//     productNameFields == productNames;
+//     print(productNames);
+    return productNames;
+  }
+
+//create a function to clear the userCart
+  Future<void> emptyUserCart() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference users = firestore.collection('users');
+    QuerySnapshot querySnapshot = await users.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.update({'userCart': []});
+      print('Emptied userCart for document ID: ${doc.id}');
+    }
   }
 
   //create function to fetch products which price string value is less than 100 from firebase
@@ -221,16 +278,16 @@ class ProductsProvider with ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current price field as a string
-      String priceString = doc.get('productPrice');
-
+      // String priceString = doc.get('productQuantity');
+      int priceString = doc.get('productQuantity');
       // Convert the price string to a number
       // double priceNumber = double.parse(priceString);
       // Convert the price string to integer
-      int priceNumber = int.parse(priceString);
-
+      // int priceNumber = int.parse(priceString);
+      String priceNumber = priceString.toString();
       // Update the document with the new price field
       await firestore.collection('products').doc(doc.id).update({
-        'productPrice': priceNumber,
+        'productQuantity': priceNumber,
       });
 
       print('Updated document ID: ${doc.id} with new price: $priceNumber');
