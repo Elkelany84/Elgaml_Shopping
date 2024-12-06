@@ -34,6 +34,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
 
   late TextEditingController _titleController,
       _priceController,
+      _priceBeforeDiscountController,
       _descriptionController,
       _quantityController;
   String? _categoryValue;
@@ -83,6 +84,10 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         text: widget.productModel == null
             ? ""
             : widget.productModel!.productPrice.toString());
+    _priceBeforeDiscountController = TextEditingController(
+        text: widget.productModel == null
+            ? ""
+            : widget.productModel!.productBeforeDiscount.toString());
     _descriptionController =
         TextEditingController(text: widget.productModel?.productDescription);
     _quantityController = TextEditingController(
@@ -97,6 +102,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
   void dispose() {
     _titleController.dispose();
     _priceController.dispose();
+    _priceBeforeDiscountController.dispose();
     _descriptionController.dispose();
     _quantityController.dispose();
     super.dispose();
@@ -107,6 +113,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     _priceController.clear();
     _descriptionController.clear();
     _quantityController.clear();
+    _priceBeforeDiscountController.clear();
     // removePickedImage();
     _clearPickedImage();
   }
@@ -176,13 +183,23 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productTitle": _titleController.text.trim(),
           "productCategory": _categoryValue,
           "productPrice": int.parse(_priceController.text),
+          "productBeforeDiscount":
+              int.parse(_priceBeforeDiscountController.text),
           "productDescription": _descriptionController.text,
           // "productImage": imageUrl,
           "productImage": imageUrl ?? imageFileListString![0],
           "imageFileList": imageFileListString,
           "createdAt": Timestamp.now(),
           "productQuantity": _quantityController.text,
-          // "colorsMap": {},
+          "colorsMap": {
+            '4279437290': false,
+            '0xFF0A0707': false,
+            '0xFFC3EA07': false,
+            '0xFFEA1C07': false,
+            '0xffad9c00': false,
+            '0xFF0ED422': false,
+            '0xFFC0C0C0': false
+          },
         });
 
         //SToast Message
@@ -268,7 +285,6 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productId": widget.productModel!.productId,
           "productTitle": _titleController.text.trim(),
           "productCategory": _categoryValue,
-          "productBeforeDiscount": "",
           "productPrice": int.parse(_priceController.text),
           "productDescription": _descriptionController.text,
           // "productImage": productImageUrl ?? productNetworkImage,
@@ -277,6 +293,8 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "imageFileList": imageFileListString,
           "createdAt": widget.productModel!.createdAt,
           "productQuantity": _quantityController.text,
+          "productBeforeDiscount":
+              int.parse(_priceBeforeDiscountController.text),
         });
 
         //SToast Message
@@ -543,7 +561,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 5,
+                    height: 3,
                   ),
 
                   //Image Picker
@@ -785,7 +803,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                     ),
                   ),
                   const SizedBox(
-                    height: 35,
+                    height: 20,
                   ),
 
                   Padding(
@@ -811,8 +829,38 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                     toBeReturnedString: "اختر اسم صحيح للمنتج");
                               },
                             ),
-                            SizedBox(
-                              height: 15,
+                            // SizedBox(
+                            //   height: 5,
+                            // ),
+                            Align(
+                                alignment: Alignment.topRight,
+                                child: SubtitleTextWidget(
+                                    label: "السعر قبل الخصم :")),
+                            TextFormField(
+                              controller: _priceBeforeDiscountController,
+                              key: ValueKey("PriceBeforeDisount \$"),
+                              maxLength: 5,
+                              maxLines: 1,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d+\.?\d{0,2}'),
+                                ),
+                              ],
+                              decoration: InputDecoration(
+                                hintText: "السعر قبل الخصم",
+                                prefix: SubtitleTextWidget(
+                                  label: "\$",
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              validator: (value) {
+                                return MyValidators.uploadProdTexts(
+                                    value: value,
+                                    toBeReturnedString: "السعر مفقود");
+                              },
                             ),
                             Row(
                               children: [
@@ -874,7 +922,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                               ],
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 10,
                             ),
                             Padding(
                               padding: EdgeInsets.only(

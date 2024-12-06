@@ -105,6 +105,23 @@ class CategoriesProvider extends ChangeNotifier {
     });
   }
 
+//update field string value
+  Future<void> updateQuantityFieldForAllDocuments() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.update({
+        'productBeforeDiscount': '0',
+      });
+      print('Updated quantity field for document ID: ${doc.id}');
+    }
+
+    print('Updated quantity field for all documents.');
+  }
+
   //convert field productQuantity from string to int
   Future<void> convertProductQuantities() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -114,18 +131,18 @@ class CategoriesProvider extends ChangeNotifier {
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current productQuantity field as a string
-      String quantityString = doc.get('productQuantity');
+      String quantityString = doc.get('productBeforeDiscount');
 
       // Convert the quantity string to an integer
       int quantityInt = int.parse(quantityString);
 
       // Update the document with the new productQuantity field as an integer
       await firestore.collection('products').doc(doc.id).update({
-        'productQuantity': quantityInt,
+        'productBeforeDiscount': quantityInt,
       });
 
       print(
-          'Updated document ID: ${doc.id} with new productQuantity: $quantityInt');
+          'Updated document ID: ${doc.id} with new productBeforeDiscount: $quantityInt');
     }
   }
 

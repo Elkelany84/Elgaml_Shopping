@@ -14,6 +14,7 @@ class ProductModel extends ChangeNotifier {
   final List? imageFileListString;
   final Map? colorsMap;
   final num productPrice;
+  final num? productBeforeDiscount;
   Timestamp? createdAt;
 
   ProductModel(
@@ -26,6 +27,7 @@ class ProductModel extends ChangeNotifier {
       required this.productQuantity,
       this.colorsMap,
       this.createdAt,
+      this.productBeforeDiscount,
       this.imageFileListString});
 
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
@@ -41,6 +43,7 @@ class ProductModel extends ChangeNotifier {
       productImage: data['productImage'],
       productQuantity: data['productQuantity'], createdAt: data['createdAt'],
       colorsMap: data['colorsMap'],
+      productBeforeDiscount: data['productBeforeDiscount'],
     );
   }
 }

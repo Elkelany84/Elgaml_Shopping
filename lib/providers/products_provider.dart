@@ -293,23 +293,22 @@ class ProductsProvider with ChangeNotifier {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Fetch all documents from the 'products' collection
-    QuerySnapshot querySnapshot =
-        await firestore.collection('newProducts').get();
+    QuerySnapshot querySnapshot = await firestore.collection('products').get();
 
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       // Get the current productQuantity field as a string
-      String quantityString = doc.get('quantity');
+      String quantityString = doc.get('productBeforeDiscount');
 
       // Convert the quantity string to an integer
       int quantityInt = int.parse(quantityString);
 
       // Update the document with the new productQuantity field as an integer
-      await firestore.collection('newProducts').doc(doc.id).update({
-        'quantity': quantityInt,
+      await firestore.collection('products').doc(doc.id).update({
+        'productBeforeDiscount': quantityInt,
       });
 
       print(
-          'Updated document ID: ${doc.id} with new productQuantity: $quantityInt');
+          'Updated document ID: ${doc.id} with new productBeforeDiscount: $quantityInt');
     }
   }
 
