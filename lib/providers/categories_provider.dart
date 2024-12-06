@@ -160,6 +160,8 @@ class CategoriesProvider extends ChangeNotifier {
       '0xFFC3EA07': false,
       '0xFFEA1C07': false,
       '0xffad9c00': false,
+      '0xFF0ED422': false,
+      '0xFFC0C0C0': false
     };
 
     // Update each document in the collection
@@ -167,6 +169,55 @@ class CategoriesProvider extends ChangeNotifier {
       await doc.reference.update({'colorsMap': colorsMap});
       print('Updated document ID: ${doc.id}');
     }
+  }
+
+//add colors map field to products if it does not exist
+
+  Future<void> addColorsMapIfNotExists() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (!data.containsKey('colorsMap')) {
+        await doc.reference.update({
+          'colorsMap': {},
+        });
+        print('Added colors map to document ID: ${doc.id}');
+      } else {
+        print('Document ID: ${doc.id} already has colors map.');
+      }
+    }
+
+    print('Checked and updated colors map for all documents.');
+  }
+
+//add fields to colorsMap
+  Future<void> updateColorsMapForAllDocuments() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      Map<String, dynamic> colorsMap = doc['colorsMap'];
+      // Print existing keys and values
+      colorsMap.forEach((key, value) {
+        print('Document ID: ${doc.id} - Key: $key, Value: $value');
+      });
+
+      // Add new key-value pair
+      await doc.reference.update({
+        'colorsMap.0xFF0EE53C': false,
+        'colorsMap.0xFFC0C0C0': false,
+      });
+      print(
+          'Updated colors map for document ID: ${doc.id} with new key-value pair.');
+    }
+
+    print('Retrieved and updated colors map for all documents.');
   }
 
 //get list value from firebase

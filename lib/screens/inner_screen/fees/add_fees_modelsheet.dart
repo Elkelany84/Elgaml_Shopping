@@ -54,7 +54,7 @@ class _AddFeesBottomSheetState extends State<AddFeesBottomSheet> {
             .set({
           "placeId": categoryId,
           "placeName": _titleController.text.trim(),
-          "fees": _feesController.text.trim(),
+          "fees": int.parse(_feesController.text.trim()),
         });
         Navigator.pushReplacementNamed(
             context,

@@ -13,6 +13,7 @@ class AppNameTextWidget extends StatelessWidget {
   final String label;
   final double fontSize;
   final String? fontFamily;
+
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
