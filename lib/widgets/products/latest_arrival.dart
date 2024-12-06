@@ -10,6 +10,7 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/products_provider.dart';
 import '../../screens/auth/login_screen.dart';
 
 class LatestArrivalProductWidgets extends StatelessWidget {
@@ -21,12 +22,17 @@ class LatestArrivalProductWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    final productsProvider = Provider.of<ProductsProvider>(context);
+
     // final productsProvider = Provider.of<ProductsProvider>(context);
     final productModel = Provider.of<ProductModel>(context);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     // final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
     User? user = FirebaseAuth.instance.currentUser;
+    final getCurrentProduct =
+        productsProvider.findByProdId(productModel.productId);
+
     void showAlertDialog(BuildContext context) {
       showDialog(
         context: context,
@@ -84,18 +90,34 @@ class LatestArrivalProductWidgets extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Hero(
-                  tag: productModel.productImage,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: FancyShimmerImage(
-                      imageUrl: productModel.productImage,
-                      height: size.height * 0.12,
-                      width: size.width * 0.25,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Hero(
+                      tag: productModel.productImage,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: FancyShimmerImage(
+                          imageUrl: productModel.productImage,
+                          height: size.height * 0.11,
+                          width: size.width * 0.25,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  if (getCurrentProduct!.productBeforeDiscount! > 0)
+                    SubtitleTextWidget(
+                      label: "${getCurrentProduct!.productBeforeDiscount} جنيه",
+                      color: Colors.grey,
+                      textDecoration: TextDecoration.lineThrough,
+                      fontWeight: FontWeight.normal, fontSize: 16,
+                      // maxLines: 2,
+                    ),
+                ],
               ),
               const SizedBox(
                 width: 5,
@@ -162,13 +184,27 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    FittedBox(
-                      child: SubtitleTextWidget(
-                        label: "${productModel.productPrice} جنيه ",
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
-                        // maxLines: 2,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // if (getCurrentProduct!.productBeforeDiscount! > 0)
+                        //   SubtitleTextWidget(
+                        //     label:
+                        //         "${getCurrentProduct!.productBeforeDiscount} جنيه",
+                        //     color: Colors.grey,
+                        //     textDecoration: TextDecoration.lineThrough,
+                        //     fontWeight: FontWeight.normal, fontSize: 16,
+                        //     // maxLines: 2,
+                        //   ),
+                        FittedBox(
+                          child: SubtitleTextWidget(
+                            label: "${productModel.productPrice} جنيه ",
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                            // maxLines: 2,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

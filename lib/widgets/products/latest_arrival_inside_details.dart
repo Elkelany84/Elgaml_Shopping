@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
@@ -18,11 +19,13 @@ class LatestArrivalProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-    // final productsProvider = Provider.of<ProductsProvider>(context);
+    final productsProvider = Provider.of<ProductsProvider>(context);
     final productModel = Provider.of<ProductModel>(context);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     // final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
+    final getCurrentProduct =
+        productsProvider.findByProdId(productModel.productId);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -59,15 +62,31 @@ class LatestArrivalProductDetails extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: FancyShimmerImage(
-                    imageUrl: productModel.productImage,
-                    height: size.height * 0.12,
-                    width: size.width * 0.25,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: FancyShimmerImage(
+                        imageUrl: productModel.productImage,
+                        height: size.height * 0.12,
+                        width: size.width * 0.25,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  if (getCurrentProduct!.productBeforeDiscount! > 0)
+                    SubtitleTextWidget(
+                      label: "${getCurrentProduct!.productBeforeDiscount} جنيه",
+                      color: Colors.grey,
+                      textDecoration: TextDecoration.lineThrough,
+                      fontWeight: FontWeight.normal, fontSize: 16,
+                      // maxLines: 2,
+                    ),
+                ],
               ),
               const SizedBox(
                 width: 5,

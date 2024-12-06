@@ -93,6 +93,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool isYellowSelected = false;
   bool isBlack = false;
   bool isBlackSelected = false; //#0A0707FF >> 0xFF0A0707
+
+  bool isGreen = false;
+  bool isGreenSelected = false; //#0ED422FF >> 0xFF0ED422
+  bool isSilver = false;
+  bool isSilverSelected = false; //#C0C0C0FF >> 0xFFC0C0C0
   @override
   Widget build(BuildContext context) {
     final productsProvider =
@@ -149,6 +154,8 @@ class _ProductDetailsState extends State<ProductDetails> {
         isGold = colors['0xffad9c00'] ?? false;
         isRed = colors['0xFFEA1C07'] ?? false;
         isYellow = colors['0xFFC3EA07'] ?? false;
+        isGreen = colors['0xFF0ED422'] ?? false;
+        isSilver = colors['0xFFC0C0C0'] ?? false;
       });
     }
 
@@ -303,15 +310,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                         height: 20,
                       ),
                       Visibility(
-                        visible:
-                            isBlue || isBlack || isGold || isRed || isYellow,
+                        visible: isBlue ||
+                            isBlack ||
+                            isGold ||
+                            isRed ||
+                            isYellow ||
+                            isGreen ||
+                            isSilver,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SubtitleTextWidget(
                               textDirection: TextDirection.rtl,
                               label: "الألوان المتاحة: ",
-                              color: Colors.black, fontSize: 20,
+                              color: Colors.black, fontSize: 16,
                               fontWeight: FontWeight.w700,
                               // maxLines: 2,
                             ),
@@ -336,6 +348,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
                                         colorChosen = "Black";
                                         await Fluttertoast.showToast(
                                             msg: "تم اختيار اللون الأسود");
@@ -345,7 +359,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Visibility(
                                         visible: isBlack,
                                         child: Container(
-                                          padding: EdgeInsets.all(3),
+                                          padding: EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -355,7 +369,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           .withOpacity(0.1),
                                                   width: 2)),
                                           child: Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(12),
                                             decoration: BoxDecoration(
                                               color: Colors.black,
                                               shape: BoxShape.circle,
@@ -372,6 +386,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = true;
                                         isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
                                         colorChosen = "Blue";
                                         print(isBlueSelected);
                                         await Fluttertoast.showToast(
@@ -382,7 +398,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Visibility(
                                         visible: isBlue,
                                         child: Container(
-                                          padding: EdgeInsets.all(3),
+                                          padding: EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -392,7 +408,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           .withOpacity(0.1),
                                                   width: 2)),
                                           child: Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(12),
                                             decoration: BoxDecoration(
                                               color: Colors.blue,
                                               shape: BoxShape.circle,
@@ -409,6 +425,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
                                         colorChosen = "Gold";
                                         await Fluttertoast.showToast(
                                             msg: "تم اختيار اللون الذهبى");
@@ -421,7 +439,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Visibility(
                                         visible: isGold,
                                         child: Container(
-                                          padding: EdgeInsets.all(3),
+                                          padding: EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -431,7 +449,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           .withOpacity(0.1),
                                                   width: 2)),
                                           child: Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(12),
                                             decoration: BoxDecoration(
                                               color: Color(0xffad9c00),
                                               shape: BoxShape.circle,
@@ -448,6 +466,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = true;
                                         isBlueSelected = false;
                                         isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
                                         colorChosen = "Red";
                                         await Fluttertoast.showToast(
                                             msg: "تم اختيار اللون الأحمر");
@@ -459,7 +479,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Visibility(
                                         visible: isRed,
                                         child: Container(
-                                          padding: EdgeInsets.all(3),
+                                          padding: EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -469,7 +489,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           .withOpacity(0.1),
                                                   width: 2)),
                                           child: Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(12),
                                             decoration: BoxDecoration(
                                               color: Colors.red,
                                               shape: BoxShape.circle,
@@ -486,6 +506,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         isRedSelected = false;
                                         isBlueSelected = false;
                                         isYellowSelected = true;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
                                         colorChosen = "Yellow";
                                         await Fluttertoast.showToast(
                                             msg: "تم اختيار اللون الأصفر");
@@ -497,7 +519,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Visibility(
                                         visible: isYellow,
                                         child: Container(
-                                          padding: EdgeInsets.all(3),
+                                          padding: EdgeInsets.all(2),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -507,9 +529,85 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           .withOpacity(0.1),
                                                   width: 2)),
                                           child: Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(12),
                                             decoration: BoxDecoration(
                                               color: Colors.yellow,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print(isGreenSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = true;
+                                        colorChosen = "Green";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأخضر");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isGreen,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isGreenSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print(isSilverSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isGreenSelected = false;
+                                        isSilverSelected = true;
+                                        colorChosen = "Black";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الفضى");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isSilver,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isSilverSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
                                               shape: BoxShape.circle,
                                             ),
                                           ),

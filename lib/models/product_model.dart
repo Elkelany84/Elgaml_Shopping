@@ -12,7 +12,7 @@ class ProductModel extends ChangeNotifier {
       productImage,
       productQuantity;
   final num productPrice;
-
+  final num? productBeforeDiscount;
   Timestamp? createdAt;
   List<String>? imageFileList;
 
@@ -25,6 +25,7 @@ class ProductModel extends ChangeNotifier {
     required this.productImage,
     required this.productQuantity,
     this.createdAt,
+    this.productBeforeDiscount,
     this.imageFileList,
   });
 
@@ -36,6 +37,7 @@ class ProductModel extends ChangeNotifier {
       productId: data['productId'],
       productTitle: data['productTitle'],
       productPrice: data['productPrice'],
+      productBeforeDiscount: data['productBeforeDiscount'],
       productCategory: data['productCategory'],
       productDescription: data['productDescription'],
       productImage: data['productImage'],

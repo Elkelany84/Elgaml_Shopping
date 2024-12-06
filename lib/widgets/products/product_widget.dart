@@ -120,6 +120,15 @@ class _ProductWidgetState extends State<ProductWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      if (getCurrentProduct.productBeforeDiscount! > 0)
+                        SubtitleTextWidget(
+                          label:
+                              "${getCurrentProduct.productBeforeDiscount} جنيه",
+                          color: Colors.grey,
+                          textDecoration: TextDecoration.lineThrough,
+                          fontWeight: FontWeight.normal, fontSize: 16,
+                          // maxLines: 2,
+                        ),
                       Flexible(
                         flex: 4,
                         child: SubtitleTextWidget(
