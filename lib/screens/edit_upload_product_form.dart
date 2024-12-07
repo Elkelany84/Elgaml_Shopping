@@ -86,7 +86,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
             : widget.productModel!.productPrice.toString());
     _priceBeforeDiscountController = TextEditingController(
         text: widget.productModel == null
-            ? ""
+            ? "0"
             : widget.productModel!.productBeforeDiscount.toString());
     _descriptionController =
         TextEditingController(text: widget.productModel?.productDescription);
@@ -495,7 +495,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
             // }),
             resizeToAvoidBottomInset: true,
             bottomSheet: SizedBox(
-              height: kBottomNavigationBarHeight + 10,
+              height: kBottomNavigationBarHeight + 8,
               child: Material(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Row(
@@ -503,7 +503,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   children: [
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(10),
                           backgroundColor: Colors.red,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -520,7 +520,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           // textStyle: TextStyle(color: Colors.white),
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(10),
                           backgroundColor: Colors.blue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -555,14 +555,15 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
               centerTitle: true,
               title: AppNameTextWidget(
                 label: isEditing ? "تعديل المنتج" : "إضافة منتج جديد",
+                fontSize: 28,
               ),
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 3,
-                  ),
+                  // const SizedBox(
+                  //   height: 1,
+                  // ),
 
                   //Image Picker
                   if (isEditing &&
@@ -622,7 +623,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           borderRadius: BorderRadius.circular(12),
                           child: FancyShimmerImage(
                             imageUrl: productNetworkImage!,
-                            height: size.width * 0.4,
+                            height: size.width * 0.3,
                             alignment: Alignment.center,
                           ),
                         ),
@@ -803,7 +804,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
 
                   Padding(
@@ -813,21 +814,25 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            TextFormField(
-                              controller: _titleController,
-                              key: ValueKey("Title"),
-                              maxLength: 80,
-                              maxLines: 2,
-                              minLines: 1,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.newline,
-                              decoration:
-                                  InputDecoration(hintText: "اسم المنتج"),
-                              validator: (value) {
-                                return MyValidators.uploadProdTexts(
-                                    value: value,
-                                    toBeReturnedString: "اختر اسم صحيح للمنتج");
-                              },
+                            Container(
+                              height: 60,
+                              child: TextFormField(
+                                controller: _titleController,
+                                key: ValueKey("Title"),
+                                maxLength: 80,
+                                maxLines: 2,
+                                minLines: 1,
+                                keyboardType: TextInputType.multiline,
+                                textInputAction: TextInputAction.newline,
+                                decoration:
+                                    InputDecoration(hintText: "اسم المنتج"),
+                                validator: (value) {
+                                  return MyValidators.uploadProdTexts(
+                                      value: value,
+                                      toBeReturnedString:
+                                          "اختر اسم صحيح للمنتج");
+                                },
+                              ),
                             ),
                             // SizedBox(
                             //   height: 5,
@@ -836,61 +841,67 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 alignment: Alignment.topRight,
                                 child: SubtitleTextWidget(
                                     label: "السعر قبل الخصم :")),
-                            TextFormField(
-                              controller: _priceBeforeDiscountController,
-                              key: ValueKey("PriceBeforeDisount \$"),
-                              maxLength: 5,
-                              maxLines: 1,
-                              keyboardType: TextInputType.number,
-                              textInputAction: TextInputAction.next,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d+\.?\d{0,2}'),
+                            Container(
+                              height: 60,
+                              child: TextFormField(
+                                controller: _priceBeforeDiscountController,
+                                key: ValueKey("PriceBeforeDisount \$"),
+                                maxLength: 5,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: "السعر قبل الخصم",
+                                  prefix: SubtitleTextWidget(
+                                    label: "\$",
+                                    color: Colors.blue,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "السعر قبل الخصم",
-                                prefix: SubtitleTextWidget(
-                                  label: "\$",
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                ),
+                                validator: (value) {
+                                  return MyValidators.uploadProdTexts(
+                                      value: value,
+                                      toBeReturnedString: "السعر مفقود");
+                                },
                               ),
-                              validator: (value) {
-                                return MyValidators.uploadProdTexts(
-                                    value: value,
-                                    toBeReturnedString: "السعر مفقود");
-                              },
                             ),
                             Row(
                               children: [
                                 Flexible(
                                   flex: 1,
-                                  child: TextFormField(
-                                    controller: _priceController,
-                                    key: ValueKey("Price \$"),
-                                    maxLength: 5,
-                                    maxLines: 1,
-                                    keyboardType: TextInputType.number,
-                                    textInputAction: TextInputAction.next,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
+                                  child: Container(
+                                    height: 60,
+                                    child: TextFormField(
+                                      controller: _priceController,
+                                      key: ValueKey("Price \$"),
+                                      maxLength: 5,
+                                      maxLines: 1,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d+\.?\d{0,2}'),
+                                        ),
+                                      ],
+                                      decoration: InputDecoration(
+                                        hintText: "السعر",
+                                        prefix: SubtitleTextWidget(
+                                          label: "\$",
+                                          color: Colors.blue,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ],
-                                    decoration: InputDecoration(
-                                      hintText: "السعر",
-                                      prefix: SubtitleTextWidget(
-                                        label: "\$",
-                                        color: Colors.blue,
-                                        fontSize: 16,
-                                      ),
+                                      validator: (value) {
+                                        return MyValidators.uploadProdTexts(
+                                            value: value,
+                                            toBeReturnedString: "السعر مفقود");
+                                      },
                                     ),
-                                    validator: (value) {
-                                      return MyValidators.uploadProdTexts(
-                                          value: value,
-                                          toBeReturnedString: "السعر مفقود");
-                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -898,31 +909,35 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 ),
                                 Flexible(
                                   flex: 1,
-                                  child: TextFormField(
-                                    controller: _quantityController,
-                                    key: ValueKey("Quantity"),
-                                    maxLength: 5,
-                                    maxLines: 1,
-                                    keyboardType: TextInputType.number,
-                                    textInputAction: TextInputAction.next,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp("[0-9]"),
-                                      )
-                                    ],
-                                    decoration:
-                                        InputDecoration(hintText: "الكمية"),
-                                    validator: (value) {
-                                      return MyValidators.uploadProdTexts(
-                                          value: value,
-                                          toBeReturnedString: "الكمية مفقودة");
-                                    },
+                                  child: Container(
+                                    height: 60,
+                                    child: TextFormField(
+                                      controller: _quantityController,
+                                      key: ValueKey("Quantity"),
+                                      maxLength: 5,
+                                      maxLines: 1,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp("[0-9]"),
+                                        )
+                                      ],
+                                      decoration:
+                                          InputDecoration(hintText: "الكمية"),
+                                      validator: (value) {
+                                        return MyValidators.uploadProdTexts(
+                                            value: value,
+                                            toBeReturnedString:
+                                                "الكمية مفقودة");
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 8,
                             ),
                             Padding(
                               padding: EdgeInsets.only(
