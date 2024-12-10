@@ -11,6 +11,8 @@ import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/o
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/assets_manager.dart';
 
+import '../screens/editPrices.dart';
+
 class DashboardButtonsModel {
   final Function onPressed;
   final String imagePath;
@@ -89,11 +91,11 @@ class DashboardButtonsModel {
             onPressed: () {
               Navigator.pushNamed(context, FeesScreen.routeName);
             }),
-        // DashboardButtonsModel(
-        //     text: "تعديل الأسعار",
-        //     imagePath: AssetsManager.editPrice,
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, EditPricesScreen.routeName);
-        //     }),
+        DashboardButtonsModel(
+            text: "تعديل الكميات",
+            imagePath: AssetsManager.editPrice,
+            onPressed: () {
+              Navigator.pushNamed(context, EditPricesScreen.routeName);
+            }),
       ];
 }

@@ -495,7 +495,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
             // }),
             resizeToAvoidBottomInset: true,
             bottomSheet: SizedBox(
-              height: kBottomNavigationBarHeight + 8,
+              height: kBottomNavigationBarHeight,
               child: Material(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Row(
@@ -514,7 +514,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                       icon: const Icon(Icons.clear),
                       label: const Text(
                         "مسح",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                     ElevatedButton.icon(
@@ -540,11 +540,11 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           ? const Text(
                               "تعديل المنتج",
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             )
                           : Text(
                               "إضافة منتج",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 18),
                             ),
                     ),
                   ],
@@ -755,7 +755,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         )
                       : SizedBox(),
                   const SizedBox(
-                    height: 5,
+                    height: 3,
                   ),
                   //DropDown Widget
                   // DropdownButton(
@@ -842,7 +842,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 child: SubtitleTextWidget(
                                     label: "السعر قبل الخصم :")),
                             Container(
-                              height: 60,
+                              height: 50,
                               child: TextFormField(
                                 controller: _priceBeforeDiscountController,
                                 key: ValueKey("PriceBeforeDisount \$"),
@@ -875,7 +875,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 Flexible(
                                   flex: 1,
                                   child: Container(
-                                    height: 60,
+                                    height: 50,
                                     child: TextFormField(
                                       controller: _priceController,
                                       key: ValueKey("Price \$"),
@@ -910,7 +910,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 Flexible(
                                   flex: 1,
                                   child: Container(
-                                    height: 60,
+                                    height: 50,
                                     child: TextFormField(
                                       controller: _quantityController,
                                       key: ValueKey("Quantity"),
@@ -947,14 +947,15 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                 controller: _descriptionController,
                                 key: ValueKey("Description"),
                                 maxLength: 500,
-                                maxLines: 5,
+                                maxLines: 4,
                                 minLines: 1,
                                 keyboardType: TextInputType.multiline,
                                 textInputAction: TextInputAction.next,
                                 textCapitalization:
                                     TextCapitalization.sentences,
-                                decoration:
-                                    InputDecoration(hintText: "وصف المنتج"),
+                                decoration: InputDecoration(
+                                  hintText: "وصف المنتج",
+                                ),
                                 validator: (value) {
                                   return MyValidators.uploadProdTexts(
                                       value: value,

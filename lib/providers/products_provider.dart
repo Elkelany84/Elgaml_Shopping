@@ -288,6 +288,41 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
+  //update field string value
+  Future<void> updateQuantityFieldForAllDocumentsZero() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.update({
+        'productQuantity': '0',
+      });
+      print('Updated quantity field for document ID: ${doc.id}');
+    }
+
+    print('Updated quantity field for all documents.');
+  }
+
+  //update field string value
+  Future<void> updateQuantityFieldForAllDocumentsHundred(
+      String quantity) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference products = firestore.collection('products');
+    QuerySnapshot querySnapshot = await products.get();
+
+    // Update each document in the collection
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.update({
+        'productQuantity': quantity,
+      });
+      print('Updated quantity field for document ID: ${doc.id}');
+    }
+
+    print('Updated quantity field for all documents.');
+  }
+
   //convert field productQuantity from string to int
   Future<void> convertProductQuantities() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
