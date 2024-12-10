@@ -8,7 +8,8 @@ var uuid = const Uuid();
 class ProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];
   List<ProductModel> ProductsLessThan100 = [];
-  List copilotList = [];
+  List<ProductModel> ProductsWithDiscounts = [];
+
   List<String> productNameFields = [];
 
   List<ProductModel> get getProducts {
@@ -19,8 +20,8 @@ class ProductsProvider with ChangeNotifier {
     return ProductsLessThan100;
   }
 
-  List get getCopilotList {
-    return copilotList;
+  List<ProductModel> get getProductsWithDiscounts {
+    return ProductsWithDiscounts;
   }
 
   //Show Product and Product Details
@@ -79,6 +80,68 @@ class ProductsProvider with ChangeNotifier {
       });
       notifyListeners();
       return products;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Fetch products from firebase less than 100
+  // final productLessThan100Db =
+  //     FirebaseFirestore.instance.collection("products");
+  Future<List<ProductModel>> fetchProductsLessThan100() async {
+    try {
+      await productDb
+          .orderBy("createdAt", descending: false)
+          .where('productPrice', isLessThan: 100)
+          .get()
+          .then((productSnapshot) {
+        ProductsLessThan100.clear();
+        for (var element in productSnapshot.docs) {
+          ProductsLessThan100.insert(0, ProductModel.fromFirestore(element)
+              // ProductModel(
+              //     productId: element.get("productId"),
+              //     productTitle: element.get("productTitle"),
+              //     productPrice: element.get("productPrice"),
+              //     productCategory: element.get("productCategory"),
+              //     productDescription: element.get("productDescription"),
+              //     productImage: element.get("productImage"),
+              //     productQuantity: "productQuantity")
+              );
+        }
+      });
+      notifyListeners();
+      return ProductsLessThan100;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Fetch products from firebase wih discounts
+  // final productLessThan100Db =
+  //     FirebaseFirestore.instance.collection("products");
+  Future<List<ProductModel>> fetchProductsWithDiscounts() async {
+    try {
+      await productDb
+          .orderBy("createdAt", descending: false)
+          .where('productBeforeDiscount', isNotEqualTo: 0)
+          .get()
+          .then((productSnapshot) {
+        ProductsWithDiscounts.clear();
+        for (var element in productSnapshot.docs) {
+          ProductsWithDiscounts.insert(0, ProductModel.fromFirestore(element)
+              // ProductModel(
+              //     productId: element.get("productId"),
+              //     productTitle: element.get("productTitle"),
+              //     productPrice: element.get("productPrice"),
+              //     productCategory: element.get("productCategory"),
+              //     productDescription: element.get("productDescription"),
+              //     productImage: element.get("productImage"),
+              //     productQuantity: "productQuantity")
+              );
+        }
+      });
+      notifyListeners();
+      return ProductsWithDiscounts;
     } catch (e) {
       rethrow;
     }

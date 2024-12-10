@@ -61,6 +61,8 @@ class _RootScreenState extends State<RootScreen> {
       Future.wait({
         productsProvider.fetchProducts(),
         categoriesProvider.fetchBanners(),
+        productsProvider.fetchProductsLessThan100(),
+        productsProvider.fetchProductsWithDiscounts(),
         // productsProvider.fetchProductsLessThan100(),
         // productsProvider.fetchAffordableProducts(),
         // productsProvider.tryThis(),

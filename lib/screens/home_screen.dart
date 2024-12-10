@@ -13,6 +13,8 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
+import 'categories_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -86,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Visibility(
                   visible: productsProvider.getProducts.isNotEmpty,
@@ -94,9 +96,9 @@ class HomeScreen extends StatelessWidget {
                     label: LocaleData.latestArrivals.getString(context),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
                 Visibility(
                   visible: productsProvider.getProducts.isNotEmpty,
                   child: SizedBox(
@@ -113,8 +115,63 @@ class HomeScreen extends StatelessWidget {
                         }),
                   ),
                 ),
-                const SizedBox(
-                  height: 6,
+                // const SizedBox(
+                //   height: 6,
+                // ),
+                Visibility(
+                  visible: productsProvider.getProducts.isNotEmpty,
+                  child: TitleTextWidget(
+                    label: 'منتجات أقل من 100 جنيه :',
+                  ),
+                ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                //products less than 100
+                Visibility(
+                  visible: productsProvider.getProductsLessThan1000.isNotEmpty,
+                  child: SizedBox(
+                    height: size.height * 0.2,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount:
+                            productsProvider.getProductsLessThan1000.length < 10
+                                ? productsProvider
+                                    .getProductsLessThan1000.length
+                                : 7,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                              value: productsProvider
+                                  .getProductsLessThan1000[index],
+                              child: const LatestArrivalProductWidgets());
+                        }),
+                  ),
+                ),
+                Visibility(
+                  visible: productsProvider.getProducts.isNotEmpty,
+                  child: TitleTextWidget(
+                    label: 'أحدث الخصومات :',
+                  ),
+                ),
+                //products with discounts
+                Visibility(
+                  visible: productsProvider.getProductsWithDiscounts.isNotEmpty,
+                  child: SizedBox(
+                    height: size.height * 0.2,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productsProvider
+                                    .getProductsWithDiscounts.length <
+                                10
+                            ? productsProvider.getProductsWithDiscounts.length
+                            : 7,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                              value: productsProvider
+                                  .getProductsWithDiscounts[index],
+                              child: const LatestArrivalProductWidgets());
+                        }),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,9 +183,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () async {
-                        await productsProvider.convertProductPrices();
-                        // Navigator.pushNamed(
-                        //     context, CategoriesScreen.routeName);
+                        // await productsProvider.convertProductPrices();
+                        Navigator.pushNamed(
+                            context, CategoriesScreen.routeName);
                       },
                       child: SubtitleTextWidget(
                         label: LocaleData.showAll.getString(context),
@@ -136,9 +193,9 @@ class HomeScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
                 GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
