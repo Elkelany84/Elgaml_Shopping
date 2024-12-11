@@ -11,6 +11,7 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/products/category_runded_w
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:provider/provider.dart';
 
 import 'categories_screen.dart';
@@ -27,7 +28,13 @@ class HomeScreen extends StatelessWidget {
     _flutterLocalization = FlutterLocalization.instance;
     String _currentLocale = _flutterLocalization.currentLocale!.languageCode;
     themeProvider.currentLocaleProvider = _currentLocale;
+    final _noScreenshot = NoScreenshot.instance;
+    void disableScreenshot() async {
+      bool result = await _noScreenshot.screenshotOff();
+      debugPrint('Screenshot Off: $result');
+    }
 
+    disableScreenshot();
     // UserModel? userModel;
     // User? user = FirebaseAuth.instance.currentUser;
     Size size = MediaQuery.of(context).size;
@@ -128,51 +135,51 @@ class HomeScreen extends StatelessWidget {
                 //   height: 5,
                 // ),
                 //products less than 100
-                Visibility(
-                  visible: productsProvider.getProductsLessThan1000.isNotEmpty,
-                  child: SizedBox(
-                    height: size.height * 0.2,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            productsProvider.getProductsLessThan1000.length < 10
-                                ? productsProvider
-                                    .getProductsLessThan1000.length
-                                : 7,
-                        itemBuilder: (context, index) {
-                          return ChangeNotifierProvider.value(
-                              value: productsProvider
-                                  .getProductsLessThan1000[index],
-                              child: const LatestArrivalProductWidgets());
-                        }),
-                  ),
-                ),
-                Visibility(
-                  visible: productsProvider.getProducts.isNotEmpty,
-                  child: TitleTextWidget(
-                    label: 'أحدث الخصومات :',
-                  ),
-                ),
-                //products with discounts
-                Visibility(
-                  visible: productsProvider.getProductsWithDiscounts.isNotEmpty,
-                  child: SizedBox(
-                    height: size.height * 0.2,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: productsProvider
-                                    .getProductsWithDiscounts.length <
-                                10
-                            ? productsProvider.getProductsWithDiscounts.length
-                            : 7,
-                        itemBuilder: (context, index) {
-                          return ChangeNotifierProvider.value(
-                              value: productsProvider
-                                  .getProductsWithDiscounts[index],
-                              child: const LatestArrivalProductWidgets());
-                        }),
-                  ),
-                ),
+                // Visibility(
+                //   visible: productsProvider.getProductsLessThan1000.isNotEmpty,
+                //   child: SizedBox(
+                //     height: size.height * 0.2,
+                //     child: ListView.builder(
+                //         scrollDirection: Axis.horizontal,
+                //         itemCount:
+                //             productsProvider.getProductsLessThan1000.length < 10
+                //                 ? productsProvider
+                //                     .getProductsLessThan1000.length
+                //                 : 7,
+                //         itemBuilder: (context, index) {
+                //           return ChangeNotifierProvider.value(
+                //               value: productsProvider
+                //                   .getProductsLessThan1000[index],
+                //               child: const LatestArrivalProductWidgets());
+                //         }),
+                //   ),
+                // ),
+                // Visibility(
+                //   visible: productsProvider.getProducts.isNotEmpty,
+                //   child: TitleTextWidget(
+                //     label: 'أحدث الخصومات :',
+                //   ),
+                // ),
+                // //products with discounts
+                // Visibility(
+                //   visible: productsProvider.getProductsWithDiscounts.isNotEmpty,
+                //   child: SizedBox(
+                //     height: size.height * 0.2,
+                //     child: ListView.builder(
+                //         scrollDirection: Axis.horizontal,
+                //         itemCount: productsProvider
+                //                     .getProductsWithDiscounts.length <
+                //                 10
+                //             ? productsProvider.getProductsWithDiscounts.length
+                //             : 7,
+                //         itemBuilder: (context, index) {
+                //           return ChangeNotifierProvider.value(
+                //               value: productsProvider
+                //                   .getProductsWithDiscounts[index],
+                //               child: const LatestArrivalProductWidgets());
+                //         }),
+                //   ),
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -10,6 +10,7 @@ import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/product_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -21,11 +22,18 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final _noScreenshot = NoScreenshot.instance;
+  void disableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOff();
+    debugPrint('Screenshot Off: $result');
+  }
+
   late TextEditingController controller;
 
   @override
   void initState() {
     controller = TextEditingController();
+    disableScreenshot();
     super.initState();
   }
 

@@ -15,6 +15,7 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival_inside_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:provider/provider.dart';
 
 import '../auth/login_screen.dart';
@@ -34,6 +35,12 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final _noScreenshot = NoScreenshot.instance;
+  void disableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOff();
+    debugPrint('Screenshot Off: $result');
+  }
+
   List imageList = [];
   Future<List<String>> fetchImageUrls({required String productId}) async {
     final productDoc = await FirebaseFirestore.instance
@@ -49,7 +56,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
-    print(widget.productId);
+    disableScreenshot();
+    // print(widget.productId);
     // final productsProvider =
     //     Provider.of<ProductsProvider>(context, listen: false);
     // final productId = ModalRoute.of(context)?.settings.arguments as String;
@@ -98,6 +106,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool isGreenSelected = false; //#0ED422FF >> 0xFF0ED422
   bool isSilver = false;
   bool isSilverSelected = false; //#C0C0C0FF >> 0xFFC0C0C0
+
   @override
   Widget build(BuildContext context) {
     final productsProvider =
