@@ -38,7 +38,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   final _noScreenshot = NoScreenshot.instance;
   void disableScreenshot() async {
     bool result = await _noScreenshot.screenshotOff();
-    debugPrint('Screenshot Off: $result');
+    // debugPrint('Screenshot Off: $result');
   }
 
   List imageList = [];
@@ -120,6 +120,24 @@ class _ProductDetailsState extends State<ProductDetails> {
     final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
     fetchImageUrls(productId: productId);
+
+    double calculateDiscountPercentage(num originalPrice, num discountedPrice) {
+      // if (originalPrice == 0) {
+      //   throw ArgumentError('Original price cannot be zero');
+      // }
+      num discountAmount = originalPrice - discountedPrice;
+      double discountPercentage = (discountAmount / originalPrice) * 100;
+      return discountPercentage;
+    }
+
+    double discountPercentage = calculateDiscountPercentage(
+      getCurrentProduct!.productBeforeDiscount!,
+      getCurrentProduct.productPrice,
+    );
+
+    // int discountPercentageInt = discountPercentage.toInt() ?? 0;
+
+    // print(discountPercentage.toInt());
     // Future<List<String>> fetchImageUrls({required String productId}) async {
     //   final productDoc = await FirebaseFirestore.instance
     //       .collection('products')
@@ -252,42 +270,93 @@ class _ProductDetailsState extends State<ProductDetails> {
                               height: showPallette
                                   ? size.height * 0.25
                                   : size.height * 0.35,
-                              child: ClipRRect(
-                                // borderRadius: BorderRadius.circular(20),
-                                child: Swiper(
-                                  autoplay: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return FancyShimmerImage(
-                                      imageUrl: imageList[index],
-                                      boxFit: BoxFit.fill,
-                                    );
-                                  },
-                                  itemCount: imageList.length,
-                                  pagination: const SwiperPagination(
-                                    builder: DotSwiperPaginationBuilder(
-                                        activeColor: Colors.red,
-                                        color: Colors.white),
+                              child: Stack(children: [
+                                ClipRRect(
+                                  // borderRadius: BorderRadius.circular(20),
+                                  child: Swiper(
+                                    autoplay: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return FancyShimmerImage(
+                                        imageUrl: imageList[index],
+                                        boxFit: BoxFit.fill,
+                                      );
+                                    },
+                                    itemCount: imageList.length,
+                                    pagination: const SwiperPagination(
+                                      builder: DotSwiperPaginationBuilder(
+                                          activeColor: Colors.red,
+                                          color: Colors.white),
+                                    ),
+                                    // control: SwiperControl(),
                                   ),
-                                  // control: SwiperControl(),
                                 ),
-                              ),
+                                if (getCurrentProduct!.productBeforeDiscount! >
+                                    0)
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(12),
+                                          // bottomRight: Radius.circular(12)
+                                        ),
+                                        color: Colors.white54,
+                                      ),
+                                      width: 75,
+                                      height: 30,
+                                      child: Center(
+                                        child: SubtitleTextWidget(
+                                            color: Colors.blue,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            label:
+                                                ' خصم ${discountPercentage.toInt()} %'),
+                                      ),
+                                    ),
+                                  )
+                              ]),
                             )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Hero(
-                                tag:
-                                    // "click",
-                                    getCurrentProduct.productImage,
-                                child: FancyShimmerImage(
-                                  imageUrl: getCurrentProduct.productImage,
-                                  height: showPallette
-                                      ? size.height * 0.25
-                                      : size.height * 0.35,
-                                  width: double.infinity,
+                          : Stack(children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Hero(
+                                  tag:
+                                      // "click",
+                                      getCurrentProduct.productImage,
+                                  child: FancyShimmerImage(
+                                    imageUrl: getCurrentProduct.productImage,
+                                    height: showPallette
+                                        ? size.height * 0.25
+                                        : size.height * 0.35,
+                                    width: double.infinity,
+                                  ),
                                 ),
                               ),
-                            ),
+                              if (getCurrentProduct!.productBeforeDiscount! > 0)
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(12),
+                                        // bottomRight: Radius.circular(12)
+                                      ),
+                                      color: Colors.white54,
+                                    ),
+                                    width: 75,
+                                    height: 30,
+                                    child: Center(
+                                      child: SubtitleTextWidget(
+                                          color: Colors.blue,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          label:
+                                              ' خصم ${discountPercentage.toInt()} %'),
+                                    ),
+                                  ),
+                                )
+                            ]),
                       const SizedBox(
                         height: 20,
                       ),
@@ -315,8 +384,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ],
                       ),
+                      if (getCurrentProduct.productBeforeDiscount! > 0)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: SubtitleTextWidget(
+                            textDirection: TextDirection.rtl,
+                            label:
+                                "${getCurrentProduct.productBeforeDiscount} جنيه",
+                            color: Colors.grey,
+                            textDecoration: TextDecoration.lineThrough,
+                            fontWeight: FontWeight.normal, fontSize: 16,
+                            // maxLines: 2,
+                          ),
+                        ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Visibility(
                         visible: isBlue ||
@@ -632,7 +714,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       // Center(
                       //   child: SizedBox(

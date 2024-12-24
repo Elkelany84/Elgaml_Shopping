@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
     final _noScreenshot = NoScreenshot.instance;
     void disableScreenshot() async {
       bool result = await _noScreenshot.screenshotOff();
-      debugPrint('Screenshot Off: $result');
+      // debugPrint('Screenshot Off: $result');
     }
 
     disableScreenshot();
@@ -125,12 +125,12 @@ class HomeScreen extends StatelessWidget {
                 // const SizedBox(
                 //   height: 6,
                 // ),
-                Visibility(
-                  visible: productsProvider.getProducts.isNotEmpty,
-                  child: TitleTextWidget(
-                    label: 'منتجات أقل من 100 جنيه :',
-                  ),
-                ),
+                // Visibility(
+                //   visible: productsProvider.getProducts.isNotEmpty,
+                //   child: TitleTextWidget(
+                //     label: 'منتجات أقل من 100 جنيه :',
+                //   ),
+                // ),
                 // const SizedBox(
                 //   height: 5,
                 // ),
