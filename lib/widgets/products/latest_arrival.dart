@@ -18,13 +18,13 @@ class LatestArrivalProductWidgets extends StatelessWidget {
   const LatestArrivalProductWidgets({
     super.key,
   });
+  static String routeName = "LatestArrivalProductWidgets";
 
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
     final productsProvider = Provider.of<ProductsProvider>(context);
 
-    // final productsProvider = Provider.of<ProductsProvider>(context);
     final productModel = Provider.of<ProductModel>(context);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     // final getCurrentProduct = productsProvider.findByProdId(productId);

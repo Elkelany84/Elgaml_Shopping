@@ -307,7 +307,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       height: 30,
                                       child: Center(
                                         child: SubtitleTextWidget(
-                                            color: Colors.blue,
+                                            color: Colors.red,
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             label:

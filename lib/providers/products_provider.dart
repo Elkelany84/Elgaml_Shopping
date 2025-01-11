@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
@@ -9,11 +11,16 @@ class ProductsProvider with ChangeNotifier {
   List<ProductModel> products = [];
   List<ProductModel> ProductsLessThan100 = [];
   List<ProductModel> ProductsWithDiscounts = [];
+  List<ProductModel> productsFromRandomCategories = [];
 
   List<String> productNameFields = [];
 
   List<ProductModel> get getProducts {
     return products;
+  }
+
+  List<ProductModel> get getProductsFromRandomCategories {
+    return productsFromRandomCategories;
   }
 
   List<ProductModel> get getProductsLessThan1000 {
@@ -23,6 +30,11 @@ class ProductsProvider with ChangeNotifier {
   List<ProductModel> get getProductsWithDiscounts {
     return ProductsWithDiscounts;
   }
+
+  List<String> categories = [];
+
+  // final Random random = Random();
+  late String randomString = getRandomString();
 
   //Show Product and Product Details
   ProductModel? findByProdId(String productId) {
@@ -80,6 +92,52 @@ class ProductsProvider with ChangeNotifier {
       });
       notifyListeners();
       return products;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  String getRandomString() {
+    final Random random = Random();
+    randomString = categories[random.nextInt(categories.length)];
+    print(randomString);
+    return categories[random.nextInt(categories.length)];
+  }
+
+  Future<List<ProductModel>> fetchProductsFromRandomCategories() async {
+    final QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('categories').get();
+    final List<String> categoryNames =
+        snapshot.docs.map((doc) => doc['categoryName'] as String).toList();
+    categories = categoryNames;
+    // _getRandomString();
+    // randomString = categoryNames[random.nextInt(categoryNames.length)];
+    // print(randomString);
+
+    try {
+      await productDb
+          .orderBy("createdAt", descending: false)
+          .where('productCategory', isEqualTo: '$randomString')
+          .get()
+          .then((productSnapshot) {
+        productsFromRandomCategories.clear();
+        for (var element in productSnapshot.docs) {
+          productsFromRandomCategories.insert(
+              0, ProductModel.fromFirestore(element)
+              // ProductModel(
+              //     productId: element.get("productId"),
+              //     productTitle: element.get("productTitle"),
+              //     productPrice: element.get("productPrice"),
+              //     productCategory: element.get("productCategory"),
+              //     productDescription: element.get("productDescription"),
+              //     productImage: element.get("productImage"),
+              //     productQuantity: "productQuantity")
+              );
+        }
+      });
+      notifyListeners();
+      print(productsFromRandomCategories);
+      return productsFromRandomCategories;
     } catch (e) {
       rethrow;
     }

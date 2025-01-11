@@ -136,6 +136,8 @@ class _MyAppState extends State<MyApp> {
               CartScreen.routeName: (context) => const CartScreen(),
               PaymentSuccess.routeName: (context) => const PaymentSuccess(),
               CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+              // LatestArrivalProductWidgets.routeName: (context) =>
+              //     const LatestArrivalProductWidgets(),
             },
           );
         },

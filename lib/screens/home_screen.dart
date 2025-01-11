@@ -35,6 +35,18 @@ class HomeScreen extends StatelessWidget {
     }
 
     disableScreenshot();
+    productsProvider.fetchProductsFromRandomCategories();
+    // productsProvider.getRandomString();
+    // String randomString;
+    // String _getRandomString() {
+    //   final List<String> categoriesNames =
+    //       categoriesProvider.categories.map((e) => e.name).toList();
+    //   final Random random = Random();
+    //   // print(categoriesNames);
+    //   return categoriesNames[random.nextInt(categoriesNames.length)];
+    // }
+    //
+    // _getRandomString();
     // UserModel? userModel;
     // User? user = FirebaseAuth.instance.currentUser;
     Size size = MediaQuery.of(context).size;
@@ -100,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 Visibility(
                   visible: productsProvider.getProducts.isNotEmpty,
                   child: TitleTextWidget(
-                    label: LocaleData.latestArrivals.getString(context),
+                    label: 'أحدث المنتجات :',
                   ),
                 ),
                 // const SizedBox(
@@ -122,64 +134,64 @@ class HomeScreen extends StatelessWidget {
                         }),
                   ),
                 ),
-                // const SizedBox(
-                //   height: 6,
-                // ),
+                //TEST RANDOM CATEGORIES AND PRODUCTS
                 // Visibility(
                 //   visible: productsProvider.getProducts.isNotEmpty,
                 //   child: TitleTextWidget(
-                //     label: 'منتجات أقل من 100 جنيه :',
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                //products less than 100
-                // Visibility(
-                //   visible: productsProvider.getProductsLessThan1000.isNotEmpty,
-                //   child: SizedBox(
-                //     height: size.height * 0.2,
-                //     child: ListView.builder(
-                //         scrollDirection: Axis.horizontal,
-                //         itemCount:
-                //             productsProvider.getProductsLessThan1000.length < 10
-                //                 ? productsProvider
-                //                     .getProductsLessThan1000.length
-                //                 : 7,
-                //         itemBuilder: (context, index) {
-                //           return ChangeNotifierProvider.value(
-                //               value: productsProvider
-                //                   .getProductsLessThan1000[index],
-                //               child: const LatestArrivalProductWidgets());
-                //         }),
+                //     label: productsProvider.randomString,
                 //   ),
                 // ),
                 // Visibility(
-                //   visible: productsProvider.getProducts.isNotEmpty,
-                //   child: TitleTextWidget(
-                //     label: 'أحدث الخصومات :',
-                //   ),
-                // ),
-                // //products with discounts
-                // Visibility(
-                //   visible: productsProvider.getProductsWithDiscounts.isNotEmpty,
+                //   visible: productsProvider
+                //       .getProductsFromRandomCategories.isNotEmpty,
                 //   child: SizedBox(
                 //     height: size.height * 0.2,
                 //     child: ListView.builder(
                 //         scrollDirection: Axis.horizontal,
                 //         itemCount: productsProvider
-                //                     .getProductsWithDiscounts.length <
+                //                     .getProductsFromRandomCategories.length <
                 //                 10
-                //             ? productsProvider.getProductsWithDiscounts.length
+                //             ? productsProvider
+                //                 .getProductsFromRandomCategories.length
                 //             : 7,
                 //         itemBuilder: (context, index) {
                 //           return ChangeNotifierProvider.value(
                 //               value: productsProvider
-                //                   .getProductsWithDiscounts[index],
+                //                   .getProductsFromRandomCategories[index],
                 //               child: const LatestArrivalProductWidgets());
                 //         }),
                 //   ),
                 // ),
+                // const SizedBox(
+                //   height: 2,
+                // ),
+//latest Discounts
+                Visibility(
+                  visible: productsProvider.getProducts.isNotEmpty,
+                  child: TitleTextWidget(
+                    label: 'أحدث الخصومات :',
+                  ),
+                ),
+//                 //products with discounts
+                Visibility(
+                  visible: productsProvider.getProductsWithDiscounts.isNotEmpty,
+                  child: SizedBox(
+                    height: size.height * 0.2,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productsProvider
+                                    .getProductsWithDiscounts.length <
+                                10
+                            ? productsProvider.getProductsWithDiscounts.length
+                            : 7,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                              value: productsProvider
+                                  .getProductsWithDiscounts[index],
+                              child: const LatestArrivalProductWidgets());
+                        }),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -217,6 +229,36 @@ class HomeScreen extends StatelessWidget {
                     );
                   }),
                 ),
+                //products less than 100
+                // Visibility(
+                //   visible: productsProvider.getProducts.isNotEmpty,
+                //   child: TitleTextWidget(
+                //     label: 'منتجات أقل من 100 جنيه :',
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // //products less than 100
+                // Visibility(
+                //   visible: productsProvider.getProductsLessThan1000.isNotEmpty,
+                //   child: SizedBox(
+                //     height: size.height * 0.2,
+                //     child: ListView.builder(
+                //         scrollDirection: Axis.horizontal,
+                //         itemCount:
+                //             productsProvider.getProductsLessThan1000.length < 10
+                //                 ? productsProvider
+                //                     .getProductsLessThan1000.length
+                //                 : 7,
+                //         itemBuilder: (context, index) {
+                //           return ChangeNotifierProvider.value(
+                //               value: productsProvider
+                //                   .getProductsLessThan1000[index],
+                //               child: const LatestArrivalProductWidgets());
+                //         }),
+                //   ),
+                // ),
                 // const SizedBox(
                 //   height: 10,
                 // ),

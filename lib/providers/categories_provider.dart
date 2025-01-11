@@ -41,7 +41,7 @@ class CategoriesProvider extends ChangeNotifier {
     }
   }
 
-  // Fetch products from firebase
+  // Fetch categories from firebase
   final categoriesDb = FirebaseFirestore.instance.collection("categories");
   Future<List<CategoriesModel>> fetchCategories() async {
     try {
@@ -67,29 +67,6 @@ class CategoriesProvider extends ChangeNotifier {
       notifyListeners();
 
       return categories;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Stream<List<CategoriesModel>> fetchCategoryStream() {
-    try {
-      return categoriesDb.snapshots().map((snapshot) {
-        categories.clear();
-        for (var element in snapshot.docs) {
-          categories.insert(0, CategoriesModel.fromFirestore(element)
-              // ProductModel(
-              //     productId: element.get("productId"),
-              //     productTitle: element.get("productTitle"),
-              //     productPrice: element.get("productPrice"),
-              //     productCategory: element.get("productCategory"),
-              //     productDescription: element.get("productDescription"),
-              //     productImage: element.get("productImage"),
-              //     productQuantity: "productQuantity")
-              );
-        }
-        return categories;
-      });
     } catch (e) {
       rethrow;
     }

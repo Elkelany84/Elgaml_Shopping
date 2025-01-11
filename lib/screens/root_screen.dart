@@ -63,6 +63,7 @@ class _RootScreenState extends State<RootScreen> {
         categoriesProvider.fetchBanners(),
         productsProvider.fetchProductsLessThan100(),
         productsProvider.fetchProductsWithDiscounts(),
+        // productsProvider.fetchProductsFromRandomCategories(),
         // productsProvider.fetchProductsLessThan100(),
         // productsProvider.fetchAffordableProducts(),
         // productsProvider.tryThis(),
