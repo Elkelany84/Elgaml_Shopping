@@ -28,17 +28,30 @@ class CartProvider with ChangeNotifier {
   }) async {
     User? user = auth.currentUser;
     if (user == null) {
-      MyAppFunctions.showErrorOrWarningDialog(
-          isError: false,
-          context: context,
-          fct: () {
-            // print("kkkk");
-            Navigator.pop(context);
-            Navigator.pushNamed(context, LoginScreen.routeName);
-          },
-          subTitle: "برجاء تسجيل الدخول أولا");
+      await MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subTitle: "برجاء تسجيل الدخول أولا",
+        fct: () async {
+          await FirebaseAuth.instance.signOut();
+          // if (!mounted) return;
+          Navigator.pushNamed(context, LoginScreen.routeName);
+
+          // auth.signOut().then((value) => Navigator.of(context)
+          //     .pushNamed(RootScreen.routeName));
+        },
+        isError: false,
+      );
+      // MyAppFunctions.showErrorOrWarningDialog(
+      //     isError: false,
+      //     context: context,
+      //     fct: () {
+      //       // print("kkkk");
+      //       Navigator.pop(context);
+      //       Navigator.pushNamed(context, LoginScreen.routeName);
+      //     },
+      //     subTitle: "برجاء تسجيل الدخول أولا");
       return;
-      Navigator.pushNamed(context, LoginScreen.routeName);
+      // Navigator.pushNamed(context, LoginScreen.routeName);
     }
     final uid = user.uid;
     final cartId = uuid.v4();

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/wishlist_model.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,13 +22,19 @@ class WishlistProvider with ChangeNotifier {
       {required String productId, required BuildContext context}) async {
     User? user = auth.currentUser;
     if (user == null) {
-      MyAppFunctions.showErrorOrWarningDialog(
-          isError: false,
-          context: context,
-          fct: () {
-            // Navigator.pushNamed(context, LoginScreen.routeName);
-          },
-          subTitle: "برجاء تسجيل الدخول أولا");
+      await MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subTitle: "برجاء تسجيل الدخول أولا",
+        fct: () async {
+          await FirebaseAuth.instance.signOut();
+          // if (!mounted) return;
+          Navigator.pushNamed(context, LoginScreen.routeName);
+
+          // auth.signOut().then((value) => Navigator.of(context)
+          //     .pushNamed(RootScreen.routeName));
+        },
+        isError: false,
+      );
       return;
       // Navigator.pushNamed(context, LoginScreen.routeName);
     }

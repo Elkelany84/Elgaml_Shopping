@@ -29,13 +29,15 @@ class HomeScreen extends StatelessWidget {
     String _currentLocale = _flutterLocalization.currentLocale!.languageCode;
     themeProvider.currentLocaleProvider = _currentLocale;
     final _noScreenshot = NoScreenshot.instance;
+
     void disableScreenshot() async {
       bool result = await _noScreenshot.screenshotOff();
       // debugPrint('Screenshot Off: $result');
     }
 
     disableScreenshot();
-    productsProvider.fetchProductsFromRandomCategories();
+
+    // productsProvider.fetchProductsFromRandomCategories();
     // productsProvider.getRandomString();
     // String randomString;
     // String _getRandomString() {

@@ -120,7 +120,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (getCurrentProduct.productBeforeDiscount! > 0)
+                      if (getCurrentProduct.productBeforeDiscount! > 0 &&
+                          getCurrentProduct.productBeforeDiscount !=
+                              getCurrentProduct.productPrice!)
                         SubtitleTextWidget(
                           label:
                               "${getCurrentProduct.productBeforeDiscount} جنيه",
@@ -175,13 +177,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),
-                              child: Icon(
-                                cartProvider.isProductInCart(
-                                        productId: getCurrentProduct.productId)
-                                    ? Icons.check
-                                    : Icons.add_shopping_cart_outlined,
-                                size: 20,
-                                color: Colors.white,
+                              child: FittedBox(
+                                child: Icon(
+                                  cartProvider.isProductInCart(
+                                          productId:
+                                              getCurrentProduct.productId)
+                                      ? Icons.check
+                                      : Icons.add_shopping_cart_outlined,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

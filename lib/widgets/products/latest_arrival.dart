@@ -109,7 +109,9 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                   SizedBox(
                     height: 3,
                   ),
-                  if (getCurrentProduct!.productBeforeDiscount! > 0)
+                  if (getCurrentProduct!.productBeforeDiscount! > 0 &&
+                      getCurrentProduct.productBeforeDiscount !=
+                          getCurrentProduct.productPrice!)
                     SubtitleTextWidget(
                       label: "${getCurrentProduct!.productBeforeDiscount} جنيه",
                       color: Colors.grey,
@@ -166,7 +168,7 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                                   },
                                   subTitle: "Error adding to cart",
                                 );
-                                print("hhhhhh");
+                                // print("hhhhhh");
                               }
                             },
                             icon: Icon(

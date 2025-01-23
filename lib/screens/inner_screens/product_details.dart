@@ -260,8 +260,647 @@ class _ProductDetailsState extends State<ProductDetails> {
         // ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: getCurrentProduct == null
-              ? const SizedBox.shrink()
+          // child: getCurrentProduct == null
+          //     ? const SizedBox.shrink()
+          child: getCurrentProduct.productQuantity == '0'
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Hero(
+                            tag:
+                                // "click",
+                                getCurrentProduct.productImage,
+                            child: FancyShimmerImage(
+                              imageUrl:
+                                  'https://firebasestorage.googleapis.com/v0/b/elgamlstores.appspot.com/o/productsImages%2FnotAvailable.png?alt=media&token=017a208a-03a5-47a8-8dd7-07a77a033e44',
+                              height: showPallette
+                                  ? size.height * 0.25
+                                  : size.height * 0.35,
+                              width: double.infinity,
+                            ),
+                          ),
+                        ),
+                        if (getCurrentProduct!.productBeforeDiscount! > 0)
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(12),
+                                  // bottomRight: Radius.circular(12)
+                                ),
+                                color: Colors.white54,
+                              ),
+                              width: 75,
+                              height: 30,
+                              child: Center(
+                                child: SubtitleTextWidget(
+                                    color: Colors.red,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    label:
+                                        ' خصم ${discountPercentage.toInt()} %'),
+                              ),
+                            ),
+                          )
+                      ]),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              getCurrentProduct.productTitle,
+                              softWrap: true,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SubtitleTextWidget(
+                            textDirection: TextDirection.rtl,
+                            label: "${getCurrentProduct.productPrice} جنيه",
+                            color: Colors.blue, fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            // maxLines: 2,
+                          ),
+                        ],
+                      ),
+                      if (getCurrentProduct.productBeforeDiscount! > 0 &&
+                          getCurrentProduct.productBeforeDiscount !=
+                              getCurrentProduct.productPrice!)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: SubtitleTextWidget(
+                            textDirection: TextDirection.rtl,
+                            label:
+                                "${getCurrentProduct.productBeforeDiscount} جنيه",
+                            color: Colors.grey,
+                            textDecoration: TextDecoration.lineThrough,
+                            fontWeight: FontWeight.normal, fontSize: 16,
+                            // maxLines: 2,
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Visibility(
+                        visible: isBlue ||
+                            isBlack ||
+                            isGold ||
+                            isRed ||
+                            isYellow ||
+                            isGreen ||
+                            isSilver,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const SubtitleTextWidget(
+                              textDirection: TextDirection.rtl,
+                              label: "الألوان المتاحة: ",
+                              color: Colors.black, fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              // maxLines: 2,
+                            ),
+                            FittedBox(
+                              child: Container(
+                                height: 50,
+                                // width: 220,
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[100],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    //Black Color
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print(isBlackSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = true;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
+                                        colorChosen = "Black";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأسود");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isBlack,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isBlackSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Blue Color
+                                    GestureDetector(
+                                      onTap: () async {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = true;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
+                                        colorChosen = "Blue";
+                                        print(isBlueSelected);
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأزرق");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isBlue,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isBlueSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Golden Color
+                                    GestureDetector(
+                                      onTap: () async {
+                                        isGoldSelected = true;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
+                                        colorChosen = "Gold";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الذهبى");
+
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                          print(isGoldSelected);
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isGold,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isGoldSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffad9c00),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Red Color
+                                    GestureDetector(
+                                      onTap: () async {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = true;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
+                                        colorChosen = "Red";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأحمر");
+
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isRed,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isRedSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //Yellow Color
+                                    GestureDetector(
+                                      onTap: () async {
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = true;
+                                        isSilverSelected = false;
+                                        isGreenSelected = false;
+                                        colorChosen = "Yellow";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأصفر");
+
+                                        setState(() {
+                                          // isBlueSelected != isBlueSelected;
+                                        });
+                                      },
+                                      child: Visibility(
+                                        visible: isYellow,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isYellowSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print(isGreenSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isSilverSelected = false;
+                                        isGreenSelected = true;
+                                        colorChosen = "Green";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الأخضر");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isGreen,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isGreenSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        print(isSilverSelected);
+                                        isGoldSelected = false;
+                                        isBlackSelected = false;
+                                        isRedSelected = false;
+                                        isBlueSelected = false;
+                                        isYellowSelected = false;
+                                        isGreenSelected = false;
+                                        isSilverSelected = true;
+                                        colorChosen = "Black";
+                                        await Fluttertoast.showToast(
+                                            msg: "تم اختيار اللون الفضى");
+
+                                        setState(() {});
+                                      },
+                                      child: Visibility(
+                                        visible: isSilver,
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: isSilverSelected
+                                                      ? Colors.white
+                                                      : Colors.blue
+                                                          .withOpacity(0.1),
+                                                  width: 2)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // ColorPicker(outerBorder: false, color: Colors.green)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // Center(
+                      //   child: SizedBox(
+                      //     height: 100,
+                      //     width: 400,
+                      //     child: FutureBuilder<List<MapEntry<String, dynamic>>>(
+                      //       future:
+                      //           productsProvider.getColorsMapAsList(productId),
+                      //       builder: (context, snapshot) {
+                      //         if (snapshot.connectionState ==
+                      //             ConnectionState.waiting) {
+                      //           return Center(
+                      //               child: CircularProgressIndicator());
+                      //         } else if (snapshot.hasError) {
+                      //           return Center(
+                      //               child: Text('Error: ${snapshot.error}'));
+                      //         } else {
+                      //           List<MapEntry<String, dynamic>> colorsList =
+                      //               snapshot.data ?? [];
+                      //           hexToColor('#ff8800');
+                      //           return Center(
+                      //             child: ListView.builder(
+                      //                 // scrollDirection: Axis.horizontal,
+                      //                 itemCount: colorsList.length,
+                      //                 itemBuilder: (context, index) {
+                      //                   return
+                      //                       //   Center(
+                      //                       //   child: GestureDetector(
+                      //                       //     onTap: () {
+                      //                       //       setState(() {
+                      //                       //         currentColor = index;
+                      //                       //         print(currentColor);
+                      //                       //       });
+                      //                       //     },
+                      //                       //     child: ColorPicker(
+                      //                       //         outerBorder:
+                      //                       //             colorsList[index].value,
+                      //                       //         color: Colors.red),
+                      //                       //   ),
+                      //                       // );
+                      //                       ListTile(
+                      //                     title: Text(
+                      //                         'Color: ${colorsList[index].key}'),
+                      //                     subtitle: Row(
+                      //                       children: [
+                      //                         Text(
+                      //                             'Value: ${colorsList[index].value}'),
+                      //                         Container(
+                      //                           child: Text(
+                      //                             'hhhh',
+                      //                             style:
+                      //                                 TextStyle(fontSize: 20),
+                      //                           ),
+                      //                           decoration: BoxDecoration(
+                      //                               color: Colors.green),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   );
+                      //                 }),
+                      //           );
+                      //         }
+                      //       },
+                      //       // child: Container(
+                      //       //   height: 50,
+                      //       //   width: 200,
+                      //       //   padding: EdgeInsets.all(8),
+                      //       //   decoration: BoxDecoration(
+                      //       //       color: Colors.black.withOpacity(0.3),
+                      //       //       borderRadius: BorderRadius.circular(30)),
+                      //       //   child: ListView.separated(
+                      //       //       scrollDirection: Axis.horizontal,
+                      //       //       itemBuilder: (context, index) {
+                      //       //         return GestureDetector(
+                      //       //           onTap: () {
+                      //       //             setState(() {
+                      //       //               currentColor = index;
+                      //       //               print(currentColor);
+                      //       //             });
+                      //       //           },
+                      //       //           child: ColorPicker(
+                      //       //               outerBorder: currentColor == index,
+                      //       //               color: colorSelected[index]),
+                      //       //         );
+                      //       //       },
+                      //       //       separatorBuilder: (context, index) {
+                      //       //         return SizedBox(
+                      //       //           height: 3,
+                      //       //         );
+                      //       //       },
+                      //       //       itemCount: colorSelected.length),
+                      //       // ),
+                      //     ),
+                      //   ),
+                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          HeartButtonWidget(
+                            productId: getCurrentProduct.productId,
+                            bgColor: Colors.blue.shade100,
+                          ),
+                          SizedBox(
+                            height: kBottomNavigationBarHeight - 10,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: () async {
+                                //check if already in cart
+                                if (cartProvider.isProductInCart(
+                                        productId:
+                                            getCurrentProduct.productId) ||
+                                    productAvailable == true) {
+                                  return;
+                                }
+                                try {
+                                  await cartProvider.addToCartFirebase(
+                                      productId: getCurrentProduct.productId,
+                                      quantity: 1,
+                                      context: context,
+                                      color: colorChosen);
+                                } catch (error) {
+                                  MyAppFunctions.showErrorOrWarningDialog(
+                                      context: context,
+                                      fct: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, LoginScreen.routeName);
+                                        print("hhhhhh");
+                                        // Navigator.pushReplacementNamed(
+                                        //     context, LoginScreen.routeName);
+                                      },
+                                      subTitle: error.toString());
+                                }
+
+                                // if (cartProvider.isProductInCart(
+                                //     productId: getCurrentProduct.productId)) {
+                                //   return;
+                                // }
+                                // cartProvider.addToCart(
+                                //     productId: getCurrentProduct.productId);
+                              },
+                              label: Text(
+                                productAvailable
+                                    ? 'المنتج غير متوفر حاليا'
+                                    : cartProvider.isProductInCart(
+                                            productId:
+                                                getCurrentProduct.productId)
+                                        ? LocaleData.productDetailsAddedAlready
+                                            .getString(context)
+                                        : LocaleData.productDetailsAddedToCart
+                                            .getString(context),
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              icon: Icon(cartProvider.isProductInCart(
+                                          productId:
+                                              getCurrentProduct.productId) &&
+                                      productAvailable != true
+                                  ? Icons.check
+                                  : Icons.add_shopping_cart),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TitleTextWidget(
+                              textDirection: TextDirection.rtl,
+                              label: LocaleData.productDetailsAboutItem
+                                  .getString(context)),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, SearchScreen.routeName,
+                                  arguments: getCurrentProduct.productCategory);
+                            },
+                            child: SubtitleTextWidget(
+                              textDirection: TextDirection.rtl,
+                              label:
+                                  "${LocaleData.productDetailsIn.getString(context)} ${getCurrentProduct.productCategory}",
+                              color: Colors.blue,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: SubtitleTextWidget(
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          label: getCurrentProduct.productDescription,
+                          textOverflow: TextOverflow.visible,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Align(
+                        alignment: Alignment.topRight,
+                        child: TitleTextWidget(
+                            textDirection: TextDirection.rtl,
+                            label: "أحدث المنتجات :"),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Visibility(
+                        visible: viewedProdProvider.viewedProdsItems.isNotEmpty,
+                        child: SizedBox(
+                          height: size.height * 0.2,
+                          width: size.width,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: productsProvider.getProducts.length,
+                              itemBuilder: (context, index) {
+                                return ChangeNotifierProvider.value(
+                                    value: productsProvider.getProducts[index],
+                                    child: LatestArrivalProductDetails());
+                              }),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : SingleChildScrollView(
                   child: Column(
                     children: [
@@ -348,7 +987,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     height: 30,
                                     child: Center(
                                       child: SubtitleTextWidget(
-                                          color: Colors.blue,
+                                          color: Colors.red,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           label:

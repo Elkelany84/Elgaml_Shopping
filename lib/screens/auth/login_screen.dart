@@ -256,9 +256,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Navigator.of(context)
                                             .pushNamed(RootScreen.routeName);
                                       },
-                                      child: Text(
-                                        LocaleData.guest.getString(context),
-                                        style: const TextStyle(fontSize: 16),
+                                      child: FittedBox(
+                                        child: Text(
+                                          LocaleData.guest.getString(context),
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -150,7 +150,7 @@ class GoogleButton extends StatelessWidget {
       },
       label: Text(
         "Sign $sign ${LocaleData.googleSignin.getString(context)}",
-        style: const TextStyle(fontSize: 20, color: Colors.black),
+        style: const TextStyle(fontSize: 18, color: Colors.black),
       ),
       icon: const Icon(
         Ionicons.logo_google,
